@@ -25,7 +25,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/alexandria-ar-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/ruqaa-ar-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/img/lamsa-pink-hero-640.webp" as="image" media="(max-width:640px)">
+<link rel="preload" href="/assets/img/scene-gift.svg" as="image">
 <link rel="stylesheet" href="/assets/css/lamsa-ds.css">
 <link rel="stylesheet" href="/assets/css/home.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://lamsagift.pages.dev/#org","name":"LAMSA لمسة","url":"https://lamsagift.pages.dev/","logo":"https://lamsagift.pages.dev/assets/img/icon-512.png","contactPoint":{"@type":"ContactPoint","contactType":"customer support","url":"https://wa.me/201588889741","availableLanguage":["ar"]}},{"@type":"Service","name":"هدية ذكرى رقمية تفاعلية مع NFC وQR","provider":{"@id":"https://lamsagift.pages.dev/#org"},"areaServed":"EG","serviceType":"هدايا شخصية رقمية","description":"قطعة هدية بشريحة NFC وكود QR تفتح صفحة ذكرى خاصة فيها صور ورسائل وأغنية وألعاب مبنية من قصة العميل."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"هل الهدية محتاجة تطبيق؟","acceptedAnswer":{"@type":"Answer","text":"لا. المستلم يلمس القطعة بالموبايل أو يمسح الـQR والذكرى تفتح في المتصفح مباشرة."}},{"@type":"Question","name":"هل تعمل على آيفون وأندرويد؟","acceptedAnswer":{"@type":"Answer","text":"أيوه. الـQR يعمل على أي موبايل بكاميرا، والـNFC مدعوم في أغلب موبايلات Android وiPhone XS وما بعده."}},{"@type":"Question","name":"هل الرابط خاص؟","acceptedAnswer":{"@type":"Answer","text":"كل ذكرى لها رابط طويل غير قابل للتخمين، ولا تظهر في محركات البحث، ويمكن حمايتها بسؤال سري."}}]}]}</script>
@@ -63,10 +63,7 @@
       <div class="h-hero-visual">
         <svg class="h-constellation" aria-hidden="true" viewBox="0 0 220 200"><path d="M110 178 L40 104 Q14 72 36 44 Q62 16 96 36 L110 52 L124 36 Q158 16 184 44 Q206 72 180 104 Z" fill="none" stroke="rgba(246,193,119,.55)" stroke-width="1" stroke-dasharray="3 6"/><g fill="#f6c177"><circle cx="110" cy="178" r="3"/><circle cx="40" cy="104" r="2.4"/><circle cx="36" cy="44" r="2.8"/><circle cx="96" cy="36" r="2.2"/><circle cx="110" cy="52" r="3.2"/><circle cx="124" cy="36" r="2.2"/><circle cx="184" cy="44" r="2.8"/><circle cx="180" cy="104" r="2.4"/></g></svg>
         <div class="h-arch">
-          <picture>
-            <source media="(max-width:640px)" srcset="/assets/img/lamsa-pink-hero-640.webp">
-            <img src="/assets/img/lamsa-pink-hero-960.webp" width="768" height="960" alt="بوكس هدية لمسة مع قطعة الذكرى" fetchpriority="high">
-          </picture>
+          <img src="/assets/img/scene-gift.svg" width="400" height="500" alt="رسمة توضيحية: علبة هدية لمسة وقطعة NFC وQR أمام النيل وقت الغروب" fetchpriority="high">
         </div>
         <div class="h-phone" aria-hidden="true">
           <div class="h-phone-notch"></div>
@@ -129,9 +126,8 @@
   <section id="gift" class="h-sec" aria-labelledby="gift-title">
     <div class="l-shell h-gift-grid">
       <div class="h-gift-media" data-reveal>
-        <figure class="h-gift-main"><img src="/assets/wow-demo/p-box.webp" alt="بوكس هدية لمسة جاهز للإهداء" loading="lazy" decoding="async" width="600" height="600"></figure>
-        <figure><img src="/assets/wow-demo/p-phone.webp" alt="ذكرى لمسة مفتوحة على الموبايل" loading="lazy" decoding="async" width="600" height="600"></figure>
-        <figure><img src="/assets/wow-demo/p-gift.webp" alt="تفاصيل تغليف هدية لمسة" loading="lazy" decoding="async" width="600" height="600"></figure>
+        <figure><img src="/assets/img/scene-tap.svg" alt="رسمة: الموبايل بيلمس قطعة لمسة فتفتح الذكرى" loading="lazy" decoding="async" width="400" height="400"><figcaption>المس بالموبايل (NFC)</figcaption></figure>
+        <figure><img src="/assets/img/scene-qr.svg" alt="رسمة: كاميرا الموبايل بتمسح كود QR على قطعة لمسة" loading="lazy" decoding="async" width="400" height="400"><figcaption>أو امسح الـQR</figcaption></figure>
       </div>
       <div data-reveal>
         <span class="l-eyebrow">الهدية الملموسة</span>
