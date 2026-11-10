@@ -4,7 +4,7 @@
 
 | البند | القيمة |
 |---|---|
-| الموقع | https://ainelhaya255.github.io/Lamsa/ (GitHub Pages، فرع `gh-pages`) |
+| الموقع | https://lamsa-eg.github.io/ (GitHub Pages، مستودع `lamsa-eg/lamsa-eg.github.io`، فرع `gh-pages`) |
 | النشر | تلقائي مع كل push على `main` (`.github/workflows/pages.yml`) |
 | قاعدة البيانات | مشروع Supabase `lamsa` (ref `kahsdittkaascnrfamlv`، Frankfurt) |
 | الدوال | 27 دالة منشورة (`supabase/functions`) — وضع مباشر بدون Cloudflare |

@@ -15,7 +15,7 @@ const ROOT = normalize(join(fileURLToPath(import.meta.url), "../.."));
 const arg = name => (process.argv.find(a => a.startsWith(`--${name}=`)) || "").split("=").slice(1).join("=");
 const TARGET = arg("target") || "cloudflare";
 const PAGES = TARGET === "pages";
-const BASE = PAGES ? (arg("base") || "/Lamsa").replace(/\/+$/, "") : "";
+const BASE = PAGES ? (process.argv.some(a => a.startsWith("--base=")) ? arg("base") : "/Lamsa").replace(/\/+$/, "") : "";
 const PAGES_ENV = PAGES ? {
   SUPABASE_URL: arg("supabase-url") || process.env.SUPABASE_URL || "",
   SUPABASE_PUBLISHABLE_KEY: arg("publishable-key") || process.env.SUPABASE_PUBLISHABLE_KEY || "",

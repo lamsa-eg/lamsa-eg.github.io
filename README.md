@@ -2,7 +2,7 @@
 
 > «مش صفحة صور… دي رحلة معمولة من قصتكم.»
 
-**الموقع:** https://ainelhaya255.github.io/Lamsa/ · **ذكرى تجريبية:** https://ainelhaya255.github.io/Lamsa/memory.html?demo=1
+**الموقع:** https://lamsa-eg.github.io/ · **ذكرى تجريبية:** https://lamsa-eg.github.io/memory.html?demo=1
 
 منصة عربية لهدايا ذكرى رقمية تفاعلية: قطعة فيها NFC وQR بتفتح صفحة ذكرى خاصة فيها صور ورسائل وأغنية وخط زمني، وألعاب مبنية من إجابات حقيقية بيكتبها صاحب الهدية وقت الطلب.
 

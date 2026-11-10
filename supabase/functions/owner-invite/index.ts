@@ -12,7 +12,7 @@ Deno.serve(async req => {
     const { data: row } = await admin.from("app_config").select("value").eq("key", "owner_email").maybeSingle();
     const email = String(row?.value || "").trim().toLowerCase();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return out({ error: "إيميل المالك غير مضبوط" }, 400);
-    const site = (Deno.env.get("SITE_URL") || "https://ainelhaya255.github.io/Lamsa").replace(/\/+$/, "");
+    const site = (Deno.env.get("SITE_URL") || "https://lamsa-eg.github.io").replace(/\/+$/, "");
     const { data, error } = await admin.auth.admin.inviteUserByEmail(email, { redirectTo: `${site}/admin/set-password.html` });
     if (error || !data.user) return out({ error: error?.message || "تعذر إرسال الدعوة" }, 400);
     const { error: pErr } = await admin.from("admin_profiles").upsert({ user_id: data.user.id, role: "owner" }, { onConflict: "user_id" });

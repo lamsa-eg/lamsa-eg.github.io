@@ -20,4 +20,4 @@ jobs:
           echo "status $code"; head -c 200 /tmp/r.json; echo
           test "$code" = "200"
       - name: Ping site
-        run: curl -sS -o /dev/null -w 'site %{http_code}\n' https://ainelhaya255.github.io/Lamsa/
+        run: curl -sS -o /dev/null -w 'site %{http_code}\n' https://lamsa-eg.github.io/

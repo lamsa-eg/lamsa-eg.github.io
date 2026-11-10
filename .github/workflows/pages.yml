@@ -17,7 +17,6 @@ jobs:
     env:
       SUPABASE_URL: https://kahsdittkaascnrfamlv.supabase.co
       SUPABASE_PUBLISHABLE_KEY: sb_publishable_zmdgfhVf1AUZart717F0zQ_9XZnmCNw
-      SITE_URL: https://ainelhaya255.github.io/Lamsa
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,7 +24,15 @@ jobs:
           node-version: '22'
       - run: npm install --no-audit --no-fund
       - run: npm run test:unit
-      - run: node tools/build.mjs --target=pages --base=/Lamsa
+      # Site address follows the repository: <owner>.github.io repos are served at the root,
+      # any other repo under /<repo>/.
+      - name: Work out site address
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"; repo="${GITHUB_REPOSITORY#*/}"
+          if [ "${repo,,}" = "${owner}.github.io" ]; then base=""; else base="/${repo}"; fi
+          echo "BASE=${base}" >> "$GITHUB_ENV"
+          echo "SITE_URL=https://${owner}.github.io${base}" >> "$GITHUB_ENV"
+      - run: node tools/build.mjs --target=pages --base="$BASE" --site-url="$SITE_URL"
       - uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
           branch: gh-pages

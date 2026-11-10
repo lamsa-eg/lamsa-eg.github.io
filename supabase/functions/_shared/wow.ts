@@ -12,7 +12,7 @@ export const SERVICE_SECRET=serverSecret();
 // The gateway secret is shared with the Cloudflare Worker and must only live in
 // Supabase secrets (LAMSA_WOW_GATEWAY_SECRET). It is never bundled in code.
 export const admin=createClient(SUPABASE_URL,SERVICE_SECRET,{auth:{persistSession:false,autoRefreshToken:false}});
-export const ORIGIN=Deno.env.get("ALLOWED_ORIGIN")||"https://ainelhaya255.github.io";
+export const ORIGIN=Deno.env.get("ALLOWED_ORIGIN")||"https://lamsa-eg.github.io";
 export const cors={"Access-Control-Allow-Origin":ORIGIN,"Access-Control-Allow-Headers":"authorization, content-type, apikey, x-client-info, x-lamsa-client-ip, x-lamsa-client-ua, x-lamsa-gateway, x-lamsa-wow-enabled, x-lamsa-form-version","Access-Control-Allow-Methods":"POST, OPTIONS","Vary":"Origin"};
 export function out(body:unknown,status=200){return new Response(JSON.stringify(body),{status,headers:{...cors,"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}})}
 export function clean(v:unknown,max=200){return String(v??"").trim().slice(0,max)}
