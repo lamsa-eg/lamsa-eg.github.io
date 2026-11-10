@@ -1,6 +1,6 @@
 .cat-tabs{display:flex;gap:8px;overflow-x:auto;margin:0 0 14px;padding-bottom:4px}
 .cat-tabs button{flex:0 0 auto;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:inherit;font:inherit;font-size:13px;cursor:pointer}
-.cat-tabs button[aria-selected="true"]{background:#f6dfe3;color:#2b1d22;border-color:#f6dfe3}
+.cat-tabs button[aria-selected="true"]{background:var(--l-night,#13233b);color:#fff;border-color:var(--l-night,#13233b)}
 .cat-panel{padding:18px}
 .cat-list{display:grid;gap:12px}
 .cat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;align-items:end;padding:14px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.02)}

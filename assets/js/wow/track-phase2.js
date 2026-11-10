@@ -4,7 +4,7 @@ import{toast,escapeHtml}from"../common-cf-v4.js";
 
 const result=document.getElementById("result");let mounted=false,lastKey="";
 function keyBytes(base64){const padding="=".repeat((4-base64.length%4)%4),s=(base64+padding).replace(/-/g,"+").replace(/_/g,"/"),raw=atob(s);return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)))}
-async function reg(){return await navigator.serviceWorker.register("/sw-v18.js",{scope:"/"})}
+async function reg(){return await navigator.serviceWorker.register((window.LAMSA_CONFIG?.BASE_PATH||"")+"/"+"sw-v18.js",{scope:(window.LAMSA_CONFIG?.BASE_PATH||"")+"/"})}
 function creds(){return{orderNumber:(document.getElementById("order")?.value||sessionStorage.getItem("lamsa_track_order")||"").trim(),trackingToken:(document.getElementById("token")?.value||sessionStorage.getItem("lamsa_track_token")||"").trim()}}
 
 async function load(){

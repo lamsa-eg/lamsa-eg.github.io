@@ -1,0 +1,76 @@
+/* LAMSA admin v40 — «غروب على النيل». Loaded after app.css/admin.css on every admin page:
+   restyles the existing markup (no logic changes). Uses tokens from lamsa-ds.css. */
+:root{--line:rgba(19,35,59,.12);--wine:var(--l-night);--gold2:var(--l-coral);--rose:var(--l-coral);--rose-soft:var(--l-coral-soft)}
+body.lm-admin{background:var(--l-bg);color:var(--l-ink);font-family:var(--l-font);font-size:15px}
+body.lm-admin::before,body.lm-admin::after{display:none!important}
+.lm-admin *{font-family:inherit}
+.lm-admin input,.lm-admin select,.lm-admin textarea,.lm-admin button{font-family:var(--l-font)}
+
+/* layout */
+.lm-admin .admin{grid-template-columns:250px minmax(0,1fr);background:var(--l-bg)}
+.lm-admin .side{background:var(--l-sky);border:0;color:#e6e9f0;padding:22px 14px}
+.lm-admin .side .logo,.lm-admin .topbar .logo{display:none}
+.lm-admin .lm-side-brand{display:flex;align-items:center;gap:10px;margin:0 6px 24px;color:#fff;text-decoration:none}
+.lm-admin .lm-side-brand b{font-family:var(--l-display);font-size:26px;line-height:1}
+.lm-admin .lm-side-brand small{display:block;color:#aab3c5;font-size:11px}
+.lm-admin .side-label{color:#f6c177;font-size:11px;letter-spacing:.14em}
+.lm-admin .menu a{color:#d9deea;font-size:14px;border-radius:14px;min-height:44px}
+.lm-admin .menu a:before{content:"◦";color:#f6c177}
+.lm-admin .menu a.active,.lm-admin .menu a:hover{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.14)}
+.lm-admin .menu a.active:before{content:"✦";color:#f6c177}
+.lm-admin .content{padding:28px clamp(16px,3vw,36px)}
+.lm-admin .kicker{color:var(--l-coral);letter-spacing:.12em;font-size:12px;font-weight:700}
+.lm-admin .title,.lm-admin h1.title{font-family:var(--l-display)!important;font-size:clamp(32px,6vw,46px)!important;color:var(--l-night);line-height:1.25}
+.lm-admin h2,.lm-admin .section-title{font-family:var(--l-display)!important;color:var(--l-night)}
+.lm-admin .copy,.lm-admin .muted,.lm-admin .hint{color:var(--l-muted)!important;font-size:14px}
+
+/* cards + stats */
+.lm-admin .card{background:#fff;border:1px solid var(--l-line);border-radius:var(--l-r-lg);box-shadow:var(--l-shadow-sm);color:var(--l-ink)}
+.lm-admin .stat{position:relative;overflow:hidden}
+.lm-admin .stat small{color:var(--l-muted);font-size:13px}
+.lm-admin .stat b{font-family:var(--l-font)!important;font-size:34px!important;font-weight:700;color:var(--l-night)!important}
+.lm-admin .stat::after{content:"✦";position:absolute;top:14px;inset-inline-end:16px;color:var(--l-gold-soft);font-size:22px}
+.lm-admin .stats .stat:first-child{background:var(--l-sky);border:0}
+.lm-admin .stats .stat:first-child small{color:#cfd6e4}.lm-admin .stats .stat:first-child b{color:#fff!important}
+.lm-admin .stats .stat:first-child::after{color:#f6c177}
+
+/* tables */
+.lm-admin .tablewrap{border-color:var(--l-line);background:#fff}
+.lm-admin .table th{background:var(--l-sand-2);color:var(--l-ink-2);font-size:13px;font-weight:700}
+.lm-admin .table td{color:var(--l-ink);font-size:14px;border-color:var(--l-line)}
+.lm-admin .table tr:hover td{background:var(--l-bg)}
+
+/* buttons */
+.lm-admin .romantic-btn,.lm-admin .romantic-btn.light{background:linear-gradient(135deg,var(--l-coral),var(--l-sunset))!important;color:#fff!important;border:0!important;border-radius:999px!important;min-height:46px;box-shadow:0 10px 24px rgba(199,67,42,.25)!important;font-weight:700}
+.lm-admin .romantic-btn *{color:#fff!important}
+.lm-admin .heart-outline-btn,.lm-admin .btn{background:#fff!important;color:var(--l-night)!important;border:1.5px solid var(--l-line-2)!important;border-radius:999px!important;min-height:44px;font-weight:600}
+.lm-admin .heart-outline-btn:hover,.lm-admin .btn:hover{border-color:var(--l-night)!important}
+.lm-admin .btn.danger,.lm-admin .row-delete{color:var(--l-err)!important;border-color:rgba(179,38,30,.3)!important}
+
+/* forms */
+.lm-admin .field{color:var(--l-ink);font-size:14px;font-weight:600}
+.lm-admin .field input,.lm-admin .field select,.lm-admin .field textarea,.lm-admin input:not([type=checkbox]):not([type=radio]):not([type=file]),.lm-admin select,.lm-admin textarea{background:#fff!important;color:var(--l-ink)!important;border:1.5px solid var(--l-line-2)!important;border-radius:var(--l-r-sm)!important;min-height:46px;font-size:15px}
+.lm-admin input:focus,.lm-admin select:focus,.lm-admin textarea:focus{border-color:var(--l-night)!important;box-shadow:0 0 0 4px rgba(199,67,42,.14)!important;outline:none}
+
+/* status pills */
+.lm-admin .pill,.lm-admin .soft-pill,.lm-admin .status{border-radius:999px;font-size:12px;font-weight:700;background:var(--l-sand-2);color:var(--l-ink-2);border:1px solid var(--l-line)}
+.lm-admin .status.pending{background:var(--l-warn-bg);color:#7a5b12}
+.lm-admin .status.processing{background:#e8eefb;color:#1f3a5f}
+.lm-admin .status.shipped{background:#efe9fb;color:#4b3a7a}
+.lm-admin .status.delivered{background:var(--l-ok-bg);color:var(--l-ok)}
+.lm-admin .status.cancelled{background:var(--l-err-bg);color:var(--l-err)}
+
+/* login / setup pages */
+.lm-admin .topbar{border-bottom:1px solid var(--l-line)}
+.lm-admin .toast{background:var(--l-night);color:#fff}
+
+/* mobile */
+@media (max-width:900px){
+  .lm-admin .admin{grid-template-columns:1fr}
+  .lm-admin .side{position:static;height:auto;padding:14px}
+  .lm-admin .lm-side-brand{margin-bottom:12px}
+  .lm-admin .menu{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .lm-admin .menu a{flex:0 0 auto;white-space:nowrap}
+  .lm-admin .side-label{display:none}
+  .lm-admin .stats{grid-template-columns:1fr 1fr}
+}
