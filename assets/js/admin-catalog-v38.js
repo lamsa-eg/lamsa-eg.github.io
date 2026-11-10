@@ -69,6 +69,16 @@ const TABS = {
       <label class="field">متاحة من باقة<select name="min_package"><option value="">كل الباقات</option>${(pk || []).map(p => `<option value="${esc(p.id)}" ${g.min_package === p.id ? "selected" : ""}>${esc(p.label)}</option>`).join("")}</select></label>
       <label class="cat-check"><input type="checkbox" name="active" ${g.active ? "checked" : ""}> متاحة للبيع</label><button class="btn" type="submit">حفظ</button></form>`).join("")}</div>`;
   },
+  async payments(s) {
+    const { data, error } = await s.from("site_settings").select("key,value").eq("key", "instapay").maybeSingle();
+    if (error) return `<p class="cat-warn">إعدادات الدفع غير متاحة (${esc(error.message)})</p>`;
+    const v = data?.value || {};
+    return `<p class="cat-note">إنستاباي هو طريقة الدفع الوحيدة. البيانات دي بتظهر للعميل في صفحة نجاح الطلب مع المبلغ وزرار الدفع.</p>
+    <div class="cat-list"><form class="cat-row" data-table="site_settings" data-key="instapay"><h3>⚡ إنستاباي</h3>
+      <label class="field">عنوان الدفع (IPA)<input name="ipa" dir="ltr" required pattern="[A-Za-z0-9._-]+@instapay" value="${esc(v.ipa || "")}" placeholder="name@instapay"></label>
+      <label class="field cat-wide">رابط الدفع (يبدأ بـ https://ipn.eg/)<input name="link" dir="ltr" type="url" pattern="https://ipn\.eg/.+" value="${esc(v.link || "")}"></label>
+      <button class="btn" type="submit">حفظ</button></form></div>`;
+  },
   async audit(s) {
     const { data, error } = await s.from("admin_audit_logs").select("*").order("created_at", { ascending: false }).limit(150);
     if (error) return `<p class="cat-warn">سجل التعديلات غير متاح — شغّل migration v38. (${esc(error.message)})</p>`;
@@ -98,6 +108,7 @@ async function save(form) {
   try {
     let q;
     if (table === "game_catalog") q = s.from(table).update({ ...values, updated_at: new Date().toISOString() }).eq("key", form.dataset.key);
+    else if (table === "site_settings") q = s.from(table).upsert({ key: form.dataset.key, value: values, is_public: true, updated_at: new Date().toISOString() }, { onConflict: "key" });
     else if (table === "seasons" && !form.dataset.id) q = s.from(table).insert(values);
     else q = s.from(table).update(table === "packages" || table === "seasons" ? { ...values, updated_at: new Date().toISOString() } : values).eq("id", form.dataset.id);
     const { data, error } = await q.select();

@@ -74,3 +74,6 @@ body.lm-admin::before,body.lm-admin::after{display:none!important}
   .lm-admin .side-label{display:none}
   .lm-admin .stats{grid-template-columns:1fr 1fr}
 }
+.lm-admin .lm-proof{display:grid;gap:6px;margin-top:12px;padding:12px;border-radius:14px;background:#f6f1ff;border:1px solid rgba(75,42,143,.2);font-size:14px}
+.lm-admin .lm-proof img{width:100%;max-height:420px;object-fit:contain;border-radius:10px;background:#fff;border:1px solid var(--l-line)}
+.lm-admin .lm-proof small{color:var(--l-muted)}

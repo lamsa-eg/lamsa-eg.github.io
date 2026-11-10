@@ -10,14 +10,17 @@ Deno.serve(async req => {
   try {
     if (cache && Date.now() - cache.at < 30_000) return out(cache.body);
     const today = new Date().toISOString().slice(0, 10);
-    const [pk, zones, games, addons, packs, seasons] = await Promise.all([
+    const [pk, zones, games, addons, packs, seasons, settings] = await Promise.all([
       admin.from("packages").select("id,label,price,sort_order,max_images,max_image_bytes,allow_video,max_video_bytes,allow_audio,max_audio_bytes,allow_song,max_games,is_recommended,tagline,features").eq("active", true).order("sort_order"),
       admin.from("shipping_zones").select("id,label,fee,sort_order").eq("active", true).order("sort_order"),
       admin.from("game_catalog").select("key,label,description,active,sort_order,min_package").order("sort_order"),
       admin.from("wow_addons").select("id,label,price").eq("active", true).not("price", "is", null).order("sort_order"),
       admin.from("wow_packs").select("id,label,price,moments,theme").eq("active", true).not("price", "is", null).order("sort_order"),
-      admin.from("seasons").select("id,name,banner_text,order_cutoff,featured_pack,starts_on,ends_on").eq("active", true).lte("starts_on", today).gte("ends_on", today).order("starts_on", { ascending: false }).limit(1)
+      admin.from("seasons").select("id,name,banner_text,order_cutoff,featured_pack,starts_on,ends_on").eq("active", true).lte("starts_on", today).gte("ends_on", today).order("starts_on", { ascending: false }).limit(1),
+      admin.from("site_settings").select("key,value").eq("is_public", true)
     ]);
+    const setting = (k: string) => (settings.data || []).find((r: any) => r.key === k)?.value || null;
+    const ip = setting("instapay");
     for (const r of [pk, zones]) if (r.error) throw r.error;
     const body = {
       packages: (pk.data || []).map((p: any) => ({ ...p, price: Number(p.price) })),
@@ -28,6 +31,7 @@ Deno.serve(async req => {
       wowAddons: (addons.data || []).map((a: any) => ({ ...a, price: Number(a.price) })),
       wowPacks: (packs.data || []).map((a: any) => ({ ...a, price: Number(a.price) })),
       season: seasons.data?.[0] || null,
+      payments: { methods: ["instapay"], instapay: ip && ip.ipa ? { ipa: String(ip.ipa), link: /^https:\/\/ipn\.eg\//.test(String(ip.link || "")) ? String(ip.link) : "" } : null },
       generatedAt: new Date().toISOString()
     };
     cache = { at: Date.now(), body };

@@ -113,7 +113,14 @@ test("full order journey with real game answers reaches the memory page", async 
   const letters = o.games.find(g => g.game === "open_when").config;
   assert.equal(letters.items[0].title, "لما أوحشك");
 
-  // Draft cleared after success
+  // InstaPay: amount, pay link and receipt upload on the success page
+  await page.waitForSelector("#payBox:not([hidden])");
+  assert.equal(await page.getAttribute("#payLink", "href"), "https://ipn.eg/S/test-shop/instapay/TEST");
+  assert.match(await page.textContent("#payIpa"), /test-shop@instapay/);
+  assert.equal(o.body.paymentMethod, "instapay");
+  await page.setInputFiles("#proofInput", photos[0]);
+  await page.waitForFunction(() => /وصلنا/.test(document.getElementById("proofStatus").textContent), null, { timeout: 15_000 });
+    // Draft cleared after success
   assert.equal(await page.evaluate(() => localStorage.getItem("lamsa:order-draft:v38")), null);
 
   // Admin publishes (mock) -> recipient opens the memory

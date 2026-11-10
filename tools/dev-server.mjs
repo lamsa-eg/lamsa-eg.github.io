@@ -64,7 +64,7 @@ async function api(name, req, res) {
   if (req.method === "POST") { try { body = JSON.parse((await readBody(req)).toString() || "{}"); } catch { return send(res, 400, { error: "Invalid JSON" }); } }
   switch (name) {
     case "public-config":
-      return send(res, 200, { packages: MOCK.packages, shippingZones: MOCK.shippingZones, wowEnabled: true, turnstileSiteKey: "", wowAddons: MOCK.wowAddons, wowPacks: MOCK.wowPacks, games: MOCK.games, season: null, generatedAt: new Date().toISOString() });
+      return send(res, 200, { packages: MOCK.packages, shippingZones: MOCK.shippingZones, wowEnabled: true, turnstileSiteKey: "", wowAddons: MOCK.wowAddons, wowPacks: MOCK.wowPacks, games: MOCK.games, payments: { methods: ["instapay"], instapay: { ipa: "test-shop@instapay", link: "https://ipn.eg/S/test-shop/instapay/TEST" } }, season: null, generatedAt: new Date().toISOString() });
     case "create-order": {
       const pkg = MOCK.packages.find(p => p.id === body.package);
       if (!pkg) return send(res, 400, { error: "الباقة غير متاحة" });
@@ -103,7 +103,13 @@ async function api(name, req, res) {
     case "attach-special-media": return send(res, 200, { ok: true, uploads: [] });
     case "order-notify-admin": return send(res, 200, { ok: true });
     case "abort-order": { const o = orders.get(body.orderNumber); if (o) o.state = "aborted"; return send(res, 200, { ok: true }); }
-    case "track-order": { const o = orders.get(body.orderNumber); if (!o || o.token !== body.trackingToken) return send(res, 404, { error: "لم يتم العثور على الطلب" }); return send(res, 200, { orderNumber: o.orderNumber, status: o.status, submissionState: o.state, events: [] }); }
+    case "track-order": { const o = orders.get(body.orderNumber); if (!o || o.token !== body.trackingToken) return send(res, 404, { error: "لم يتم العثور على الطلب" }); return send(res, 200, { orderNumber: o.orderNumber, status: o.status, submissionState: o.state, paymentMethod: "instapay", paymentStatus: "pending", paymentProofUploaded: !!o.proof, price: o.result.basePrice, shippingFee: o.result.shippingFee, shippingPending: o.result.shippingPending, totalAmount: o.result.totalAmount, wowPrice: 0 }); }
+    case "payment-proof": {
+      const o = orders.get(body.orderNumber); if (!o || o.token !== body.trackingToken || o.state !== "complete") return send(res, 401, { error: "بيانات الطلب غير صحيحة" });
+      if (body.stage === "prepare") { o.proofPath = `${o.id}/${randomUUID()}-instapay-receipt.jpg`; return send(res, 200, { path: o.proofPath, token: randomBytes(16).toString("hex") }); }
+      if (!uploads.has(o.proofPath)) return send(res, 409, { error: "الإيصال ما اترفعش" });
+      o.proof = true; return send(res, 200, { ok: true });
+    }
     case "public-memory": {
       const m = memories.get(String(body.slug || ""));
       if (!m || !m.published) return send(res, 404, { error: "الذكرى غير متاحة" });

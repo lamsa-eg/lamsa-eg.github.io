@@ -17,7 +17,7 @@ const STORY_Q = [["firstMeet", "اتقابلتوا أول مرة فين؟", "ف�
 const OCCASION_THEME = { birthday: "birthday_balloons", mothers_day: "elegant_cream", graduation: "black_gold", baby: "elegant_cream" };
 const OCCASION_PACK = { engagement: "engagement", mothers_day: "mothers_day", apology: "apology", baby: "baby" };
 
-const fresh = () => ({ v: 1, step: 0, furthest: 0, requestId: crypto.randomUUID(), occasion: "", occasionCustom: "", relationship: "", senderName: "", recipientName: "", recipientGender: "", memoryDate: "", package: "", theme: "black_rose", pageTitle: "", layoutStyle: "carousel", pageEffect: "none", fontSize: "normal", pageTextColor: "default", images: [], cover: null, background: null, video: null, audio: null, songTitle: "", songUrl: "", message: "", closingText: "", story: {}, games: [], pack: "", addons: [], simpleMode: false, textColor: "gold", engraving: "", zone: "", city: "", area: "", street: "", phone: "", deliveryDate: "", paymentMethod: "cash_on_delivery", notes: "", whatsapp: true, legal: false, attempt: null, honeypot: "" });
+const fresh = () => ({ v: 1, step: 0, furthest: 0, requestId: crypto.randomUUID(), occasion: "", occasionCustom: "", relationship: "", senderName: "", recipientName: "", recipientGender: "", memoryDate: "", package: "", theme: "black_rose", pageTitle: "", layoutStyle: "carousel", pageEffect: "none", fontSize: "normal", pageTextColor: "default", images: [], cover: null, background: null, video: null, audio: null, songTitle: "", songUrl: "", message: "", closingText: "", story: {}, games: [], pack: "", addons: [], simpleMode: false, textColor: "gold", engraving: "", zone: "", city: "", area: "", street: "", phone: "", deliveryDate: "", paymentMethod: "instapay", notes: "", whatsapp: true, legal: false, attempt: null, honeypot: "" });
 
 let S = fresh(), C = buildCatalog({}), catalogReady = false, submitting = false, gameFilter = "الكل", turnstileToken = "";
 const urls = new Map(); // file id -> object URL
@@ -386,7 +386,7 @@ async function renderReview() {
     <section class="ow-rev"><div class="ow-rev-h"><h3>الصور (${S.images.length})</h3>${edit("media")}</div><div class="ow-rev-imgs">${S.images.map((im, i) => `<img alt="صورة ${i + 1}" data-src="${im.id}" width="64" height="64">`).join("")}</div>${[S.video && "فيديو", S.audio && "رسالة صوتية", S.cover && "غلاف", S.background && "خلفية", S.songUrl && "أغنية"].filter(Boolean).map(x => `<span class="l-chip">${x}</span>`).join(" ")}</section>
     <section class="ow-rev"><div class="ow-rev-h"><h3>الرسالة</h3>${edit("story")}</div><p class="ow-rev-msg">${esc(S.message)}</p></section>
     <section class="ow-rev"><div class="ow-rev-h"><h3>الألعاب</h3>${edit("games")}</div>${gameRows ? `<ul>${gameRows}</ul>` : "<p>بدون ألعاب</p>"}</section>
-    <section class="ow-rev"><div class="ow-rev-h"><h3>التوصيل</h3>${edit("delivery")}</div><p>${esc([S.street, S.area, S.city].filter(Boolean).join("، "))} · <span dir="ltr">${esc(S.phone)}</span> · ${S.paymentMethod === "bank_transfer" ? "تحويل بنكي" : "الدفع عند الاستلام"}</p></section>
+    <section class="ow-rev"><div class="ow-rev-h"><h3>التوصيل</h3>${edit("delivery")}</div><p>${esc([S.street, S.area, S.city].filter(Boolean).join("، "))} · <span dir="ltr">${esc(S.phone)}</span> · الدفع بإنستاباي</p></section>
     <div class="ow-rev-total"><span>الإجمالي</span><b>${total === null ? "—" : money(total)}${shippingPending ? " + الشحن" : ""}</b></div>`;
   for (const img of $$("img[data-src]", $("#reviewBody"))) img.src = await urlFor(img.dataset.src);
   const coverId = S.cover?.id || S.images[0]?.id, cover = await urlFor(coverId);
@@ -408,7 +408,7 @@ const fingerprint = () => mainFiles().map(f => `${f.kind}:${f.size}:${f.type}`).
 function buildPayload() {
   const p = pkg();
   return {
-    requestId: S.attempt.requestId, honeypot: S.honeypot || "", package: S.package, paymentMethod: S.paymentMethod, turnstileToken,
+    requestId: S.attempt.requestId, honeypot: S.honeypot || "", package: S.package, paymentMethod: "instapay", turnstileToken,
     customization: {
       senderName: S.senderName.trim(), recipientName: S.recipientName.trim(), occasion: occasionLabel().slice(0, 80), date: S.memoryDate || null, message: S.message.trim(), theme: S.theme,
       pageCopy: { pageTitle: S.pageTitle.trim(), intro: "", messageTitle: "كلمة من القلب", galleryTitle: "لحظاتنا", audioTitle: "صوت من القلب", videoTitle: "لحظات حية", songSectionTitle: "أغنيتنا", closingText: S.closingText.trim() },

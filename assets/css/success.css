@@ -14,3 +14,14 @@
 .ok-secret small{color:var(--l-muted)}
 .ok-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}
 .ok-card{min-width:0}.ok-secret .l-btn,.ok-actions .l-btn{white-space:normal;text-align:center}
+.ok-pay{margin:18px 0;padding:18px;border-radius:var(--l-r-lg);background:linear-gradient(160deg,#f6f1ff,#fff7f2);border:1.5px solid rgba(75,42,143,.22);text-align:start;display:grid;gap:12px}
+.ok-pay-head{display:flex;gap:12px;align-items:flex-start}
+.ok-pay-head>span{width:46px;height:46px;flex:0 0 auto;border-radius:14px;display:grid;place-items:center;background:#4b2a8f;color:#fff;font-size:22px}
+.ok-pay-head h2{font-size:19px;margin:0 0 2px}.ok-pay-head p{margin:0;color:var(--l-ink-2);font-size:14px}
+.ok-pay-amount{display:grid;gap:2px;text-align:center;padding:10px;border-radius:var(--l-r);background:#fff}
+.ok-pay-amount small{color:var(--l-muted)}.ok-pay-amount b{font-size:32px;color:var(--l-night)}.ok-pay-amount span{font-size:13px;color:#7a5b12}
+.ok-pay-btn{background:#4b2a8f!important;color:#fff!important;font-size:17px;min-height:54px}
+.ok-pay-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--l-r-sm);background:#fff;border:1px solid var(--l-line)}
+.ok-pay-row small{display:block;color:var(--l-muted);font-size:12.5px}.ok-pay-row b{font-size:15px;color:var(--l-night);word-break:break-all}
+.ok-pay-proof{display:grid;gap:8px;padding-top:6px;border-top:1px dashed var(--l-line-2)}
+.ok-pay-proof.is-done{color:var(--l-ok)}

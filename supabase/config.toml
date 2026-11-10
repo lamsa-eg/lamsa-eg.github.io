@@ -87,3 +87,6 @@ verify_jwt = false
 
 [functions.owner-invite]
 verify_jwt = false
+
+[functions.payment-proof]
+verify_jwt = false
