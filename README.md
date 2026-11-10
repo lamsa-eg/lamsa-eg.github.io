@@ -2,6 +2,8 @@
 
 > «مش صفحة صور… دي رحلة معمولة من قصتكم.»
 
+**الموقع:** https://ainelhaya255.github.io/Lamsa/ · **ذكرى تجريبية:** https://ainelhaya255.github.io/Lamsa/memory.html?demo=1
+
 منصة عربية لهدايا ذكرى رقمية تفاعلية: قطعة فيها NFC وQR بتفتح صفحة ذكرى خاصة فيها صور ورسائل وأغنية وخط زمني، وألعاب مبنية من إجابات حقيقية بيكتبها صاحب الهدية وقت الطلب.
 
 ## البنية
@@ -48,6 +50,7 @@ npm run test:db        # migrations مرتين + RLS + rollback على Postgres 
 ```bash
 npm run build          # dist/
 npm run build:zip      # lamsa-cloudflare-pages-v40.zip
+npm run build:pages    # dist-pages/ لـ GitHub Pages (بيتعمل تلقائي في GitHub Actions)
 ```
 
 خطوات النشر كاملة في **[DEPLOYMENT.md](DEPLOYMENT.md)** (فيها خطوة **إلزامية**: تغيير سر البوابة). قاعدة البيانات: **[DATABASE.md](DATABASE.md)**. الأمان: **[SECURITY_REVIEW.md](SECURITY_REVIEW.md)**. التغييرات: **[CHANGELOG.md](CHANGELOG.md)**.
