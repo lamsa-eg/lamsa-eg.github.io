@@ -1,6 +1,6 @@
 // LAMSA production build for Cloudflare Pages.
 //   node tools/build.mjs            -> dist/  (deploy this folder)
-//   node tools/build.mjs --zip      -> also dist/../lamsa-cloudflare-pages-v39.zip
+//   node tools/build.mjs --zip      -> also dist/../lamsa-cloudflare-pages-v40.zip
 // Only files reachable from the public HTML pages (plus dynamically imported
 // game modules) are shipped. Docs, tests, tools, supabase/ and any .env are
 // never copied. CSS/JS are minified with esbuild when it is installed.
@@ -15,7 +15,7 @@ const OUT = join(ROOT, "dist");
 const ENTRIES = ["index.html", "order.html", "order-success.html", "memory.html", "track.html", "privacy.html", "terms.html", "404.html", "order-v19.html", "admin/index.html", "admin/login.html", "admin/dashboard.html", "admin/order-detail.html", "admin/memory-editor.html", "admin/nfc-writer.html", "admin/shipping-settings.html", "admin/setup-owner.html", "admin/catalog.html"];
 const ALWAYS = ["_worker.js", "_headers", "_redirects", "_routes.json", "robots.txt", "sitemap.xml", "favicon.svg", "site.webmanifest", "manifest.webmanifest", "sw-v18.js", "version.txt", "assets/img/og-lamsa.jpg", "assets/img/icon-192.png", "assets/img/icon-512.png"];
 // Loaded through template-string dynamic imports / script injection at runtime.
-const DYNAMIC_DIRS = ["assets/js/wow/moments", "assets/js/wow/legacy/moments", "assets/js/wow/gates", "assets/demo", "assets/wow-demo", "assets/audio", "assets/fonts"];
+const DYNAMIC_DIRS = ["assets/js/wow/moments", "assets/js/wow/legacy/moments", "assets/js/wow/gates", "assets/demo-v2", "assets/audio", "assets/fonts"];
 const DENY = /(^|\/)(\.env|\.dev\.vars|wrangler\.json|.*\.md|tests|tools|docs|supabase|node_modules|\.git)(\/|$)/i;
 
 const exists = p => stat(join(ROOT, p)).then(s => s.isFile()).catch(() => false);
@@ -89,7 +89,7 @@ for (const f of shipped) { if (!/\.(js|html|css|json|txt|webmanifest|xml)$|_head
 console.log(`✓ dist/ ready: ${shipped.length} files${esbuild ? ` · JS/CSS minified ${Math.round(bytesIn / 1024)}KB → ${Math.round(bytesOut / 1024)}KB` : " · (esbuild not installed: files copied unminified)"}`);
 if (missing.length) console.warn(`! unresolved references (check): ${[...new Set(missing)].join(", ")}`);
 if (process.argv.includes("--zip")) {
-  const zip = join(ROOT, "lamsa-cloudflare-pages-v39.zip"); await rm(zip, { force: true });
+  const zip = join(ROOT, "lamsa-cloudflare-pages-v40.zip"); await rm(zip, { force: true });
   execFileSync("zip", ["-qr", "-X", zip, "."], { cwd: OUT });
   console.log(`✓ ${relative(ROOT, zip)} (${Math.round((await stat(zip)).size / 1024)}KB)`);
 }

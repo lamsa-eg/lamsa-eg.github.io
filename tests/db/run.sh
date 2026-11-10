@@ -10,7 +10,7 @@ trap cleanup EXIT
 chown postgres "$DIR"
 su postgres -c "$PGBIN/initdb -D $DIR/data -A trust -U postgres" >/dev/null
 su postgres -c "$PGBIN/pg_ctl -D $DIR/data -o '-p $PORT -k $DIR' -l $DIR/log start -w" >/dev/null
-PSQL="psql -h $DIR -p $PORT -U postgres -d postgres -v ON_ERROR_STOP=1 -q"
+PSQL="psql -X -h $DIR -p $PORT -U postgres -d postgres -v ON_ERROR_STOP=1 -q"
 $PSQL -f "$HERE/stub-base-schema.sql"
 for pass in 1 2; do
   for f in "$ROOT"/supabase/migrations/*.sql; do
@@ -19,5 +19,5 @@ for pass in 1 2; do
   done
 done
 echo "migrations applied twice: OK"
-$PSQL -f "$HERE/rls-tests.sql"
-$PSQL -f "$ROOT/supabase/migrations/20261110_lamsa_v38_catalog_admin.rollback.sql" >/dev/null && echo "rollback: OK"
+$PSQL -f "$HERE/rls-tests.sql" | grep -E "RLS OK|ERROR" 
+$PSQL -f "$ROOT/supabase/rollbacks/20261110000000_lamsa_v38_catalog_admin.rollback.sql" >/dev/null && echo "rollback: OK"

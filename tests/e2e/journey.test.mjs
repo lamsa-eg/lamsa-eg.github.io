@@ -120,6 +120,12 @@ test("full order journey with real game answers reaches the memory page", async 
   const { slug } = await (await fetch(base + "/__mock/publish", { method: "POST", body: JSON.stringify({ orderNumber: o.orderNumber }) })).json();
   const m = await ctx.newPage(); await blockExternal(m); const mErrs = errorsOf(m);
   await m.goto(`${base}/m/${slug}`);
+  await m.waitForSelector("#openBtn:not([disabled])");
+  assert.match(await m.textContent("#openTitle"), /يوسف/);
+  await m.click("#openBtn");
+  await m.waitForSelector("#page:not([hidden])");
+  assert.match(await m.textContent("#names"), /يوسف/);
+  assert.equal(await m.locator("#gallery figure").count(), 4, "gallery shows the 4 uploaded photos");
   await m.waitForSelector(".wow-m-game", { timeout: 15_000 });
   const envelopes = await m.locator(".wow-envelope").allTextContents();
   assert.ok(envelopes.some(t => /مين فينا/.test(t)), "who_of_us envelope present");

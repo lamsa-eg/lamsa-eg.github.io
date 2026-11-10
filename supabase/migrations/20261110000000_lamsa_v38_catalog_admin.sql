@@ -1,9 +1,8 @@
 -- LAMSA v38 — catalog management, game catalog and admin audit log.
 -- ADDITIVE ONLY: no table/column is dropped or renamed and no data is deleted.
--- Safe to run more than once. Rollback: 20261110_lamsa_v38_catalog_admin.rollback.sql
+-- Safe to run more than once. Rollback: supabase/rollbacks/20261110000000_lamsa_v38_catalog_admin.rollback.sql
 -- Before running in production: take a backup (Dashboard → Database → Backups).
 
-begin;
 
 -- 1) Helper: is the current user a catalog admin (owner/admin)?
 create or replace function public.lamsa_is_admin()
@@ -127,4 +126,3 @@ do $$ declare t text; begin
   end if;
 end $$;
 
-commit;

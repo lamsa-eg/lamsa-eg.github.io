@@ -1,4 +1,4 @@
-# لمسة — LAMSA (v38)
+# لمسة — LAMSA (v40)
 
 > «مش صفحة صور… دي رحلة معمولة من قصتكم.»
 
@@ -10,7 +10,7 @@
 index.html            الصفحة الرئيسية (باقات من القاعدة + تجارب WOW قابلة للعب)
 order.html            رحلة الطلب (12 خطوة) ← assets/js/order/*
 order-success.html    تأكيد الطلب ورقم المتابعة
-memory.html  (/m/*)   صفحة الذكرى ← memory-cf-v28-wow-p2.js + assets/js/wow/**
+memory.html  (/m/*)   صفحة الذكرى ← assets/js/memory.js + assets/js/wow/** (ألعاب)
 track.html            متابعة الطلب
 admin/                لوحة الإدارة (Supabase Auth + RLS)
   catalog.html        ← جديد: الباقات/الأسعار/الإضافات/المواسم/الألعاب/سجل التعديلات
@@ -18,7 +18,7 @@ _worker.js            Cloudflare Pages Worker: /api/* → Edge Functions، /uplo
 assets/js/lib/        api.js (عميل الـ API)، catalog.js (مصدر الأسعار الوحيد)، ui.js
 assets/js/games/      registry.js — تعريف موحد لكل لعبة (الحقول، التحقق، الإعداد)
 supabase/functions/   Edge Functions (Deno) + _shared/game-sanitize.ts
-supabase/migrations/  SQL إضافي فقط (+ ملف rollback)
+supabase/migrations/  قاعدة البيانات كاملة من الصفر (+ rollbacks/، config.toml)
 tools/                dev-server.mjs (خادم محلي + Backend وهمي)، build.mjs (بناء dist/)
 tests/                unit/ · e2e/ (Playwright) · db/ (Postgres محلي + RLS)
 legacy/               ملفات اتستبدلت في v38 (مش بتتنشر)
@@ -47,7 +47,7 @@ npm run test:db        # migrations مرتين + RLS + rollback على Postgres 
 
 ```bash
 npm run build          # dist/
-npm run build:zip      # lamsa-cloudflare-pages-v39.zip
+npm run build:zip      # lamsa-cloudflare-pages-v40.zip
 ```
 
 خطوات النشر كاملة في **[DEPLOYMENT.md](DEPLOYMENT.md)** (فيها خطوة **إلزامية**: تغيير سر البوابة). قاعدة البيانات: **[DATABASE.md](DATABASE.md)**. الأمان: **[SECURITY_REVIEW.md](SECURITY_REVIEW.md)**. التغييرات: **[CHANGELOG.md](CHANGELOG.md)**.

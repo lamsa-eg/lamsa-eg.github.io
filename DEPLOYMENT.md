@@ -1,88 +1,127 @@
-# نشر لمسة v38 على Cloudflare Pages وSupabase
+# تشغيل لمسة من الصفر (v40)
 
-> اقرأ الخطوات بالترتيب. الخطوات المعلّمة **⚠ مطلوبة** لازم تتعمل قبل أو مع النشر. بدونها الألعاب والإجابات مش هتتحفظ.
+> الدليل ده لبداية نضيفة: مشروع Supabase جديد + مشروع Cloudflare Pages جديد مربوط بـ GitHub.
+> المستودع فيه **كل حاجة**: قاعدة البيانات كاملة، كل الدوال، والموقع. مفيش أجزاء مخفية على أي سيرفر.
 
-## 0) نظرة سريعة
+الوقت المتوقع: 30–45 دقيقة. هتحتاج: حساب Supabase، وحساب Cloudflare، وجهاز عليه Node.js 22 (للأوامر).
 
-| البند | القيمة |
-|---|---|
-| نوع المشروع | موقع Static + Cloudflare Pages Worker (`_worker.js` advanced mode) |
-| Build command | `npm run build` (أو اتركه فارغًا وارفع `dist/` جاهز) |
-| Build output directory | `dist` |
-| Node | 22 |
-| ملف الرفع المباشر | `lamsa-cloudflare-pages-v39.zip` (محتوى `dist/`) |
+---
 
-## 1) ⚠ تغيير سر البوابة (Rotate) — مطلوب فورًا
+## 0) تنظيف القديم (اختياري)
 
-الإصدارات حتى V37 كانت فيها قيمة `LAMSA_WOW_GATEWAY_SECRET` مكتوبة داخل `_worker.js` و`supabase/functions/_shared/wow.ts`، وأي حد معاه ملف ZIP قديم يقدر يستخدمها. v38 شالها من الكود نهائيًا. **لازم تعمل سر جديد:**
+مفيش طلبات حقيقية، فالمسح آمن:
+- **Cloudflare** → Workers & Pages → المشروع القديم → Settings → (آخر الصفحة) **Delete project**.
+- **Supabase** → المشروع القديم → Project Settings → General → **Delete project**.
 
+> لو حابب تحتفظ بأي بيانات تجريبية، خد Backup الأول. بعد المسح مفيش رجوع.
+
+---
+
+## 1) أسرار هتحتاجها (اعملها مرة واحدة واحفظها في مكان آمن)
+
+على جهازك:
 ```bash
-openssl rand -hex 32     # انسخ الناتج (64 حرف)
+openssl rand -hex 32   # ← LAMSA_WOW_GATEWAY_SECRET  (نفس القيمة في Supabase وCloudflare)
+openssl rand -hex 16   # ← OWNER_SETUP_CODE          (كود إنشاء حساب المالك، لمرة واحدة)
+```
+**ممنوع** تكتب أي سر منهم في الكود أو في GitHub أو في الشات.
+
+---
+
+## 2) Supabase — مشروع جديد
+
+1. https://supabase.com/dashboard → **New project**
+   - Name: `lamsa` · Region: **Central EU (Frankfurt)** (الأقرب لمصر) · احفظ كلمة سر قاعدة البيانات.
+2. بعد ما يجهز: Project Settings → **API Keys** → انسخ:
+   - **Project URL** (زي `https://abcd1234.supabase.co`)
+   - **Publishable key** (`sb_publishable_...`) — ده عام وآمن للواجهة.
+   - **ماتنسخش** الـ secret/service_role key لأي مكان.
+3. من فولدر المشروع على جهازك:
+```bash
+git clone https://github.com/ainelhaya255/Lamsa.git && cd Lamsa
+npx supabase@latest login
+npx supabase@latest link --project-ref <PROJECT_REF>        # الـREF هو الجزء قبل .supabase.co
+npx supabase@latest db push                                  # ينشئ كل الجداول والصلاحيات والتخزين
+npx supabase@latest secrets set \
+  LAMSA_WOW_GATEWAY_SECRET=<السر_الأول> \
+  OWNER_SETUP_CODE=<كود_المالك> \
+  ALLOWED_ORIGIN=https://lamsa-eg.pages.dev \
+  REQUIRE_LAMSA_GATEWAY=true
+npx supabase@latest functions deploy                         # ينشر كل الدوال (25 دالة)
+```
+4. (اختياري) `NOTIFY_EMAIL=<إيميلك>` للإشعارات، و`TURNSTILE_SECRET_KEY` للحماية من البوتات، و`ANTHROPIC_API_KEY` لمساعد الكتابة.
+
+> **بدون CLI؟** SQL Editor ← شغّل ملفات `supabase/migrations/` بالترتيب (من الأقدم للأحدث)، لكن نشر الدوال محتاج CLI.
+
+---
+
+## 3) Cloudflare Pages — مربوط بـ GitHub
+
+1. Cloudflare → **Workers & Pages** → Create → **Pages** → **Connect to Git** → اختار `ainelhaya255/Lamsa`.
+2. الإعدادات:
+   | الحقل | القيمة |
+   |---|---|
+   | Project name | `lamsa-eg` (← الرابط هيبقى `lamsa-eg.pages.dev`) |
+   | Production branch | `main` |
+   | Framework preset | None |
+   | Build command | `npm run build` |
+   | Build output directory | `dist` |
+3. **Environment variables** (Production و Preview):
+   | المتغير | النوع | القيمة |
+   |---|---|---|
+   | `NODE_VERSION` | Plain | `22` |
+   | `SUPABASE_URL` | Plain | Project URL من خطوة 2 |
+   | `SUPABASE_PUBLISHABLE_KEY` | Plain | Publishable key من خطوة 2 |
+   | `SITE_URL` | Plain | `https://lamsa-eg.pages.dev` |
+   | `LAMSA_WOW_GATEWAY_SECRET` | **Secret** | نفس السر الأول |
+   | `TURNSTILE_SITE_KEY` | Plain | اختياري (لازم مع `TURNSTILE_SECRET_KEY`) |
+4. **Save and Deploy**. بعد كده أي تعديل يتحفظ على `main` بيتنشر تلقائيًا، وأي فرع تاني بياخد رابط معاينة.
+
+> لو اسم `lamsa-eg` مش متاح، اختار اسم تاني، وحدّث `ALLOWED_ORIGIN` في Supabase و`SITE_URL` في Cloudflare.
+
+---
+
+## 4) حساب المالك (مرة واحدة)
+
+1. افتح `https://lamsa-eg.pages.dev/admin/setup-owner.html`
+2. اكتب اسمك وإيميلك وكلمة سر (12 حرف على الأقل) و**كود المالك**.
+3. بعد النجاح: Supabase → Edge Functions → Secrets → **امسح `OWNER_SETUP_CODE`** (الدالة بترفض أصلًا بعد أول مالك، ده احتياط زيادة).
+4. سجّل دخول من `/admin/login.html` ← **الباقات والألعاب**: راجع الأسعار، وحدد أسعار الشحن من **الشحن**.
+
+مشرفين إضافيين: Supabase → Authentication → Add user، ثم SQL Editor:
+```sql
+insert into public.admin_profiles(user_id, display_name, role) values ('<USER_ID>', 'الاسم', 'editor'); -- أو admin
 ```
 
-1. **Supabase** → Project Settings → Edge Functions → Secrets → أضف/عدّل `LAMSA_WOW_GATEWAY_SECRET` = القيمة الجديدة.
-2. **Cloudflare** → Workers & Pages → مشروعك → Settings → Variables and Secrets → Add → النوع **Secret** → `LAMSA_WOW_GATEWAY_SECRET` = نفس القيمة (Production و Preview).
-3. أعد نشر دوال Supabase (الخطوة 3) ثم الموقع (الخطوة 4).
+---
 
-لو الـ Worker اشتغل من غير السر: صفحات الذكرى العادية تفضل شغالة، لكن الألعاب وحفظ اختيارات الألعاب هيرجعوا خطأ 503.
-
-## 2) ⚠ قاعدة البيانات (Supabase)
-
-1. خد نسخة احتياطية: Dashboard → Database → Backups (أو `pg_dump`).
-2. شغّل الـ migration الجديد **بس** (القديمة متطبقة عندك بالفعل):
-   - SQL Editor → الصق محتوى `supabase/migrations/20261110_lamsa_v38_catalog_admin.sql` → Run.
-   - أو بالـ CLI: `supabase db push`.
-3. الملف إضافي فقط (لا يحذف ولا يعيد تسمية أي شيء) وآمن لو اتشغّل مرتين. الرجوع: `20261110_lamsa_v38_catalog_admin.rollback.sql`.
-4. بعد التشغيل راجع الأسعار من لوحة الإدارة ← «الباقات والألعاب».
-
-## 3) ⚠ نشر دوال Edge المعدلة
+## 5) إشعارات الموبايل للإدارة (اختياري)
 
 ```bash
-supabase login
-supabase link --project-ref qwavanugzcjevhtzjfuo
-supabase functions deploy order-wow-selection create-order public-memory wow-event wow-admin-config wow-catalog wow-unlock wow-reply wow-open-notify wow-sender-subscribe wow-track-replies wow-gender-reveal wow-generate wow-hunt-step wow-love-wrapped wow-rewrite wow-sender-timeline
+npx web-push generate-vapid-keys
 ```
+SQL Editor:
+```sql
+insert into public.notification_settings(id, vapid_public_key, vapid_private_key)
+values ('default', '<PUBLIC>', '<PRIVATE>')
+on conflict (id) do update set vapid_public_key = excluded.vapid_public_key, vapid_private_key = excluded.vapid_private_key;
+```
+بعدها من لوحة الإدارة اضغط جرس الإشعارات ← فعّل.
 
-كل الدوال اللي بتستخدم `_shared/wow.ts` لازم تتنشر تاني، لأن السر القديم اتشال من الملف المشترك.
-الدوال `complete-order` و`abort-order` و`track-order` و`attach-special-media` و`order-notify-admin` و`admin-*` و`claim-owner` **مش موجودة في الـ ZIP** (موجودة على Supabase بس) — **ماتمسحهاش**.
+---
 
-## 4) نشر الموقع
+## 6) التحقق (5 دقائق)
 
-### الطريقة أ — رفع مباشر (Direct Upload)
-1. على جهازك: `npm install && npm run build:zip` (أو استخدم `lamsa-cloudflare-pages-v39.zip` الجاهز).
-2. Cloudflare → Workers & Pages → مشروع `lamsagift` → Create deployment → ارفع **محتوى** `dist/` (أو ملف الـ ZIP).
+1. `https://lamsa-eg.pages.dev/version.txt` ← `cf-v40-fresh-start`.
+2. الرئيسية: الباقات بأسعار القاعدة. «شوف التجربة» يفتح الذكرى التجريبية.
+3. `/order`: طلب تجريبي بصورة + لعبة «مين فينا؟» ← رقم طلب.
+4. الإدارة: الطلب ظاهر + إشعار ← افتح الطلب ← اسحب الملفات للذكرى ← انشر ← افتح رابط الذكرى ← افتح الظرف ← العب.
+5. `/m/m-0000000000000000` ← «الرابط ده مش صحيح…».
+6. `/supabase/` و`/DEPLOYMENT.md` ← 404 (مش بيتنشروا).
 
-### الطريقة ب — ربط Git
-- Framework preset: None · Build command: `npm run build` · Output: `dist` · Env: `NODE_VERSION=22`.
+لو ظهر «الموقع لسه ما اتربطش بقاعدة البيانات»: راجع `SUPABASE_URL` و`SUPABASE_PUBLISHABLE_KEY` في Cloudflare ثم Retry deployment.
 
-## 5) متغيرات البيئة
+---
 
-| المكان | المتغير | النوع | مطلوب؟ |
-|---|---|---|---|
-| Cloudflare | `LAMSA_WOW_GATEWAY_SECRET` | Secret | ✅ |
-| Cloudflare | `TURNSTILE_SITE_KEY` | Plain | اختياري |
-| Cloudflare | `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` | Plain | اختياري (لهم قيم افتراضية) |
-| Cloudflare | `WOW_ENABLED` | Plain | اختياري (`false` لإيقاف الألعاب) |
-| Supabase | `LAMSA_WOW_GATEWAY_SECRET` | Secret | ✅ |
-| Supabase | `ALLOWED_ORIGIN` | Secret | ✅ (`https://lamsagift.pages.dev` أو دومينك) |
-| Supabase | `TURNSTILE_SECRET_KEY` | Secret | اختياري — لو اتحط لازم `TURNSTILE_SITE_KEY` يتحط في Cloudflare |
-| Supabase | `REQUIRE_LAMSA_GATEWAY` | Secret | موصى به: `true` بعد التأكد إن السر شغال |
-| Supabase | `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` | Secret | اختياري (مساعد الكتابة) |
-
-قالب كامل في `.env.example`. **ممنوع** وضع `service_role` أو أي secret key في الواجهة أو في Git.
-
-## 6) التحقق بعد النشر (5 دقائق)
-
-1. `https://<domain>/version.txt` ← `cf-v39-nile-sunset`.
-2. الرئيسية: الباقات بتظهر بأسعار القاعدة (مش رقم ثابت). لو ظهرت «مقدرناش نحمّل الأسعار» راجع `/api/public-config`.
-3. `/order`: كمّل طلب تجريبي بصورة واحدة ولعبة «مين فينا؟» → صفحة نجاح ورقم طلب.
-4. لوحة الإدارة → الطلب ظاهر، والألعاب ظاهرة في تفاصيل الطلب → سحب الملفات → نشر → افتح رابط الذكرى → العب اللعبة بنفس إجاباتك.
-5. افتح `/m/m-0000000000000000` ← رسالة «الذكرى غير متاحة».
-6. `https://<domain>/supabase/` و`/DEPLOYMENT.md` ← 404 (مش بيتنشروا).
-7. Security headers: `curl -I https://<domain>/` فيه `Content-Security-Policy` و`Strict-Transport-Security`.
-
-## 7) دومين خاص (اختياري)
-Custom domains → أضف الدومين، ثم حدّث: `ALLOWED_ORIGIN` في Supabase، و`SITE_URL` في `assets/js/config-cf-v4.js`، والـ canonical/OG في `index.html`، و`sitemap.xml`، و`robots.txt`.
-
-## 8) الرجوع لنسخة سابقة
-Cloudflare → Deployments → النسخة السابقة → «Rollback to this deployment». الـ migration إضافي فلا يكسر النسخ القديمة. لو رجعت لـ V37 لازم ترجع السر القديم في Supabase مؤقتًا (غير مستحسن).
+## 7) دومين خاص لاحقًا
+Cloudflare Pages → Custom domains → أضف الدومين، ثم حدّث `SITE_URL` (Cloudflare) و`ALLOWED_ORIGIN` (Supabase)، والروابط في `index.html` (canonical/og) و`sitemap.xml` و`robots.txt`.

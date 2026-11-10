@@ -1,0 +1,80 @@
+# Supabase CLI config for LAMSA. `supabase link --project-ref <ref>` then `supabase db push` and `supabase functions deploy`.
+project_id = "lamsa"
+
+# All functions are reached through the Cloudflare Worker with the publishable key (not a JWT).
+# Each function checks its own authorization: tracking token, gateway secret, or admin JWT via actor().
+[functions.abort-order]
+verify_jwt = false
+
+[functions.admin-notifications]
+verify_jwt = false
+
+[functions.admin-update-order]
+verify_jwt = false
+
+[functions.attach-special-media]
+verify_jwt = false
+
+[functions.claim-owner]
+verify_jwt = false
+
+[functions.complete-order]
+verify_jwt = false
+
+[functions.create-order]
+verify_jwt = false
+
+[functions.order-notify-admin]
+verify_jwt = false
+
+[functions.order-wow-selection]
+verify_jwt = false
+
+[functions.public-memory]
+verify_jwt = false
+
+[functions.track-order]
+verify_jwt = false
+
+[functions.wow-admin-config]
+verify_jwt = false
+
+[functions.wow-catalog]
+verify_jwt = false
+
+[functions.wow-event]
+verify_jwt = false
+
+[functions.wow-gender-reveal]
+verify_jwt = false
+
+[functions.wow-generate]
+verify_jwt = false
+
+[functions.wow-hunt-step]
+verify_jwt = false
+
+[functions.wow-love-wrapped]
+verify_jwt = false
+
+[functions.wow-open-notify]
+verify_jwt = false
+
+[functions.wow-reply]
+verify_jwt = false
+
+[functions.wow-rewrite]
+verify_jwt = false
+
+[functions.wow-sender-subscribe]
+verify_jwt = false
+
+[functions.wow-sender-timeline]
+verify_jwt = false
+
+[functions.wow-track-replies]
+verify_jwt = false
+
+[functions.wow-unlock]
+verify_jwt = false
+

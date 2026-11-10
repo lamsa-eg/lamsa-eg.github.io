@@ -128,6 +128,7 @@ export function createServer() {
       if (p === "/__mock/fail" && req.method === "POST") { Object.assign(state.fail, JSON.parse((await readBody(req)).toString())); return send(res, 200, { ok: true }); }
       if (p.startsWith("/__mock-upload/")) { const b = uploads.get(decodeURIComponent(p.slice(15))); return b ? send(res, 200, b.data, { "Content-Type": b.type }) : send(res, 404, "missing"); }
       if (p === "/upload/order" && req.method === "PUT") { const path = url.searchParams.get("path"); const data = await readBody(req); if (!path) return send(res, 400, { error: "Invalid upload ticket" }); uploads.set(path, { data, type: req.headers["content-type"] }); return send(res, 200, { Key: path }); }
+      if (p === "/env.js") return send(res, 200, `window.LAMSA_ENV=${JSON.stringify({ SUPABASE_URL: "https://mock-project.supabase.co", SUPABASE_PUBLISHABLE_KEY: "mock-publishable", SITE_URL: `http://${req.headers.host}` })};`, { "Content-Type": TYPES[".js"] });
       if (p.startsWith("/api/")) return api(p.slice(5).replace(/\/+$/, ""), req, res);
       const r = redirects.find(x => x.from === p);
       if (r) { res.writeHead(r.code, { Location: r.to + url.search }); return res.end(); }

@@ -43,7 +43,7 @@ const DEMO = {
   intro: "في تفاصيل صغيرة بنفتكرها أكتر من الأيام الكبيرة… نظرة، صورة، مكان، وأغنية أول ما تبدأ ترجع كل الحكاية.",
   message: "من أول يوم، وكل لحظة بينا بتضيف حاجة جميلة للحكاية.\nالصفحة دي معمولة عشان الذكريات ما تفضلش مجرد صور في الموبايل… تبقى مكان نرجع له في أي وقت.\nوكل مرة تفتحيها، تفتكري إن أجمل حاجة حصلتلي… إنك بقيتي جزء من أيامي.",
   songTitle: "أغنيتنا — LAMSA Romantic Theme",
-  songUrl: "https://lamsagift.pages.dev/assets/audio/lamsa-romantic-ambient.mp3",
+  songUrl: "https://lamsa-eg.pages.dev/assets/audio/lamsa-romantic-ambient.mp3",
   theme: "elegant_cream",
   pageCopy: {
     pageTitle: "حكاية بدأت بلحظة… وكملت بذكريات",

@@ -9,4 +9,4 @@ Disallow: /track.html
 Disallow: /api/
 Disallow: /upload/
 
-Sitemap: https://lamsagift.pages.dev/sitemap.xml
+Sitemap: https://lamsa-eg.pages.dev/sitemap.xml

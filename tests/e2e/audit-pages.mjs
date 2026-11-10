@@ -4,7 +4,7 @@ import { chromium } from "./pw.mjs";
 import { createServer } from "../../tools/dev-server.mjs";
 import { mkdir } from "node:fs/promises";
 
-const pages = (process.env.PAGES || "/,/order-v19.html,/memory.html?demo=1&wow=1,/track.html,/privacy.html,/404-test,/admin/login.html").split(",");
+const pages = (process.env.PAGES || "/,/order-v19.html,/memory.html?demo=1,/track.html,/privacy.html,/404-test,/admin/login.html").split(",");
 const sizes = (process.env.SIZES || "360x800,390x844,412x915,768x1024,1366x768,1920x1080").split(",").map(s => s.split("x").map(Number));
 const outDir = process.env.OUT || "reports/screenshots";
 const shots = process.env.SHOTS !== "0";

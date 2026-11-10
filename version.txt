@@ -1,2 +1,2 @@
-LAMSA Cloudflare v39 — Nile Sunset identity
-Build: cf-v39-nile-sunset
+LAMSA v40 — Fresh start (Nile Sunset)
+Build: cf-v40-fresh-start
