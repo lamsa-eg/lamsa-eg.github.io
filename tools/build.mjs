@@ -25,7 +25,7 @@ const PAGES_ENV = PAGES ? {
 if (PAGES && (!PAGES_ENV.SUPABASE_URL.startsWith("https://") || !PAGES_ENV.SUPABASE_PUBLISHABLE_KEY)) { console.error("pages target needs --supabase-url and --publishable-key"); process.exit(1); }
 if (PAGES) PAGES_ENV.API_BASE = `${PAGES_ENV.SUPABASE_URL.replace(/\/+$/, "")}/functions/v1`;
 const OUT = join(ROOT, PAGES ? "dist-pages" : "dist");
-const ENTRIES = ["index.html", "order.html", "order-success.html", "memory.html", "track.html", "privacy.html", "terms.html", "404.html", "order-v19.html", "admin/index.html", "admin/login.html", "admin/dashboard.html", "admin/order-detail.html", "admin/memory-editor.html", "admin/nfc-writer.html", "admin/shipping-settings.html", "admin/setup-owner.html", "admin/catalog.html"];
+const ENTRIES = ["index.html", "order.html", "order-success.html", "memory.html", "track.html", "privacy.html", "terms.html", "404.html", "order-v19.html", "admin/index.html", "admin/login.html", "admin/dashboard.html", "admin/order-detail.html", "admin/memory-editor.html", "admin/nfc-writer.html", "admin/shipping-settings.html", "admin/setup-owner.html", "admin/catalog.html", "admin/set-password.html"];
 const ALWAYS = ["_worker.js", "_headers", "_redirects", "_routes.json", "robots.txt", "sitemap.xml", "favicon.svg", "site.webmanifest", "manifest.webmanifest", "sw-v18.js", "version.txt", "assets/img/og-lamsa.jpg", "assets/img/icon-192.png", "assets/img/icon-512.png"];
 // Loaded through template-string dynamic imports / script injection at runtime.
 const DYNAMIC_DIRS = ["assets/js/wow/moments", "assets/js/wow/legacy/moments", "assets/js/wow/gates", "assets/demo-v2", "assets/audio", "assets/fonts"];
