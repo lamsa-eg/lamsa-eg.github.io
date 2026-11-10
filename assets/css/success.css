@@ -13,3 +13,4 @@
 .ok-secret code{word-break:break-all;font-size:12px;color:var(--l-night-2);user-select:all}
 .ok-secret small{color:var(--l-muted)}
 .ok-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}
+.ok-card{min-width:0}.ok-secret .l-btn,.ok-actions .l-btn{white-space:normal;text-align:center}
