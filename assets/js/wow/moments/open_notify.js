@@ -1,0 +1,1 @@
+export async function mount({memory,core}){const key=`lamsa-wow-open:${memory.slug}`;if(sessionStorage.getItem(key))return;sessionStorage.setItem(key,"1");try{await core.api("wow-open-notify",{slug:memory.slug})}catch(e){console.warn("WOW open notify",e)}}

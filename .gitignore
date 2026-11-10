@@ -1,0 +1,13 @@
+node_modules
+dist/
+.env
+.env.*
+!.env.example
+.dev.vars
+*.log
+test-results/
+playwright-report/
+reports/screenshots/
+.wrangler/
+lamsa-cloudflare-pages-v39.zip
+lamsa-source-v38.zip

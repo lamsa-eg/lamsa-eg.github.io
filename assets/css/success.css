@@ -1,0 +1,15 @@
+.ok{min-height:100vh;display:grid;place-items:center;padding:28px 0}
+.ok-card{max-width:560px;width:100%;padding:28px 22px;text-align:center}
+.ok-seal{width:88px;height:88px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;font-size:36px;color:#fff;background:radial-gradient(circle at 35% 30%,#e8674a,#a8321d);box-shadow:var(--l-shadow)}
+.ok-card h1{font-size:clamp(26px,7vw,36px)}
+.ok-order{margin:18px 0;padding:14px;border-radius:var(--l-r);background:var(--l-sand-2);display:grid}
+.ok-order small{color:var(--l-muted)}.ok-order b{font-size:22px;color:var(--l-night);letter-spacing:.04em}
+.ok-price{margin:0 0 16px;display:grid;gap:6px;text-align:start}
+.ok-price div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed var(--l-line)}
+.ok-price dt{color:var(--l-muted)}.ok-price dd{margin:0;font-weight:700}
+.ok-price .is-total dd{color:var(--l-night);font-size:19px}
+.ok-next{text-align:start;margin:16px 0;padding-inline-start:20px;display:grid;gap:6px;color:var(--l-ink-2)}
+.ok-secret{margin:16px 0;padding:16px;border-radius:var(--l-r);border:1px dashed var(--l-line-2);display:grid;gap:8px}
+.ok-secret code{word-break:break-all;font-size:12px;color:var(--l-night-2);user-select:all}
+.ok-secret small{color:var(--l-muted)}
+.ok-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}

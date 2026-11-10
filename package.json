@@ -1,0 +1,21 @@
+{
+  "name": "lamsa-gift",
+  "version": "39.0.0",
+  "private": true,
+  "description": "LAMSA — personal phygital memory gifts (Cloudflare Pages + Supabase)",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "node tools/dev-server.mjs",
+    "build": "node tools/build.mjs",
+    "build:zip": "node tools/build.mjs --zip",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --experimental-strip-types --no-warnings --test tests/unit/*.test.mjs",
+    "test:e2e": "node --test tests/e2e/journey.test.mjs",
+    "test:visual": "node tests/e2e/audit-pages.mjs",
+    "test:db": "bash tests/db/run.sh"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0"
+  }
+}

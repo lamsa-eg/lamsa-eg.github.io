@@ -1,0 +1,19 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LAMSA — الباقات والأسعار والألعاب</title><meta name="robots" content="noindex,nofollow,noarchive"><link rel="stylesheet" href="../assets/css/app.css"><link rel="stylesheet" href="../assets/css/admin.css"><link rel="stylesheet" href="../assets/css/admin-catalog.css"><link rel="manifest" href="../manifest.webmanifest"><meta name="theme-color" content="#f6dfe3"></head>
+<body><div class="admin"><aside class="side"><img class="logo" src="../assets/img/logo.svg" alt="LAMSA"><div class="side-label">OPERATIONS</div><nav class="menu"><a href="index.html">مركز التشغيل</a><a href="dashboard.html">الطلبات</a><a href="memory-editor.html">الذكريات</a><a href="nfc-writer.html">NFC Writer</a><a href="shipping-settings.html">الشحن</a><a class="active" href="catalog.html">الباقات والألعاب</a></nav></aside>
+<main class="content">
+  <div class="adminhead"><div><span class="kicker">CATALOG</span><h1 class="title">الباقات والأسعار والألعاب.</h1><p class="copy">ده المكان الوحيد لتعديل الأسعار. أي تعديل يظهر في الموقع وصفحة الطلب خلال دقيقة تقريبًا (الكاش 60 ثانية)، والسيرفر يحسب السعر النهائي من نفس البيانات.</p></div><button class="heart-outline-btn" id="refresh" type="button">تحديث</button></div>
+  <div id="roleNote" class="cat-note" hidden></div>
+  <div class="cat-tabs" role="tablist" aria-label="أقسام الكتالوج">
+    <button role="tab" aria-selected="true" data-tab="packages" type="button">الباقات</button>
+    <button role="tab" aria-selected="false" data-tab="addons" type="button">الإضافات</button>
+    <button role="tab" aria-selected="false" data-tab="packs" type="button">باقات المناسبات</button>
+    <button role="tab" aria-selected="false" data-tab="seasons" type="button">المواسم والعروض</button>
+    <button role="tab" aria-selected="false" data-tab="games" type="button">الألعاب</button>
+    <button role="tab" aria-selected="false" data-tab="audit" type="button">سجل التعديلات</button>
+  </div>
+  <section class="card cat-panel" id="panel" role="tabpanel" aria-live="polite"><div class="muted">تحميل…</div></section>
+</main></div>
+<script src="../assets/js/config-cf-v4.js"></script>
+<script type="module" src="../assets/js/admin-catalog-v38.js"></script>
+<script type="module" src="../assets/js/admin-notifications-v18.js"></script>
+</body></html>
