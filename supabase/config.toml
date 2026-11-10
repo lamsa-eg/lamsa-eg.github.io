@@ -78,3 +78,9 @@ verify_jwt = false
 [functions.wow-unlock]
 verify_jwt = false
 
+
+[functions.public-config]
+verify_jwt = false
+
+[functions.tiktok-resolve]
+verify_jwt = false

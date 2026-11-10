@@ -12,18 +12,24 @@ export const SERVICE_SECRET=serverSecret();
 // The gateway secret is shared with the Cloudflare Worker and must only live in
 // Supabase secrets (LAMSA_WOW_GATEWAY_SECRET). It is never bundled in code.
 export const admin=createClient(SUPABASE_URL,SERVICE_SECRET,{auth:{persistSession:false,autoRefreshToken:false}});
-export const ORIGIN=Deno.env.get("ALLOWED_ORIGIN")||"https://lamsa-eg.pages.dev";
+export const ORIGIN=Deno.env.get("ALLOWED_ORIGIN")||"https://ainelhaya255.github.io";
 export const cors={"Access-Control-Allow-Origin":ORIGIN,"Access-Control-Allow-Headers":"authorization, content-type, apikey, x-client-info, x-lamsa-client-ip, x-lamsa-client-ua, x-lamsa-gateway, x-lamsa-wow-enabled, x-lamsa-form-version","Access-Control-Allow-Methods":"POST, OPTIONS","Vary":"Origin"};
 export function out(body:unknown,status=200){return new Response(JSON.stringify(body),{status,headers:{...cors,"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}})}
 export function clean(v:unknown,max=200){return String(v??"").trim().slice(0,max)}
 export async function sha256Text(v:string){const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v));return [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 export async function gatewayOk(req:Request){
   const configured=Deno.env.get("LAMSA_WOW_GATEWAY_SECRET")||"",got=req.headers.get("x-lamsa-gateway")||"";
+  // Direct mode (static hosting, e.g. GitHub Pages): no Worker in front, no gateway secret.
+  // Every function still enforces its own token checks and per-IP rate limits.
+  if(!configured)return true;
   if(!got||configured.length<32)return false;
-  // Compare digests so the comparison time does not depend on the secret.
   return (await sha256Text(got))===(await sha256Text(configured));
 }
-export function trustedIp(req:Request){return (req.headers.get("x-lamsa-client-ip")||"unknown").trim().slice(0,120)}
+export function trustedIp(req:Request){
+  // Behind the Worker the real client IP arrives in x-lamsa-client-ip (only trusted when the gateway secret is set).
+  if(Deno.env.get("LAMSA_WOW_GATEWAY_SECRET"))return (req.headers.get("x-lamsa-client-ip")||"unknown").trim().slice(0,120);
+  return (req.headers.get("cf-connecting-ip")||req.headers.get("x-real-ip")||req.headers.get("x-forwarded-for")?.split(",")[0]||"unknown").trim().slice(0,120);
+}
 export async function rateAllowed(action:string,keyMaterial:string,limit:number,windowSeconds:number){const key=await sha256Text(`${action}|${keyMaterial}`);const{data,error}=await admin.rpc("consume_rate_limit",{p_action:action,p_key_hash:key,p_limit:limit,p_window_seconds:windowSeconds});if(error)throw error;return data===true}
 export async function turnstileOk(token:string,ip:string){const secret=Deno.env.get("TURNSTILE_SECRET_KEY")||"";if(!secret)return{ok:false,missing:true};if(!token)return{ok:false,missing:false};const form=new FormData();form.set("secret",secret);form.set("response",token);if(ip&&ip!=="unknown")form.set("remoteip",ip);try{const r=await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify",{method:"POST",body:form});const d=await r.json();return{ok:d?.success===true,missing:false}}catch{return{ok:false,missing:false}}}
 export function normalizeSecretAnswer(v:unknown){let s=String(v??"").normalize("NFC").trim().toLocaleLowerCase("ar");s=s.replace(/[\u064B-\u065F\u0670\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/\s+/g," ").trim();if(s.startsWith("ال")&&s.length>2)s=s.slice(2).trim();return s}

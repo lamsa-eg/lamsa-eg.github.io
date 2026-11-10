@@ -9,7 +9,8 @@ import { apiPost, ApiError, wait } from "../lib/api.js";
 function uploadWithProgress(ticket, blob, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("PUT", `/upload/order?path=${encodeURIComponent(ticket.path)}&token=${encodeURIComponent(ticket.token)}`);
+    xhr.open("PUT", window.LAMSA_UPLOAD_URL("order-uploads", ticket.path, ticket.token));
+    if (window.LAMSA_CONFIG?.SUPABASE_PUBLISHABLE_KEY && !String(window.LAMSA_CONFIG.SUPABASE_PUBLISHABLE_KEY).startsWith("__")) xhr.setRequestHeader("x-upsert", "false");
     xhr.setRequestHeader("Content-Type", blob.type);
     xhr.timeout = 10 * 60 * 1000;
     xhr.upload.onprogress = e => e.lengthComputable && onProgress?.(e.loaded / e.total);

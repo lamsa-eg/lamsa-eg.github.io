@@ -22,7 +22,7 @@ export async function functionPost(name, body, jwt){
   const headers={"Content-Type":"application/json","x-lamsa-form-version":"2"};
   if(jwt) headers.Authorization=`Bearer ${jwt}`;
   try{
-    const {r,data}=await postJson(`/api/${encodeURIComponent(name)}`,body,headers);
+    const {r,data}=await postJson(window.LAMSA_API(name),body,window.LAMSA_API_HEADERS(headers));
     if(!r.ok){const err=new Error(data.error||`Request failed (${r.status})`);err.status=r.status;err.data=data;throw err;}
     return data;
   }catch(e){

@@ -28,12 +28,12 @@ const DEMO = {
 };
 
 /* ---------- loading ---------- */
-function slugFromUrl() { const s = location.pathname.split("/").filter(Boolean).pop() || qs.get("slug") || ""; return SLUG_RE.test(s) ? s : ""; }
+function slugFromUrl() { const s = qs.get("m") || qs.get("slug") || location.pathname.split("/").filter(Boolean).pop() || ""; return SLUG_RE.test(s) ? s : ""; }
 
 async function fetchMemory(slug) {
   const early = window.__LAMSA_EARLY; window.__LAMSA_EARLY = null;
   if (early && !sessionStorage.getItem(`lamsa-wow-unlock:${slug}`)) { try { return await early; } catch (e) { throw e; } }
-  const r = await fetch("/api/public-memory", { method: "POST", headers: { "Content-Type": "application/json" }, cache: "no-store", body: JSON.stringify({ slug, wowToken: sessionStorage.getItem(`lamsa-wow-unlock:${slug}`) || "" }) });
+  const r = await fetch(window.LAMSA_API("public-memory"), { method: "POST", headers: window.LAMSA_API_HEADERS({ "Content-Type": "application/json" }), cache: "no-store", body: JSON.stringify({ slug, wowToken: sessionStorage.getItem(`lamsa-wow-unlock:${slug}`) || "" }) });
   const d = await r.json().catch(() => ({}));
   if (!r.ok) throw Object.assign(new Error(d.error || "Request failed"), { status: r.status });
   return d;
@@ -121,7 +121,7 @@ function renderSong(d, copy) {
   if (isAudio(url)) { const a = document.createElement("audio"); a.controls = true; a.preload = "none"; a.src = url; a.onplay = () => { pauseAmbient(); card.classList.add("is-playing"); }; a.onpause = () => card.classList.remove("is-playing"); host.replaceChildren(a); return; }
   if (yt) return playBtn("▶ شغّل الأغنية", () => { pauseAmbient(); card.classList.add("is-playing"); host.innerHTML = `<iframe title="${esc(d.songTitle || "أغنيتنا")}" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(yt)}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`; });
   if (isTikTok(url)) return playBtn("▶ شغّل من TikTok", async () => {
-    pauseAmbient(); try { const r = await fetch(`/api/tiktok-resolve?url=${encodeURIComponent(url)}`); const x = await r.json(); if (!r.ok) throw 0; host.innerHTML = `<iframe title="TikTok" src="${esc(x.embedUrl)}" allow="autoplay; encrypted-media; fullscreen" style="aspect-ratio:9/16;max-height:80vh"></iframe>`; card.classList.add("is-playing"); }
+    pauseAmbient(); try { const r = await fetch(`${window.LAMSA_API("tiktok-resolve")}?url=${encodeURIComponent(url)}`, { headers: window.LAMSA_API_HEADERS({}) }); const x = await r.json(); if (!r.ok) throw 0; host.innerHTML = `<iframe title="TikTok" src="${esc(x.embedUrl)}" allow="autoplay; encrypted-media; fullscreen" style="aspect-ratio:9/16;max-height:80vh"></iframe>`; card.classList.add("is-playing"); }
     catch { host.innerHTML = `<a class="l-btn l-btn-ghost" href="${esc(url)}" target="_blank" rel="noopener">افتح الأغنية ↗</a>`; }
   });
   try { const u = new URL(url); if (/^https?:$/.test(u.protocol)) host.innerHTML = `<a class="l-btn l-btn-ghost" href="${esc(u.href)}" target="_blank" rel="noopener">اسمع الأغنية ↗</a>`; } catch {}

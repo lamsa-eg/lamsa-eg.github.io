@@ -11,3 +11,5 @@ reports/screenshots/
 .wrangler/
 lamsa-cloudflare-pages-v40.zip
 lamsa-source-v38.zip
+dist-pages/
+lamsa-github-pages-v40.zip

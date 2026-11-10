@@ -1,0 +1,33 @@
+# Builds the GitHub Pages version of LAMSA and publishes it to the gh-pages branch
+# on every push to main. Only PUBLIC values appear here: the Supabase project URL and
+# its publishable key are meant for browsers and are protected by RLS.
+name: pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: https://kahsdittkaascnrfamlv.supabase.co
+      SUPABASE_PUBLISHABLE_KEY: sb_publishable_zmdgfhVf1AUZart717F0zQ_9XZnmCNw
+      SITE_URL: https://ainelhaya255.github.io/Lamsa
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm run test:unit
+      - run: node tools/build.mjs --target=pages --base=/Lamsa
+      - uses: JamesIves/github-pages-deploy-action@v4.6.4
+        with:
+          branch: gh-pages
+          folder: dist-pages
+          single-commit: true

@@ -16,7 +16,9 @@ export async function apiPost(name, body = {}, { timeoutMs = 30_000, retries = 0
     if (isOffline()) throw new ApiError("لا يوجد اتصال بالإنترنت. تأكد من الشبكة وحاول مرة أخرى.", { offline: true });
     const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
-      const r = await fetch(`/api/${encodeURIComponent(name)}`, { method: "POST", headers: { "Content-Type": "application/json", "x-lamsa-form-version": "38" }, body: JSON.stringify(body), signal: ctrl.signal, cache: "no-store" });
+      const url = window.LAMSA_API ? window.LAMSA_API(name) : `/api/${encodeURIComponent(name)}`;
+      const headers = (window.LAMSA_API_HEADERS || (h => h))({ "Content-Type": "application/json", "x-lamsa-form-version": "38" });
+      const r = await fetch(url, { method: "POST", headers, body: JSON.stringify(body), signal: ctrl.signal, cache: "no-store" });
       const data = await r.json().catch(() => ({}));
       if (!r.ok) {
         const err = new ApiError(data.error || `تعذر إكمال الطلب (${r.status})`, { status: r.status, data });

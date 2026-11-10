@@ -9,6 +9,7 @@
     "dev": "node tools/dev-server.mjs",
     "build": "node tools/build.mjs",
     "build:zip": "node tools/build.mjs --zip",
+    "build:pages": "node tools/build.mjs --target=pages --base=/Lamsa",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "node --experimental-strip-types --no-warnings --test tests/unit/*.test.mjs",
     "test:e2e": "node --test tests/e2e/journey.test.mjs",

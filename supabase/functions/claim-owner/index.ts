@@ -8,11 +8,14 @@ Deno.serve(async req => {
   try {
     const ip = (await gatewayOk(req)) ? trustedIp(req) : (req.headers.get("cf-connecting-ip") || "unknown");
     if (!(await rateAllowed("claim-owner", ip, 5, 3600))) return out({ error: "محاولات كثيرة" }, 429);
-    const expected = Deno.env.get("OWNER_SETUP_CODE") || "";
-    if (expected.length < 20) return out({ error: "التأسيس غير مفعل" }, 403);
+    // Setup code: Supabase secret OWNER_SETUP_CODE, or its SHA-256 stored in app_config (service role only).
+    const envCode = Deno.env.get("OWNER_SETUP_CODE") || "";
+    const { data: cfgRow } = await admin.from("app_config").select("value").eq("key", "owner_setup_code_sha256").maybeSingle();
+    const expectedHash = envCode.length >= 20 ? await sha256Text(envCode) : String(cfgRow?.value || "");
+    if (expectedHash.length !== 64) return out({ error: "التأسيس غير مفعل" }, 403);
     const body = await req.json();
     const code = clean(body.code, 200), email = clean(body.email, 200).toLowerCase(), password = String(body.password || ""), displayName = clean(body.displayName, 80);
-    if ((await sha256Text(code)) !== (await sha256Text(expected))) return out({ error: "كود التأسيس غير صحيح" }, 403);
+    if ((await sha256Text(code)) !== expectedHash) return out({ error: "كود التأسيس غير صحيح" }, 403);
     const { count, error: cErr } = await admin.from("admin_profiles").select("user_id", { count: "exact", head: true }).eq("role", "owner");
     if (cErr) throw cErr; if ((count || 0) > 0) return out({ error: "تم التأسيس بالفعل" }, 409);
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || password.length < 12) return out({ error: "اكتب إيميل صحيح وكلمة سر 12 حرف على الأقل" }, 400);
@@ -20,6 +23,7 @@ Deno.serve(async req => {
     if (error || !data.user) return out({ error: error?.message || "تعذر إنشاء الحساب" }, 400);
     const { error: pErr } = await admin.from("admin_profiles").insert({ user_id: data.user.id, display_name: displayName || null, role: "owner" });
     if (pErr) { await admin.auth.admin.deleteUser(data.user.id); throw pErr; }
+    await admin.from("app_config").delete().eq("key", "owner_setup_code_sha256");
     return out({ ok: true });
   } catch (e) { console.error(e); return out({ error: "تعذر إتمام التأسيس" }, 500); }
 });

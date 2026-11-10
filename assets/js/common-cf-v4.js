@@ -31,20 +31,25 @@ export function httpUrl(value){
   try{const u=new URL(String(value).trim());return ["http:","https:"].includes(u.protocol)?u.href:""}catch{return ""}
 }
 export function siteUrl(){
+  // Keeps a base path (GitHub Pages serves the site under /<repo>/).
   const raw=String(cfg().SITE_URL||"").trim();
-  if(raw){try{const u=new URL(raw);if(u.protocol==="https:")return u.origin}catch{}}
-  return location.origin;
+  if(raw){try{const u=new URL(raw);if(u.protocol==="https:")return (u.origin+u.pathname).replace(/\/+$/,"")}catch{}}
+  return (location.origin+(cfg().BASE_PATH||"")).replace(/\/+$/,"");
 }
+const SLUG_RE=/^m-[a-f0-9]{16}(?:[a-f0-9]{16})?$/i;
+/** Public link of a memory (QR / NFC). Works on any static host: memory.html?m=<slug>. */
 export function memoryUrl(slug){
   const s=String(slug||"").trim();
-  if(!/^m-[a-f0-9]{16}(?:[a-f0-9]{16})?$/i.test(s)) return "";
-  return `${siteUrl().replace(/\/$/,"")}/m/${encodeURIComponent(s)}`;
+  if(!SLUG_RE.test(s)) return "";
+  return `${siteUrl()}/memory.html?m=${encodeURIComponent(s)}`;
 }
 export function validMemoryUrl(value){
   try{
-    const u=new URL(String(value||"").trim());
-    const root=new URL(siteUrl());
-    return u.protocol==="https:"&&u.origin===root.origin&&/^\/m\/m-[a-f0-9]{16}(?:[a-f0-9]{16})?$/i.test(u.pathname)&&!u.search&&!u.hash;
+    const u=new URL(String(value||"").trim()), root=new URL(siteUrl()+"/");
+    if(u.protocol!=="https:"||u.origin!==root.origin||u.hash)return false;
+    const base=root.pathname.replace(/\/+$/,"");
+    if(u.pathname===`${base}/memory.html`)return SLUG_RE.test(u.searchParams.get("m")||"")&&[...u.searchParams.keys()].length===1;
+    return !u.search&&new RegExp(`^${base.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}/m/m-[a-f0-9]{16}(?:[a-f0-9]{16})?$`,"i").test(u.pathname);
   }catch{return false}
 }
 export const PACKAGE_INFO = {
