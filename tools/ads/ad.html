@@ -1,0 +1,57 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>LAMSA ad template</title>
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<style>
+/* Ad creative template. Rendered by tools/ads/render.mjs: ?c=<concept>&w=&h=&price= */
+html,body{margin:0;height:100%}
+body{--u:calc(100vw/1080);width:100vw;height:100vh;overflow:hidden;font-family:var(--l-font);position:relative;display:flex;flex-direction:column;padding:calc(64*var(--u)) calc(64*var(--u));gap:calc(28*var(--u))}
+body.night{background:var(--l-sky);color:#fff}
+body.sand{background:radial-gradient(120% 80% at 50% 0%,#fff8ea 0%,#f6e9d0 60%,#f1dcbb 100%);color:var(--l-night)}
+body.sun{background:linear-gradient(160deg,#13233b 0%,#3a3359 38%,#c7432a 78%,#f08a5d 100%);color:#fff}
+body.story{padding-top:calc(270*var(--u));padding-bottom:calc(340*var(--u));gap:calc(40*var(--u))}.story h1{font-size:calc(104*var(--u))}.story .sub{font-size:calc(38*var(--u))}
+.stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,#fff 0 1.5px,transparent 2px),radial-gradient(circle,#f6c177 0 2px,transparent 2.5px),radial-gradient(circle,#fff 0 1px,transparent 1.5px);background-size:calc(310*var(--u)) calc(270*var(--u)),calc(470*var(--u)) calc(390*var(--u)),calc(190*var(--u)) calc(230*var(--u));background-position:20px 40px,140px 90px,70px 10px;opacity:.5;mask-image:linear-gradient(#000 0,#000 45%,transparent 70%)}
+.sand .stars{display:none}
+.brand{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.brand b{font-family:var(--l-display);font-size:calc(64*var(--u));line-height:1;display:flex;align-items:center;gap:calc(14*var(--u))}
+.brand b i{font-style:normal;color:var(--l-coral);font-size:calc(46*var(--u))}
+.night .brand b i,.sun .brand b i{color:#f6c177}
+.chip{padding:calc(12*var(--u)) calc(26*var(--u));border-radius:999px;font-size:calc(26*var(--u));font-weight:600;background:rgba(255,255,255,.12);color:#f6d9b0;border:1px solid rgba(246,193,119,.35)}
+.sand .chip{background:#fff;color:var(--l-coral);border-color:rgba(199,67,42,.25)}
+h1{color:inherit;font-family:var(--l-display);font-weight:700;font-size:calc(92*var(--u));line-height:1.25;margin:0;position:relative;z-index:1}
+h1 span{display:block;color:#f6c177}
+.sand h1 span{color:var(--l-coral)}
+.sub{font-size:calc(34*var(--u));line-height:1.6;margin:0;opacity:.92;position:relative;z-index:1;font-weight:400}
+.vis{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.arch{height:100%;aspect-ratio:4/5;max-width:100%;border-radius:999px 999px calc(36*var(--u)) calc(36*var(--u));overflow:hidden;border:calc(8*var(--u)) solid rgba(246,193,119,.5);box-shadow:0 calc(30*var(--u)) calc(80*var(--u)) rgba(12,22,38,.45);background:#13233b}
+.arch img{width:100%;height:100%;object-fit:cover;display:block}
+.round{height:100%;aspect-ratio:1;max-width:100%;border-radius:calc(48*var(--u));overflow:hidden;box-shadow:0 calc(30*var(--u)) calc(80*var(--u)) rgba(19,35,59,.2);border:calc(6*var(--u)) solid #fff}
+.round img{width:100%;height:100%;object-fit:cover;display:block}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:calc(20*var(--u));position:relative;z-index:1}
+.cta{background:linear-gradient(135deg,#f6c177,#f08a5d);color:#13233b;font-weight:700;font-size:calc(36*var(--u));padding:calc(22*var(--u)) calc(44*var(--u));border-radius:999px;box-shadow:0 calc(14*var(--u)) calc(34*var(--u)) rgba(12,22,38,.3);white-space:nowrap}
+.sand .cta{background:linear-gradient(135deg,#c7432a,#f08a5d);color:#fff}
+.price{font-size:calc(28*var(--u));line-height:1.3}
+.price b{display:block;font-size:calc(46*var(--u));font-weight:700}
+.url{font-size:calc(26*var(--u));opacity:.85;direction:ltr}
+/* game mock */
+.phone{height:100%;aspect-ratio:9/15;max-width:100%;background:var(--l-sky);border-radius:calc(56*var(--u));border:calc(12*var(--u)) solid #13233b;box-shadow:0 calc(30*var(--u)) calc(80*var(--u)) rgba(19,35,59,.3);padding:calc(44*var(--u)) calc(34*var(--u));display:flex;flex-direction:column;justify-content:center;gap:calc(22*var(--u));color:#fff;text-align:center}
+.phone small{color:#f6c177;font-size:calc(24*var(--u));letter-spacing:.04em}
+.phone .q{font-family:var(--l-display);font-size:calc(50*var(--u));line-height:1.35}
+.phone .o{display:grid;grid-template-columns:1fr 1fr;gap:calc(16*var(--u))}
+.phone .o span{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);border-radius:calc(24*var(--u));padding:calc(24*var(--u)) 0;font-size:calc(34*var(--u));font-weight:600}
+.phone .o span.y{background:linear-gradient(135deg,#f6c177,#f08a5d);color:#13233b;border-color:transparent}
+.phone .r{font-size:calc(28*var(--u));color:#f6d9b0}
+/* steps */
+.steps{display:grid;gap:calc(22*var(--u));width:100%;align-content:center;height:100%}
+.step{display:flex;align-items:center;gap:calc(28*var(--u));background:rgba(255,255,255,.1);border:1px solid rgba(246,193,119,.3);border-radius:calc(34*var(--u));padding:calc(30*var(--u)) calc(34*var(--u))}
+.step i{font-style:normal;flex:0 0 auto;width:calc(86*var(--u));height:calc(86*var(--u));border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f6c177,#f08a5d);color:#13233b;font-weight:700;font-size:calc(44*var(--u))}
+.step b{display:block;font-size:calc(38*var(--u))}
+.step span{font-size:calc(28*var(--u));opacity:.85}
+/* landscape 1200x628 */
+body.wide{--u:calc(100vh/628);flex-direction:row;flex-wrap:wrap;align-content:space-between;padding:calc(44*var(--u)) calc(56*var(--u));gap:calc(10*var(--u)) calc(40*var(--u))}
+.wide .brand,.wide .foot{flex:0 0 100%}
+.wide .txt{flex:1;display:flex;flex-direction:column;justify-content:center;gap:calc(16*var(--u));min-width:0}
+.wide .vis{flex:0 0 34%;height:calc(380*var(--u))}
+.wide h1{font-size:calc(66*var(--u))}.wide .sub{font-size:calc(25*var(--u))}
+.wide .brand b{font-size:calc(46*var(--u))}.wide .chip{font-size:calc(19*var(--u))}
+.wide .cta{font-size:calc(26*var(--u));padding:calc(14*var(--u)) calc(32*var(--u))}.wide .price{font-size:calc(20*var(--u))}.wide .price b{font-size:calc(32*var(--u))}
+.sq h1{font-size:calc(80*var(--u))}.sq .sub{font-size:calc(30*var(--u))}
+</style></head><body><script src="/tools/ads/ad.js"></script></body></html>
