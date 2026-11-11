@@ -21,7 +21,7 @@ function fill(){
   document.getElementById("wowGenderEnabled").checked=!!moment?.enabled;
   const selected=config?.genderReveal?.result;if(selected)document.querySelector(`input[name="wowGenderResult"][value="${escapeHtml(selected)}"]`)?.click();
   document.getElementById("wowGenderTitle").value=c.title||"";document.getElementById("wowGenderSubtitle").value=c.subtitle||"";document.getElementById("wowGenderGirl").value=c.girlMessage||"";document.getElementById("wowGenderBoy").value=c.boyMessage||"";
-  const state=document.getElementById("wowGenderAdminState");if(config?.genderReveal?.revealAt)state.textContent=`بدأ الكشف: ${new Date(config.genderReveal.revealAt).toLocaleString("ar-EG")}`;else state.textContent=config?.genderReveal?.configured?"النتيجة محفوظة بأمان — لم يبدأ الكشف بعد.":"اختر النتيجة ثم احفظ.";
+  const state=document.getElementById("wowGenderAdminState");if(config?.genderReveal?.revealAt)state.textContent=`بدأ الكشف: ${new Date(config.genderReveal.revealAt).toLocaleString("ar-EG-u-nu-latn")}`;else state.textContent=config?.genderReveal?.configured?"النتيجة محفوظة بأمان — لم يبدأ الكشف بعد.":"اختر النتيجة ثم احفظ.";
 }
 
 async function save(){

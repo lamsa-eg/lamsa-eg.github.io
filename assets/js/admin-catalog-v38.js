@@ -89,7 +89,7 @@ const TABS = {
     const { data, error } = await s.from("admin_audit_logs").select("*").order("created_at", { ascending: false }).limit(150);
     if (error) return `<p class="cat-warn">سجل التعديلات غير متاح — شغّل migration v38. (${esc(error.message)})</p>`;
     if (!data.length) return `<p class="muted">لا توجد تعديلات مسجلة بعد.</p>`;
-    return `<div class="cat-audit"><table><thead><tr><th>الوقت</th><th>الجدول</th><th>العنصر</th><th>العملية</th><th>بواسطة</th><th>التغييرات</th></tr></thead><tbody>${data.map(r => `<tr><td>${new Date(r.created_at).toLocaleString("ar-EG")}</td><td>${esc(r.table_name)}</td><td>${esc(r.row_id || "")}</td><td>${esc(r.action)}</td><td>${esc(r.actor_role || "")}</td><td><code>${esc(Object.entries(r.changes || {}).map(([k, v]) => `${k}: ${JSON.stringify(v?.from)} → ${JSON.stringify(v?.to)}`).join(" · ")).slice(0, 400)}</code></td></tr>`).join("")}</tbody></table></div>`;
+    return `<div class="cat-audit"><table><thead><tr><th>الوقت</th><th>الجدول</th><th>العنصر</th><th>العملية</th><th>بواسطة</th><th>التغييرات</th></tr></thead><tbody>${data.map(r => `<tr><td>${new Date(r.created_at).toLocaleString("ar-EG-u-nu-latn")}</td><td>${esc(r.table_name)}</td><td>${esc(r.row_id || "")}</td><td>${esc(r.action)}</td><td>${esc(r.actor_role || "")}</td><td><code>${esc(Object.entries(r.changes || {}).map(([k, v]) => `${k}: ${JSON.stringify(v?.from)} → ${JSON.stringify(v?.to)}`).join(" · ")).slice(0, 400)}</code></td></tr>`).join("")}</tbody></table></div>`;
   }
 };
 

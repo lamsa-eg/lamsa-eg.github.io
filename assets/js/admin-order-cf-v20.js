@@ -53,6 +53,6 @@ function renderAttribution(data){const a=data.attribution,host=document.getEleme
 async function renderPaymentProof(s,data){const box=document.getElementById("paymentProof");if(!box)return;box.hidden=false;
 if(!data.payment_proof_path){box.innerHTML=`<b>إنستاباي</b><span>${data.payment_status==="paid"?"✓ مدفوع":"العميل لسه ما رفعش إيصال التحويل."}</span>`;return}
 try{const{data:sig,error}=await s.storage.from("order-uploads").createSignedUrl(data.payment_proof_path,900);if(error)throw error;
-const when=data.payment_proof_uploaded_at?new Date(data.payment_proof_uploaded_at).toLocaleString("ar-EG"):"";
+const when=data.payment_proof_uploaded_at?new Date(data.payment_proof_uploaded_at).toLocaleString("ar-EG-u-nu-latn"):"";
 box.innerHTML=`<b>إيصال إنستاباي</b><span>اترفع ${escapeHtml(when)} · المبلغ المطلوب ${escapeHtml(String(Number(data.total_amount)))} ج.م</span><a href="${escapeHtml(sig.signedUrl)}" target="_blank" rel="noopener"><img src="${escapeHtml(sig.signedUrl)}" alt="إيصال التحويل"></a><small>اتأكد إن المبلغ وصل حسابك، وبعدها اختار «تم الدفع ✓» واحفظ.</small>`}
 catch(e){box.innerHTML=`<b>إيصال إنستاباي</b><span>تعذر عرض الإيصال: ${escapeHtml(e.message||"")}</span>`}}
