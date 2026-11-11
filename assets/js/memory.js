@@ -187,7 +187,7 @@ function showError(err) {
 async function main() {
   let d;
   try {
-    if (qs.get("demo") === "1") d = DEMO;
+    if (qs.get("demo") === "1") { d = DEMO; import("./lib/marketing.js").then(m => m.track("ViewContent", { content_name: "demo-memory", content_type: "product" })).catch(() => {}); }
     else if (qs.get("preview")) d = await adminPreview(qs.get("preview"));
     else { const slug = slugFromUrl(); if (!slug) throw Object.assign(new Error("not found"), { status: 404 }); d = await fetchMemory(slug); }
   } catch (e) { console.warn("memory unavailable", e?.message || e); return showError(e); }

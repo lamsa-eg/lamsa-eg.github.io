@@ -2,6 +2,10 @@
 import { loadPublicConfig } from "./lib/api.js";
 import { buildCatalog, money, packageFeatures } from "./lib/catalog.js";
 import { esc, $, $$, reveal } from "./lib/ui.js";
+import { track } from "./lib/marketing.js";
+let vcSent = false;
+document.addEventListener("click", e => { if (e.target.closest('a[href^="https://wa.me"]')) track("Contact", { content_name: "whatsapp" }); });
+const viewed = k => { if (!vcSent) { vcSent = true; track("ViewContent", { content_name: `demo:${k}`, content_type: "product" }); } };
 
 reveal();
 
@@ -83,7 +87,7 @@ function choose(k, focus = false) {
   $$("[data-demo]", tabs).forEach(b => { const on = b.dataset.demo === k; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); });
   panel.setAttribute("aria-labelledby", `tab-${k}`); panel.innerHTML = ""; panel.className = `d-panel d-${k}`; DEMOS[k].render(panel);
 }
-tabs.addEventListener("click", e => { const b = e.target.closest("[data-demo]"); if (b) choose(b.dataset.demo); });
+tabs.addEventListener("click", e => { const b = e.target.closest("[data-demo]"); if (b) { choose(b.dataset.demo); viewed(b.dataset.demo); } });
 tabs.addEventListener("keydown", e => {
   const keys = Object.keys(DEMOS), cur = keys.indexOf($('[aria-selected="true"]', tabs).dataset.demo);
   const d = e.key === "ArrowLeft" ? 1 : e.key === "ArrowRight" ? -1 : 0; // RTL

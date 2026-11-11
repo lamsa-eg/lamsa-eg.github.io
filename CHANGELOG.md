@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v42 — جاهز للإعلانات (2026-11-11)
+- **اسم الدفع «Lamsa»** بيظهر مع عنوان إنستاباي في صفحة نجاح الطلب، وبيتعدل من الإدارة ← الباقات والألعاب ← «الدفع والتسويق».
+- **Meta Pixel** بيشتغل بس لما رقم البكسل يتحط من الإدارة (مفيش كود محتاج تعديل). الأحداث: PageView، ViewContent (التجربة)، InitiateCheckout (بدء الطلب)، Purchase (الطلب اتسجل بقيمته)، AddPaymentInfo (رفع الإيصال)، Contact (واتساب). مش بيشتغل على صفحات ذكريات العملاء، ومفيش بيانات شخصية بتتبعت.
+- **مصدر كل طلب** (UTM / fbclid) بيتحفظ في `orders.attribution` وبيظهر في تفاصيل الطلب.
+- سياسة الخصوصية والـ CSP اتحدثوا. migration: `20261113000000_lamsa_v42_marketing.sql`.
+- عدة الحملة الإعلانية في `docs/marketing/`.
+
 ## v40 — بداية نضيفة (2026-11-11)
 - **قاعدة البيانات كاملة في المستودع:** migration أساسي جديد (`20260901000000_lamsa_core.sql`) بيبني مشروع Supabase من الصفر: الجداول والصلاحيات (RLS) ومساحات التخزين وحدود الطلبات والكتالوج المبدئي. الـ migrations اتعادت ترقيمها بأرقام فريدة، وملف الرجوع اتنقل لـ `supabase/rollbacks/`.
 - **8 دوال كانت ناقصة من الملف الأصلي اتكتبت:** `complete-order`، `abort-order`، `track-order`، `attach-special-media`، `order-notify-admin`، `admin-update-order`، `claim-owner`، `admin-notifications`. ومعاها `supabase/config.toml`.

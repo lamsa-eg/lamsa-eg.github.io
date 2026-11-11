@@ -4,6 +4,7 @@ import { apiPost, loadPublicConfig } from "./lib/api.js";
 import { money } from "./lib/catalog.js";
 import { toast } from "./lib/ui.js";
 import { optimizeImageFile } from "./image-optimize-v26.js";
+import { track as px } from "./lib/marketing.js";
 
 const $ = id => document.getElementById(id);
 
@@ -40,6 +41,7 @@ export async function mountInstapay({ order, token, track }) {
   $("payShipNote").hidden = !track.shippingPending;
   $("payRef").textContent = order;
   if (ip?.link) { $("payLink").href = ip.link; $("payLink").hidden = false; }
+  if ($("payName")) $("payName").textContent = ip?.name || "Lamsa";
   $("payIpa").textContent = ip?.ipa || "هنبعتلك بيانات الدفع على واتساب";
   $("copyIpa").hidden = !ip?.ipa;
   $("copyIpa").onclick = () => copy(ip.ipa, "عنوان إنستاباي");
@@ -56,7 +58,7 @@ export async function mountInstapay({ order, token, track }) {
       const t = await apiPost("payment-proof", { orderNumber: order, trackingToken: token, stage: "prepare", mimeType: blob.type, size: blob.size });
       await uploadPut(window.LAMSA_UPLOAD_URL("order-uploads", t.path, t.token), blob);
       await apiPost("payment-proof", { orderNumber: order, trackingToken: token, stage: "finalize" });
-      setProofState("uploaded"); toast("الإيصال وصل ✓");
+      setProofState("uploaded"); toast("الإيصال وصل ✓"); px("AddPaymentInfo", { currency: "EGP", value: Number(track.totalAmount) || 0 }, { once: `proof_${order}` });
     } catch (err) { $("proofStatus").textContent = err.message || "تعذر رفع الإيصال، جرّب تاني"; }
     finally { btn.removeAttribute("aria-disabled"); }
   };

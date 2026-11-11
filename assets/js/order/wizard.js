@@ -6,6 +6,8 @@ import { GAME_BY_KEY, availableGames, emptyGameData, emptyItem, validateGame, bu
 import { loadState, saveState, flushState, putFile, getFile, deleteFile, clearDraft } from "./draft-store.js";
 import { prepareImage, checkFile } from "./media.js";
 import { submitOrder, abortOrder } from "./submit.js";
+import { track, getAttribution } from "../lib/marketing.js";
+let icSent = false;
 
 const LEGAL_VERSION = window.LAMSA_CONFIG?.LEGAL_VERSION || "2026-09-11";
 const STEPS = ["occasion", "people", "package", "look", "media", "story", "games", "answers", "surprises", "delivery", "review", "send"];
@@ -83,6 +85,7 @@ function go(i, { push = true, focus = true } = {}) {
   // Never jump past the furthest validated step.
   if (i > S.furthest) i = S.furthest;
   S.step = i; persist();
+  if (i >= 1 && !icSent) { icSent = true; track("InitiateCheckout", { currency: "EGP", content_category: "gift" }); }
   STEPS.forEach((n, k) => { const s = $(`[data-step="${n}"]`); s.hidden = k !== i; });
   renderStep(STEPS[i]);
   updateChrome();
@@ -408,7 +411,7 @@ const fingerprint = () => mainFiles().map(f => `${f.kind}:${f.size}:${f.type}`).
 function buildPayload() {
   const p = pkg();
   return {
-    requestId: S.attempt.requestId, honeypot: S.honeypot || "", package: S.package, paymentMethod: "instapay", turnstileToken,
+    requestId: S.attempt.requestId, honeypot: S.honeypot || "", package: S.package, paymentMethod: "instapay", turnstileToken, attribution: getAttribution(),
     customization: {
       senderName: S.senderName.trim(), recipientName: S.recipientName.trim(), occasion: occasionLabel().slice(0, 80), date: S.memoryDate || null, message: S.message.trim(), theme: S.theme,
       pageCopy: { pageTitle: S.pageTitle.trim(), intro: "", messageTitle: "كلمة من القلب", galleryTitle: "لحظاتنا", audioTitle: "صوت من القلب", videoTitle: "لحظات حية", songSectionTitle: "أغنيتنا", closingText: S.closingText.trim() },

@@ -21,6 +21,7 @@ Deno.serve(async req => {
     ]);
     const setting = (k: string) => (settings.data || []).find((r: any) => r.key === k)?.value || null;
     const ip = setting("instapay");
+    const px = String(setting("meta_pixel")?.id || "");
     for (const r of [pk, zones]) if (r.error) throw r.error;
     const body = {
       packages: (pk.data || []).map((p: any) => ({ ...p, price: Number(p.price) })),
@@ -31,7 +32,8 @@ Deno.serve(async req => {
       wowAddons: (addons.data || []).map((a: any) => ({ ...a, price: Number(a.price) })),
       wowPacks: (packs.data || []).map((a: any) => ({ ...a, price: Number(a.price) })),
       season: seasons.data?.[0] || null,
-      payments: { methods: ["instapay"], instapay: ip && ip.ipa ? { ipa: String(ip.ipa), link: /^https:\/\/ipn\.eg\//.test(String(ip.link || "")) ? String(ip.link) : "" } : null },
+      payments: { methods: ["instapay"], instapay: ip && ip.ipa ? { name: String(ip.name || "Lamsa").slice(0, 40), ipa: String(ip.ipa), link: /^https:\/\/ipn\.eg\//.test(String(ip.link || "")) ? String(ip.link) : "" } : null },
+      metaPixelId: /^[0-9]{8,20}$/.test(px) ? px : "",
       generatedAt: new Date().toISOString()
     };
     cache = { at: Date.now(), body };

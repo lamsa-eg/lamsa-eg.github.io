@@ -70,13 +70,19 @@ const TABS = {
       <label class="cat-check"><input type="checkbox" name="active" ${g.active ? "checked" : ""}> متاحة للبيع</label><button class="btn" type="submit">حفظ</button></form>`).join("")}</div>`;
   },
   async payments(s) {
-    const { data, error } = await s.from("site_settings").select("key,value").eq("key", "instapay").maybeSingle();
+    const { data, error } = await s.from("site_settings").select("key,value").in("key", ["instapay", "meta_pixel"]);
     if (error) return `<p class="cat-warn">إعدادات الدفع غير متاحة (${esc(error.message)})</p>`;
-    const v = data?.value || {};
+    const get = k => (data || []).find(r => r.key === k)?.value || {};
+    const v = get("instapay"), px = get("meta_pixel");
     return `<p class="cat-note">إنستاباي هو طريقة الدفع الوحيدة. البيانات دي بتظهر للعميل في صفحة نجاح الطلب مع المبلغ وزرار الدفع.</p>
     <div class="cat-list"><form class="cat-row" data-table="site_settings" data-key="instapay"><h3>⚡ إنستاباي</h3>
+      <label class="field">الاسم اللي يظهر للعميل<input name="name" maxlength="40" value="${esc(v.name || "Lamsa")}" placeholder="Lamsa"></label>
       <label class="field">عنوان الدفع (IPA)<input name="ipa" dir="ltr" required pattern="[A-Za-z0-9._-]+@instapay" value="${esc(v.ipa || "")}" placeholder="name@instapay"></label>
       <label class="field cat-wide">رابط الدفع (يبدأ بـ https://ipn.eg/)<input name="link" dir="ltr" type="url" pattern="https://ipn\.eg/.+" value="${esc(v.link || "")}"></label>
+      <button class="btn" type="submit">حفظ</button></form>
+    <form class="cat-row" data-table="site_settings" data-key="meta_pixel"><h3>📣 فيسبوك / ميتا بكسل</h3>
+      <p class="cat-note cat-wide">من Events Manager ← Data sources ← انسخ رقم الـ Pixel (أرقام بس). سيبه فاضي لإيقاف التتبع.</p>
+      <label class="field">Pixel ID<input name="id" dir="ltr" inputmode="numeric" pattern="[0-9]{8,20}" value="${esc(px.id || "")}" placeholder="123456789012345"></label>
       <button class="btn" type="submit">حفظ</button></form></div>`;
   },
   async audit(s) {

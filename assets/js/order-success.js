@@ -2,6 +2,7 @@ import { apiPost } from "./lib/api.js";
 import { money } from "./lib/catalog.js";
 import { toast } from "./lib/ui.js";
 import { mountInstapay } from "./payment.js";
+import { track } from "./lib/marketing.js";
 const $ = id => document.getElementById(id), qs = new URLSearchParams(location.search);
 const legacy = qs.get("token") || "";
 if (legacy) { sessionStorage.setItem("lamsa_track_token", legacy); const u = new URL(location.href); u.searchParams.delete("token"); history.replaceState(null, "", u.pathname + u.search); }
@@ -23,5 +24,6 @@ if (order && token) {
     if (d.totalAmount !== undefined) $("totalPrice").textContent = d.shippingPending ? `${money(d.totalAmount)} + الشحن` : money(d.totalAmount);
     if (d.whatsappStatus === "sent") $("waStatus").hidden = false;
     mountInstapay({ order, token, track: d });
+    if (d.totalAmount !== undefined) track("Purchase", { value: Number(d.totalAmount) || 0, currency: "EGP", content_ids: d.package ? [String(d.package)] : undefined, content_type: "product" }, { eventID: order, once: `purchase_${order}` });
   } catch { $("pricing").hidden = true; }
 } else $("pricing").hidden = true;
