@@ -56,7 +56,7 @@ async function adminPreview(memoryId) {
 
 /* ---------- helpers ---------- */
 const g = (d, m, f) => (d.recipientGender === "f" ? f : m);
-function formatDate(v) { if (!v) return ""; try { return new Intl.DateTimeFormat("ar-EG", { day: "numeric", month: "long", year: "numeric" }).format(new Date(v)); } catch { return ""; } }
+function formatDate(v) { if (!v) return ""; try { return new Intl.DateTimeFormat("ar-EG-u-nu-latn", { day: "numeric", month: "long", year: "numeric" }).format(new Date(v)); } catch { return ""; } }
 function show(id, on = true) { const el = $(id); if (el) el.hidden = !on; return el; }
 function youtubeId(u) { try { const x = new URL(u); if (/youtu\.be$/.test(x.hostname)) return x.pathname.slice(1, 12); if (/youtube\.com$/.test(x.hostname.replace(/^www\.|^m\.|^music\./, ""))) return x.searchParams.get("v") || (x.pathname.match(/\/(?:shorts|embed|live)\/([\w-]{11})/) || [])[1] || ""; } catch {} return ""; }
 const isTikTok = u => { try { return /(^|\.)tiktok\.com$/.test(new URL(u).hostname); } catch { return false; } };

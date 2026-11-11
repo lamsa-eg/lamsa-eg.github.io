@@ -27,7 +27,7 @@ async function packages() {
     const min = C.minPrice();
     if (sticky) { sticky.classList.remove("l-skel"); sticky.textContent = min === null ? "اختار باقتك" : money(min); }
     if (C.season) {
-      const b = $("[data-season]"), cutoff = C.season.order_cutoff ? new Date(C.season.order_cutoff).toLocaleDateString("ar-EG", { day: "numeric", month: "long" }) : "";
+      const b = $("[data-season]"), cutoff = C.season.order_cutoff ? new Date(C.season.order_cutoff).toLocaleDateString("ar-EG-u-nu-latn", { day: "numeric", month: "long" }) : "";
       b.textContent = `${C.season.banner_text || C.season.name}${cutoff ? ` — آخر طلب مضمون: ${cutoff}` : ""}`; b.hidden = false;
     }
   } catch {

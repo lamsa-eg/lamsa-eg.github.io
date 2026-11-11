@@ -46,7 +46,7 @@ export function buildCatalog(cfg = {}) {
 
 export function money(v) {
   if (v === null || v === undefined || !Number.isFinite(Number(v))) return "—";
-  return new Intl.NumberFormat("ar-EG", { maximumFractionDigits: 0 }).format(Number(v)) + " ج.م";
+  return new Intl.NumberFormat("ar-EG-u-nu-latn", { maximumFractionDigits: 0 }).format(Number(v)) + " ج.م";
 }
 export function mb(bytes) { return Math.round(Number(bytes || 0) / MB); }
 

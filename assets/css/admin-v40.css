@@ -9,7 +9,8 @@ body.lm-admin::before,body.lm-admin::after{display:none!important}
 /* layout */
 .lm-admin .admin{grid-template-columns:250px minmax(0,1fr);background:var(--l-bg)}
 .lm-admin .side{background:var(--l-sky);border:0;color:#e6e9f0;padding:22px 14px}
-.lm-admin .side .logo,.lm-admin .topbar .logo{display:none}
+.lm-admin .side .logo,.lm-admin .topbar .logo,.lm-admin .box>img.logo,.lm-admin form.card>img{display:none}
+.lm-admin form.card .lm-side-brand{color:var(--l-night)}.lm-admin form.card .lm-side-brand small{color:var(--l-muted)}
 .lm-admin .lm-side-brand{display:flex;align-items:center;gap:10px;margin:0 6px 24px;color:#fff;text-decoration:none}
 .lm-admin .lm-side-brand b{font-family:var(--l-display);font-size:26px;line-height:1}
 .lm-admin .lm-side-brand small{display:block;color:#aab3c5;font-size:11px}

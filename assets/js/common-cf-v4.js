@@ -3,7 +3,7 @@ export function configured(){
   const c=cfg(); return c.SUPABASE_URL && !c.SUPABASE_URL.startsWith("__") &&
     c.SUPABASE_PUBLISHABLE_KEY && !c.SUPABASE_PUBLISHABLE_KEY.startsWith("__");
 }
-export function money(v){ return new Intl.NumberFormat("ar-EG",{style:"currency",currency:"EGP",maximumFractionDigits:0}).format(Number(v||0)); }
+export function money(v){ return new Intl.NumberFormat("ar-EG-u-nu-latn",{style:"currency",currency:"EGP",maximumFractionDigits:0}).format(Number(v||0)); }
 export function qs(name){ return new URLSearchParams(location.search).get(name); }
 export function escapeHtml(s=""){ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])); }
 export function toast(msg){

@@ -1,2 +1,46 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>LAMSA — متابعة الطلب</title><meta content="تابع حالة طلب LAMSA باستخدام رقم الطلب ورمز المتابعة الخاص." name="description"/><meta content="noindex,nofollow" name="robots"/><link href="/favicon.svg" rel="icon" type="image/svg+xml"/><link href="assets/css/app.css" rel="stylesheet"/><style>.page{max-width:760px;margin:0 auto;padding:62px 18px 80px}.hero-mini{text-align:center}.hero-mini .copy{max-width:560px;margin:auto}.search{padding:19px;margin-top:28px}.search-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:10px}.result{padding:25px;margin-top:16px}.steps{margin-top:18px}.step{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--line);color:#82736d}.step.on{color:#eee1d8}.dot{width:12px;height:12px;border-radius:50%;background:#d9a5b1;margin-top:3px}.step.on .dot{background:linear-gradient(135deg,var(--rose),var(--gold));box-shadow:0 0 0 4px rgba(201,137,145,.08)}@media(max-width:650px){.search-grid{grid-template-columns:1fr}.page{padding-top:42px}}</style></head><body><div class="container"><header class="topbar"><a href="index.html"><img alt="LAMSA" class="logo" src="assets/img/logo.svg"/></a><a class="heart-outline-btn" href="/order">طلب جديد</a></header></div><main class="page"><div class="hero-mini"><span class="kicker">TRACK YOUR GIFT</span><h1 class="title">اعرف الهدية وصلت لفين.</h1><p class="copy">اكتب رقم الطلب ورمز المتابعة الموجود في الرابط اللي استلمته.</p></div><section class="card search"><div class="search-grid"><label class="field">رقم الطلب<input autocomplete="off" id="order" placeholder="ORD-..."/></label><label class="field">رمز المتابعة<input autocomplete="off" id="token" placeholder="رمز المتابعة الخاص" type="password"/></label><button class="romantic-btn light" id="go">متابعة</button></div></section><section class="card result hidden" id="result"></section></main><script src="/env.js"></script><script src="assets/js/config-cf-v4.js"></script><script src="assets/js/track-cf-v4.js" type="module"></script><script type="module" src="/assets/js/wow/track-phase2.js"></script></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>لمسة — متابعة الطلب</title>
+<meta name="description" content="تابع حالة طلب لمسة برقم الطلب ورمز المتابعة الخاص.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#13233b">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/alexandria-ar-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<link rel="stylesheet" href="/assets/css/wow.css">
+<link rel="stylesheet" href="/assets/css/pages.css">
+</head>
+<body class="l-body pg">
+<a class="l-skip" href="#main">تخطى إلى المحتوى</a>
+<header class="l-header">
+  <div class="l-shell l-header-in">
+    <a class="l-brand" href="/" aria-label="لمسة — الرئيسية"><span class="l-brand-mark" aria-hidden="true">✦</span><span><b>لمسة</b><small>LAMSA</small></span></a>
+    <div class="pg-head-cta"><a class="l-btn l-btn-primary l-btn-sm" href="/order">ابدأ حكايتكم</a></div>
+  </div>
+</header>
+<main id="main" class="l-shell pg-track">
+  <header class="pg-hero pg-center"><span class="pg-stamp">متابعة الطلب</span><h1 class="l-display">اعرف الهدية وصلت لفين</h1><p class="l-lead">اكتب رقم الطلب ورمز المتابعة اللي ظهرولك بعد ما بعت الطلب.</p></header>
+  <section class="l-card pg-search" aria-label="بيانات المتابعة">
+    <div class="l-field"><label for="order">رقم الطلب</label><input class="l-input" id="order" dir="ltr" autocomplete="off" placeholder="ORD-…"></div>
+    <div class="l-field"><label for="token">رمز المتابعة</label><input class="l-input" id="token" dir="ltr" autocomplete="off" type="password" placeholder="رمز المتابعة الخاص"></div>
+    <button class="l-btn l-btn-primary l-btn-block" id="go" type="button">متابعة الطلب</button>
+    <p class="l-help">ضاع منك الرمز؟ <a href="https://wa.me/201588889741" target="_blank" rel="noopener">كلمنا على واتساب</a> برقم الطلب.</p>
+  </section>
+  <section class="l-card card pg-result hidden" id="result" aria-live="polite"></section>
+</main>
+<footer class="l-footer pg-footer">
+  <div class="l-shell l-footer-grid">
+    <div><a class="l-brand" href="/" style="color:#fff"><span class="l-brand-mark" aria-hidden="true">✦</span><span><b>لمسة</b><small style="color:#aab3c5">هدية تتحول لذكرى</small></span></a><p><small>اتعملت علشان التفاصيل الصغيرة ما تتنسيش.</small></p></div>
+    <div><h3>طلبك</h3><ul><li><a href="/order">طلب جديد</a></li><li><a href="/track.html">متابعة الطلب</a></li><li><a href="https://wa.me/201588889741" target="_blank" rel="noopener">واتساب</a></li></ul></div>
+    <div><h3>معلومات</h3><ul><li><a href="/">الرئيسية</a></li><li><a href="/privacy.html">الخصوصية</a></li><li><a href="/terms.html">الشروط</a></li></ul></div>
+  </div>
+  <div class="l-shell"><small>© 2026 LAMSA</small></div>
+</footer>
+<script src="/env.js"></script><script src="/assets/js/config-cf-v4.js"></script>
+<script type="module" src="/assets/js/track-cf-v4.js"></script>
+<script type="module" src="/assets/js/wow/track-phase2.js"></script>
+</body>
+</html>
