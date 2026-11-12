@@ -15,4 +15,9 @@ const shot = async (c, name, w, h) => {
 for (const c of CONCEPTS) for (const [f, [w, h]] of Object.entries(FORMATS)) await shot(c, `lamsa-${c}-${f}-${w}x${h}`, w, h);
 await shot("hero", "lamsa-hero-link-1200x628", 1200, 628);
 await shot("hero", "lamsa-page-cover-1640x624", 1640, 624);
+// Page kit (docs/marketing/page): avatar, cover, extra organic post images.
+const page = async (url, name, w, h) => { const p = await b.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 }); await p.goto(`${base}${url}`); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(250); await p.screenshot({ path: `docs/marketing/page/${name}.jpg`, type: "jpeg", quality: 93 }); await p.close(); console.log(name); };
+await page("/tools/ads/page.html?k=avatar", "profile-1080x1080", 1080, 1080);
+await page("/tools/ads/page.html?k=cover", "cover-1640x720", 1640, 720);
+for (const c of ["welcome", "privacy"]) await page(`/tools/ads/ad.html?c=${c}`, `post-${c}-1080x1080`, 1080, 1080);
 await b.close();

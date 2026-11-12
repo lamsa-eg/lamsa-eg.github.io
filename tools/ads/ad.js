@@ -10,7 +10,10 @@ const C = {
   steps: { bg: "night", chip: "بتتعمل مخصوص ليكم", h: ["هدية من قصتكم", "في ٣ خطوات"], sub: "",
     vis: `<div class="steps"><div class="step"><i>١</i><div><b>احكوا قصتكم</b><span>صور، رسالة، أغنية وإجابات الألعاب</span></div></div><div class="step"><i>٢</i><div><b>إحنا نجهّزها</b><span>هدية تتلمس + صفحة ذكرى خاصة</span></div></div><div class="step"><i>٣</i><div><b>تفتح بلمسة</b><span>NFC أو QR من أي موبايل</span></div></div></div>` },
   birthday: { bg: "sun", chip: "هدية عيد ميلاد مختلفة", h: ["عيد ميلاد حد غالي قرّب؟", "اهديه ذكرى تتفتح بلمسة."], sub: "صوركم سوا، رسالتك بصوتك، وألعاب عن تفاصيلكم.", vis: img("/assets/demo-v2/birthday.svg") },
-  anniversary: { bg: "night", chip: "لذكرى أول لقاء", h: ["فاكرين أول قهوة؟", "خلّوا الذكرى تتلمس."], sub: "هدية بتحكي حكايتكم من أول يوم — بصوركم وكلامكم.", vis: img("/assets/demo-v2/coffee.svg") }
+  anniversary: { bg: "night", chip: "لذكرى أول لقاء", h: ["فاكرين أول قهوة؟", "خلّوا الذكرى تتلمس."], sub: "هدية بتحكي حكايتكم من أول يوم — بصوركم وكلامكم.", vis: img("/assets/demo-v2/coffee.svg") },
+  privacy: { bg: "night", chip: "خصوصيتكم أولًا", h: ["اللحظة تخصكم،", "وتفضل بينكم."], sub: "",
+    vis: `<div class="steps"><div class="step"><i>✦</i><div><b>صوركم مش للإعلانات</b><span>مش بنستخدم صوركم أو قصتكم في أي محتوى عام</span></div></div><div class="step"><i>✦</i><div><b>رابط خاص بيكم</b><span>طويل ومش بيظهر في محركات البحث</span></div></div><div class="step"><i>✦</i><div><b>تقدروا تقفلوها برمز</b><span>سؤال سري أو ميعاد فتح محدد</span></div></div></div>` },
+  welcome: { bg: "sun", chip: "أهلًا بيكم", h: ["هدية تتلمس،", "وذكرى تفتح بلمسة."], sub: "صوركم ورسايلكم وأغنيتكم، وألعاب من إجاباتكم الحقيقية.", vis: img("/assets/img/scene-gift.svg") }
 }[c];
 document.body.className = `${C.bg} ${fmt}`;
 const head = `<div class="brand"><b><i>✦</i>لمسة</b><span class="chip">${C.chip}</span></div>`;
