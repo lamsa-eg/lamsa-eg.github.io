@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://*.supabase.co https://i.ytimg.com https://www.facebook.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://challenges.cloudflare.com https://cdn.jsdelivr.net https://www.facebook.com https://connect.facebook.net; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>لمسة — متابعة الطلب</title>
+<meta name="description" content="تابع حالة طلب لمسة برقم الطلب ورمز المتابعة الخاص.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#13233b">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/alexandria-ar-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<link rel="stylesheet" href="/assets/css/wow.css">
+<link rel="stylesheet" href="/assets/css/pages.css">
+</head>
+<body class="l-body pg">
+<a class="l-skip" href="#main">تخطى إلى المحتوى</a>
+<header class="l-header">
+  <div class="l-shell l-header-in">
+    <a class="l-brand" href="/" aria-label="لمسة — الرئيسية"><span class="l-brand-mark" aria-hidden="true">✦</span><span><b>لمسة</b><small>LAMSA</small></span></a>
+    <div class="pg-head-cta"><a class="l-btn l-btn-primary l-btn-sm" href="/order">ابدأ حكايتكم</a></div>
+  </div>
+</header>
+<main id="main" class="l-shell pg-track">
+  <header class="pg-hero pg-center"><span class="pg-stamp">متابعة الطلب</span><h1 class="l-display">اعرف الهدية وصلت لفين</h1><p class="l-lead">اكتب رقم الطلب ورمز المتابعة اللي ظهرولك بعد ما بعت الطلب.</p></header>
+  <section class="l-card pg-search" aria-label="بيانات المتابعة">
+    <div class="l-field"><label for="order">رقم الطلب</label><input class="l-input" id="order" dir="ltr" autocomplete="off" placeholder="ORD-…"></div>
+    <div class="l-field"><label for="token">رمز المتابعة</label><input class="l-input" id="token" dir="ltr" autocomplete="off" type="password" placeholder="رمز المتابعة الخاص"></div>
+    <button class="l-btn l-btn-primary l-btn-block" id="go" type="button">متابعة الطلب</button>
+    <p class="l-help">ضاع منك الرمز؟ <a href="https://wa.me/201588889741" target="_blank" rel="noopener">كلمنا على واتساب</a> برقم الطلب.</p>
+  </section>
+  <section class="l-card card pg-result hidden" id="result" aria-live="polite"></section>
+</main>
+<footer class="l-footer pg-footer">
+  <div class="l-shell l-footer-grid">
+    <div><a class="l-brand" href="/" style="color:#fff"><span class="l-brand-mark" aria-hidden="true">✦</span><span><b>لمسة</b><small style="color:#aab3c5">هدية تتحول لذكرى</small></span></a><p><small>اتعملت علشان التفاصيل الصغيرة ما تتنسيش.</small></p></div>
+    <div><h3>طلبك</h3><ul><li><a href="/order">طلب جديد</a></li><li><a href="/track.html">متابعة الطلب</a></li><li><a href="https://wa.me/201588889741" target="_blank" rel="noopener">واتساب</a></li></ul></div>
+    <div><h3>معلومات</h3><ul><li><a href="/">الرئيسية</a></li><li><a href="/privacy.html">الخصوصية</a></li><li><a href="/terms.html">الشروط</a></li></ul></div>
+  </div>
+  <div class="l-shell"><small>© 2026 LAMSA</small></div>
+</footer>
+<script src="/env.js"></script><script src="/assets/js/config-cf-v4.js"></script>
+<script type="module" src="/assets/js/track-cf-v4.js"></script>
+<script type="module" src="/assets/js/wow/track-phase2.js"></script>
+</body>
+</html>

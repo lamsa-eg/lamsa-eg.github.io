@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t"><title id="t">رسمة: كاميرا الموبايل بتمسح كود QR على قطعة لمسة</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16294a"/><stop offset="1" stop-color="#3a3359"/></linearGradient><linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf1"/><stop offset="1" stop-color="#efe1c6"/></linearGradient></defs>
+<rect width="400" height="400" fill="url(#bg)"/>
+<g fill="#fff" opacity=".8"><circle cx="40" cy="50" r="1.5"/><circle cx="120" cy="30" r="1"/><circle cx="350" cy="60" r="1.4"/><circle cx="300" cy="25" r="1"/><circle cx="370" cy="340" r="1.2"/><circle cx="30" cy="360" r="1"/></g>
+<g transform="translate(120 96)"><rect width="160" height="208" rx="22" fill="url(#card)" stroke="#d8c39b" stroke-width="2"/>
+<rect x="30" y="34" width="100" height="100" rx="8" fill="#fff" stroke="#13233b" stroke-width="2"/>
+<g fill="#13233b"><rect x="38" y="42" width="24" height="24" rx="3"/><rect x="98" y="42" width="24" height="24" rx="3"/><rect x="38" y="102" width="24" height="24" rx="3"/><rect x="45" y="49" width="10" height="10" fill="#fff"/><rect x="105" y="49" width="10" height="10" fill="#fff"/><rect x="45" y="109" width="10" height="10" fill="#fff"/><rect x="70" y="44" width="8" height="8"/><rect x="72" y="60" width="8" height="8"/><rect x="68" y="76" width="12" height="8"/><rect x="88" y="74" width="8" height="8"/><rect x="104" y="78" width="10" height="8"/><rect x="74" y="96" width="8" height="12"/><rect x="92" y="96" width="8" height="8"/><rect x="106" y="104" width="10" height="10"/><rect x="88" y="114" width="8" height="8"/><rect x="42" y="78" width="12" height="8"/></g>
+<text x="80" y="172" text-anchor="middle" font-family="Alexandria,sans-serif" font-size="15" font-weight="700" fill="#13233b">امسح الكود</text><path d="M80 184 l3.5 9 9 3.5 -9 3.5 -3.5 9 -3.5 -9 -9 -3.5 9 -3.5z" fill="#c7432a" transform="translate(0 -6) scale(1)"/></g>
+<g fill="none" stroke="#f6c177" stroke-width="5" stroke-linecap="round"><path d="M130 118 v-26 h26"/><path d="M270 118 v-26 h-26"/><path d="M130 246 v26 h26"/><path d="M270 246 v26 h-26"/></g>
+<rect x="138" y="176" width="124" height="3" rx="1.5" fill="#f08a5d" opacity=".9"/>
+</svg>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://*.supabase.co https://i.ytimg.com https://www.facebook.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://challenges.cloudflare.com https://cdn.jsdelivr.net https://www.facebook.com https://connect.facebook.net; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c1626">
+<title>ذكرى خاصة — لمسة</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta property="og:type" content="website">
+<meta property="og:title" content="فيه ذكرى معمولة لك ✦ — لمسة">
+<meta property="og:description" content="رحلة صغيرة معمولة من قصتكم. افتحها من موبايلك.">
+<meta property="og:image" content="https://lamsa-eg.github.io/assets/img/og-lamsa.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/alexandria-ar-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ruqaa-ar-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<link rel="stylesheet" href="/assets/css/memory.css">
+<script src="/env.js"></script>
+<script src="/assets/js/config-cf-v4.js"></script>
+<script src="/assets/js/memory-early.js"></script>
+</head>
+<body class="l-body lm" data-theme="black_rose" data-state="loading">
+
+<!-- 1) Envelope: the first moment -->
+<section class="lm-open" id="opening" aria-labelledby="openTitle">
+  <svg class="lm-stars" aria-hidden="true" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><g fill="#fff"><circle cx="40" cy="80" r="1.3"/><circle cx="120" cy="40" r="1"/><circle cx="200" cy="120" r="1.5"/><circle cx="300" cy="60" r="1.1"/><circle cx="360" cy="150" r="1.3"/><circle cx="70" cy="220" r="1"/><circle cx="250" cy="250" r="1.2"/><circle cx="340" cy="320" r="0.9"/><circle cx="30" cy="380" r="1.1"/><circle cx="160" cy="330" r="1"/></g></svg>
+  <div class="lm-open-in">
+    <p class="lm-open-kicker" id="openKicker">فيه حاجة مستنياك</p>
+    <h1 class="lm-open-title" id="openTitle"><span class="l-skel">ذكرى خاصة</span></h1>
+    <div class="lm-envelope" aria-hidden="true"><div class="lm-env-flap"></div><div class="lm-env-body"></div></div>
+    <button type="button" class="lm-seal" id="openBtn" aria-describedby="openHint" disabled><span>✦</span><b>افتح</b></button>
+    <p class="lm-open-hint" id="openHint">المس الختم عشان تبدأ الرحلة</p>
+    <div class="lm-error" id="memoryError" role="alert" aria-live="polite" hidden></div>
+  </div>
+</section>
+
+<!-- 2) The journey -->
+<div class="lm-progress" id="progress" hidden aria-hidden="true"><i id="progressBar"></i><span id="progressLabel"></span></div>
+<main class="lm-page" id="page" hidden>
+  <header class="lm-hero hero" id="hero">
+    <div class="lm-hero-bg" id="heroBg" aria-hidden="true"></div>
+    <div class="lm-hero-in">
+      <span class="lm-chip" id="occasion"></span>
+      <figure class="lm-arch"><img id="cover" alt="" src="/assets/img/scene-gift.svg" width="400" height="500"></figure>
+      <p class="lm-for" id="forLine"></p>
+      <h2 class="lm-names" id="names"></h2>
+      <p class="lm-title" id="pageTitle"></p>
+      <time class="lm-date" id="date"></time>
+      <a class="lm-down" href="#story" aria-label="ابدأ الرحلة">ابدأ الرحلة <span aria-hidden="true">↓</span></a>
+    </div>
+    <svg class="lm-wave" aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none"><path d="M0 40 C 240 90 480 0 720 40 S 1200 80 1440 30 L1440 90 L0 90 Z" fill="var(--m-paper)"/></svg>
+  </header>
+
+  <div class="lm-story story" id="story">
+    <section class="lm-station" id="introChapter" data-station="البداية" hidden><div class="lm-card lm-intro"><p id="intro"></p></div></section>
+
+    <section class="lm-station" id="messageChapter" data-station="الرسالة" hidden>
+      <div class="lm-letter">
+        <span class="lm-stamp" aria-hidden="true">✦</span>
+        <h3 class="lm-h" id="messageTitle">كلمة من القلب</h3>
+        <div class="lm-letter-body" id="message"></div>
+        <p class="lm-sign" id="signature"></p>
+      </div>
+    </section>
+
+    <section class="lm-station" id="galleryChapter" data-station="الصور" hidden>
+      <h3 class="lm-h" id="galleryTitle">لحظاتنا</h3>
+      <div class="lm-gallery" id="gallery" tabindex="0" aria-label="صور الذكرى — اسحب للتنقل"></div>
+      <div class="lm-gallery-nav" id="galleryNav"><button type="button" id="prevPhoto" aria-label="الصورة السابقة">→</button><span id="photoCount" aria-live="polite"></span><button type="button" id="nextPhoto" aria-label="الصورة التالية">←</button></div>
+    </section>
+
+    <section class="lm-station" id="videoChapter" data-station="الفيديو" hidden>
+      <h3 class="lm-h" id="videoTitle">لحظات حية</h3>
+      <div class="lm-media"><video id="video" playsinline controls preload="none"></video></div>
+    </section>
+
+    <section class="lm-station" id="audioChapter" data-station="صوت" hidden>
+      <div class="lm-card lm-voice"><span class="lm-voice-ico" aria-hidden="true">◉</span><div><h3 class="lm-h" id="audioTitle">صوت من القلب</h3><audio id="audio" controls preload="none"></audio></div></div>
+    </section>
+
+    <section class="lm-station" id="songChapter" data-station="أغنيتنا" hidden>
+      <div class="lm-card lm-song">
+        <div class="lm-vinyl" aria-hidden="true"><i></i></div>
+        <div class="lm-song-info"><h3 class="lm-h" id="songSectionTitle">أغنيتنا</h3><p id="songTitle"></p></div>
+        <div id="songPlayer" class="lm-song-player"></div>
+      </div>
+    </section>
+
+    <!-- WOW games are inserted after the gallery and before the closing by wow-core.js -->
+
+    <section class="lm-end closing" id="closing" data-station="النهاية">
+      <svg class="lm-end-heart" aria-hidden="true" viewBox="0 0 220 200"><path d="M110 178 L40 104 Q14 72 36 44 Q62 16 96 36 L110 52 L124 36 Q158 16 184 44 Q206 72 180 104 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 6"/><g fill="currentColor"><circle cx="110" cy="178" r="3.4"/><circle cx="40" cy="104" r="2.6"/><circle cx="36" cy="44" r="3"/><circle cx="96" cy="36" r="2.4"/><circle cx="110" cy="52" r="3.4"/><circle cx="124" cy="36" r="2.4"/><circle cx="184" cy="44" r="3"/><circle cx="180" cy="104" r="2.6"/></g></svg>
+      <p class="lm-end-text" id="closingText"></p>
+      <p class="lm-end-from" id="endFrom"></p>
+      <div class="lm-end-actions">
+        <button type="button" class="l-btn l-btn-sun" id="replay">شوف الرحلة تاني ↺</button>
+        <button type="button" class="l-btn lm-btn-glass" id="share">شارك الذكرى ↗</button>
+      </div>
+      <p class="lm-end-note">صفحة خاصة · مش بتظهر في محركات البحث · اتعملت بعناية في <a href="/" target="_blank" rel="noopener">لمسة</a></p>
+    </section>
+  </div>
+</main>
+
+<audio id="ambient" src="/assets/audio/lamsa-romantic-ambient.mp3" loop preload="none"></audio>
+<button type="button" class="lm-music" id="music" aria-pressed="false" aria-label="تشغيل الموسيقى" hidden><span aria-hidden="true">♪</span></button>
+
+<div class="lm-lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="الصورة" hidden><button type="button" id="lightboxClose" aria-label="إغلاق">✕</button><img id="lightboxImg" alt=""></div>
+
+<script type="module" src="/assets/js/memory.js"></script>
+</body>
+</html>

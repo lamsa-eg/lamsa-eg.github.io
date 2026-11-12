@@ -1,0 +1,1 @@
+window.LAMSA_ENV={"SUPABASE_URL":"https://kahsdittkaascnrfamlv.supabase.co","SUPABASE_PUBLISHABLE_KEY":"sb_publishable_zmdgfhVf1AUZart717F0zQ_9XZnmCNw","SITE_URL":"https://lamsa-eg.github.io","BASE_PATH":"","API_BASE":"https://kahsdittkaascnrfamlv.supabase.co/functions/v1"};

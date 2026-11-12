@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /m/
+Disallow: /memory.html
+Disallow: /order
+Disallow: /order-success.html
+Disallow: /track.html
+Disallow: /api/
+Disallow: /upload/
+
+Sitemap: https://lamsa-eg.github.io/sitemap.xml

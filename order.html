@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://*.supabase.co https://i.ytimg.com https://www.facebook.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://challenges.cloudflare.com https://cdn.jsdelivr.net https://www.facebook.com https://connect.facebook.net; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf5ec">
+<title>ابدأ حكايتكم — لمسة LAMSA</title>
+<meta name="description" content="اصنع هدية لمسة خطوة بخطوة: احكي قصتكم، ارفع الصور، اختار الألعاب واكتب إجاباتها الحقيقية، واستلم هدية تفتح بـNFC أو QR.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://lamsa-eg.github.io/order">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/alexandria-ar-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<link rel="stylesheet" href="/assets/css/order.css">
+</head>
+<body class="l-body order-page">
+<a class="l-skip" href="#wizard">تخطى إلى نموذج الطلب</a>
+<header class="l-header">
+  <div class="l-shell l-header-in">
+    <a class="l-brand" href="/" aria-label="لمسة — الصفحة الرئيسية"><span class="l-brand-mark" aria-hidden="true">✦</span><span><b>لمسة</b><small>LAMSA</small></span></a>
+    <div class="ow-head-actions"><span class="ow-saved" id="savedState" aria-live="polite"></span><a class="l-btn l-btn-ghost l-btn-sm" href="/track.html">تابع طلبك</a></div>
+  </div>
+  <div class="ow-progress" aria-hidden="true"><i id="progressBar"></i></div>
+</header>
+
+<main id="wizard" class="ow-main" tabindex="-1">
+  <div class="l-shell ow-layout">
+    <div class="ow-panel">
+      <div class="ow-stepmeta"><span id="stepCount">الخطوة 1 من 12</span><span id="stepPercent">0% مكتمل</span></div>
+      <div id="draftBanner" class="l-alert l-alert-info ow-draft" hidden>
+        <span>رجّعنا آخر مسودة كنت شغال عليها ♡</span>
+        <button type="button" class="l-link" id="resetDraft">ابدأ طلب جديد</button>
+      </div>
+      <noscript><div class="l-alert l-alert-err">صفحة الطلب محتاجة تفعيل JavaScript في المتصفح.</div></noscript>
+
+      <form id="orderForm" novalidate autocomplete="on">
+        <input type="text" name="website" class="l-sr" tabindex="-1" autocomplete="off" aria-hidden="true" data-k="honeypot">
+
+        <!-- 1 -->
+        <section class="ow-step" data-step="occasion" aria-labelledby="h-occasion">
+          <h1 id="h-occasion" class="ow-h">إيه المناسبة؟</h1>
+          <p class="ow-sub">نبدأ من الحكاية. اختيارك هنا بيساعدنا نقترح الشكل والألعاب المناسبة.</p>
+          <fieldset class="ow-fieldset"><legend class="l-label">المناسبة</legend>
+            <div class="ow-chips" id="occasionChips"></div>
+            <div class="l-field" id="occasionCustomWrap" hidden><label for="occasionCustom">اكتب المناسبة</label><input class="l-input" id="occasionCustom" data-k="occasionCustom" maxlength="60"></div>
+            <p class="l-error" data-err="occasion"></p>
+          </fieldset>
+          <fieldset class="ow-fieldset"><legend class="l-label">الهدية لمين؟</legend>
+            <div class="ow-chips" id="relationshipChips"></div>
+            <p class="l-error" data-err="relationship"></p>
+          </fieldset>
+        </section>
+
+        <!-- 2 -->
+        <section class="ow-step" data-step="people" aria-labelledby="h-people" hidden>
+          <h2 id="h-people" class="ow-h">مين صاحب الحكاية؟</h2>
+          <p class="ow-sub">الأسامي هتظهر في أول الذكرى وفي أسئلة الألعاب.</p>
+          <div class="l-grid-2">
+            <div class="l-field"><label for="senderName">اسمك (مقدّم الهدية)</label><input class="l-input" id="senderName" data-k="senderName" maxlength="80" autocomplete="given-name" aria-describedby="e-senderName"><p class="l-error" id="e-senderName" data-err="senderName"></p></div>
+            <div class="l-field"><label for="recipientName">اسم المستلم</label><input class="l-input" id="recipientName" data-k="recipientName" maxlength="80" aria-describedby="e-recipientName"><p class="l-error" id="e-recipientName" data-err="recipientName"></p></div>
+          </div>
+          <fieldset class="ow-fieldset"><legend class="l-label">المستلم</legend>
+            <div class="ow-row2">
+              <label class="l-choice"><input type="radio" name="recipientGender" value="m" data-k="recipientGender"><span><b>هو</b><small>الكلام في الذكرى بصيغة المذكر</small></span></label>
+              <label class="l-choice"><input type="radio" name="recipientGender" value="f" data-k="recipientGender"><span><b>هي</b><small>الكلام في الذكرى بصيغة المؤنث</small></span></label>
+            </div>
+            <p class="l-error" data-err="recipientGender"></p>
+          </fieldset>
+          <div class="l-field"><label for="memoryDate">تاريخ الذكرى <span class="l-opt">(اختياري)</span></label><input class="l-input" type="date" id="memoryDate" data-k="memoryDate"><p class="l-help">مثلًا يوم أول مقابلة أو يوم المناسبة.</p></div>
+        </section>
+
+        <!-- 3 -->
+        <section class="ow-step" data-step="package" aria-labelledby="h-package" hidden>
+          <h2 id="h-package" class="ow-h">اختار حجم الحكاية</h2>
+          <p class="ow-sub">الأسعار محدثة من النظام. تقدر تغيّر الباقة في أي وقت قبل الإرسال.</p>
+          <div class="ow-packages" id="packageList" role="radiogroup" aria-label="الباقات" aria-busy="true"><div class="ow-pkg-skel"></div><div class="ow-pkg-skel"></div><div class="ow-pkg-skel"></div></div>
+          <p class="l-error" data-err="package"></p>
+        </section>
+
+        <!-- 4 -->
+        <section class="ow-step" data-step="look" aria-labelledby="h-look" hidden>
+          <h2 id="h-look" class="ow-h">شكل التجربة</h2>
+          <p class="ow-sub">ده شكل صفحة الذكرى اللي هتفتح على موبايل المستلم.</p>
+          <fieldset class="ow-fieldset"><legend class="l-label">الستايل</legend><div class="ow-themes" id="themeList"></div></fieldset>
+          <div class="l-field"><label for="pageTitle">عنوان الذكرى <span class="l-opt">(اختياري)</span></label><input class="l-input" id="pageTitle" data-k="pageTitle" maxlength="120" placeholder="مثال: حكايتنا الجميلة"></div>
+          <details class="ow-story-q" id="lookDetails"><summary>تخصيص أكتر للشكل <span class="l-opt">(اختياري)</span></summary>
+          <div class="l-grid-2">
+            <div class="l-field"><label for="layoutStyle">عرض الصور</label><select class="l-select" id="layoutStyle" data-k="layoutStyle"><option value="carousel">عرض متحرك كالفيديو</option><option value="gallery">معرض رأسي</option><option value="grid2">صورتين في الصف</option><option value="grid">شبكة</option></select></div>
+            <div class="l-field"><label for="pageEffect">الحركة في الصفحة</label><select class="l-select" id="pageEffect" data-k="pageEffect"><option value="none">هادئة</option><option value="fade">تلاشي ناعم</option><option value="glow">توهج</option><option value="particles">جزيئات خفيفة</option></select></div>
+            <div class="l-field"><label for="fontSize">حجم الخط</label><select class="l-select" id="fontSize" data-k="fontSize"><option value="normal">عادي</option><option value="large">كبير</option><option value="xlarge">أكبر</option></select></div>
+            <div class="l-field"><label for="pageTextColor">لون النص</label><select class="l-select" id="pageTextColor" data-k="pageTextColor"><option value="default">حسب الستايل</option><option value="gold">ذهبي</option><option value="silver">فضي</option><option value="rose">وردي</option><option value="warm">دافئ</option></select></div>
+          </div>
+          </details>
+        </section>
+
+        <!-- 5 -->
+        <section class="ow-step" data-step="media" aria-labelledby="h-media" hidden>
+          <h2 id="h-media" class="ow-h">الصور واللحظات</h2>
+          <p class="ow-sub" id="mediaLimits">ارفع الصور بالترتيب اللي تحب يظهر بيه. الصور الكبيرة بتتضغط تلقائيًا بجودة عالية.</p>
+          <div class="ow-drop" id="imageDrop">
+            <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="l-sr">
+            <label for="imageInput" class="l-btn l-btn-primary"><span aria-hidden="true">＋</span> أضف صور</label>
+            <p class="l-help" id="imageHint">JPG أو PNG أو WEBP</p>
+          </div>
+          <p class="l-error" data-err="images"></p>
+          <ol class="ow-thumbs" id="imageList" aria-label="الصور المختارة"></ol>
+          <div class="ow-media-grid">
+            <div class="ow-media-slot" data-slot="cover"><b>صورة الغلاف</b><small>اختياري — لو فاضية هنستخدم أول صورة</small><div class="ow-slot-body"></div><input type="file" id="coverInput" accept="image/jpeg,image/png,image/webp" class="l-sr"><label for="coverInput" class="l-btn l-btn-ghost l-btn-sm">اختار صورة</label></div>
+            <div class="ow-media-slot" data-slot="background"><b>صورة الخلفية</b><small>اختياري</small><div class="ow-slot-body"></div><input type="file" id="backgroundInput" accept="image/jpeg,image/png,image/webp" class="l-sr"><label for="backgroundInput" class="l-btn l-btn-ghost l-btn-sm">اختار صورة</label></div>
+            <div class="ow-media-slot" data-slot="video"><b>فيديو</b><small data-hint>—</small><div class="ow-slot-body"></div><input type="file" id="videoInput" accept="video/mp4,video/quicktime" class="l-sr"><label for="videoInput" class="l-btn l-btn-ghost l-btn-sm">اختار فيديو</label></div>
+            <div class="ow-media-slot" data-slot="audio"><b>رسالة صوتية</b><small data-hint>—</small><div class="ow-slot-body"></div><input type="file" id="audioInput" accept="audio/mpeg,audio/mp4,audio/x-m4a,audio/wav" class="l-sr"><label for="audioInput" class="l-btn l-btn-ghost l-btn-sm">اختار تسجيل</label></div>
+          </div>
+          <p class="l-error" data-err="media"></p>
+          <div id="songFields" class="ow-song">
+            <h3 class="ow-h3">أغنيتكم <span class="l-opt">(اختياري)</span></h3>
+            <div class="l-grid-2">
+              <div class="l-field"><label for="songTitle">اسم الأغنية</label><input class="l-input" id="songTitle" data-k="songTitle" maxlength="120"></div>
+              <div class="l-field"><label for="songUrl">رابط الأغنية</label><input class="l-input" id="songUrl" data-k="songUrl" type="url" inputmode="url" maxlength="500" placeholder="YouTube أو TikTok أو MP3" dir="ltr"><p class="l-error" data-err="songUrl"></p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 -->
+        <section class="ow-step" data-step="story" aria-labelledby="h-story" hidden>
+          <h2 id="h-story" class="ow-h">احكيلنا قصتكم</h2>
+          <p class="ow-sub">جاوب على اللي تعرفه بس. الإجابات دي بنستخدمها في الخط الزمني واقتراح الألعاب، ومش بتظهر لحد غير صاحب الهدية.</p>
+          <div class="l-field"><label for="message">الرسالة الأساسية</label><textarea class="l-textarea" id="message" data-k="message" maxlength="2000" rows="5" placeholder="اكتب الكلام اللي نفسك يوصل…" aria-describedby="e-message"></textarea><p class="l-help"><span data-count="message">0</span>/2000</p><p class="l-error" id="e-message" data-err="message"></p></div>
+          <details class="ow-story-q" id="storyDetails"><summary>أسئلة عن حكايتكم <span class="l-opt">(اختياري — بتخلّي الذكرى أحلى وبتقترح ألعاب)</span></summary>
+            <div class="l-grid-2" id="storyQuestions"></div>
+          </details>
+          <div class="l-field"><label for="closingText">جملة الختام <span class="l-opt">(اختياري)</span></label><input class="l-input" id="closingText" data-k="closingText" maxlength="240" placeholder="وكل يوم وإنت أجمل ذكرى"></div>
+        </section>
+
+        <!-- 7 -->
+        <section class="ow-step" data-step="games" aria-labelledby="h-games" hidden>
+          <h2 id="h-games" class="ow-h">اختار ألعاب الذكرى</h2>
+          <p class="ow-sub">كل لعبة بتتبني من إجاباتك الحقيقية — مش أسئلة عشوائية. <b id="gamesAllowance"></b></p>
+          <div class="ow-games-filter" id="gameFilter" role="group" aria-label="تصنيف الألعاب"></div>
+          <div class="ow-games" id="gameList"></div>
+          <p class="l-error" data-err="games"></p>
+        </section>
+
+        <!-- 8 -->
+        <section class="ow-step" data-step="answers" aria-labelledby="h-answers" hidden>
+          <h2 id="h-answers" class="ow-h">إجابات الألعاب</h2>
+          <p class="ow-sub">اكتب الأسئلة والإجابات زي ما حصلت بينكم. ده اللي المستلم هيلعبه بالظبط.</p>
+          <div id="gameEditors"></div>
+        </section>
+
+        <!-- 9 -->
+        <section class="ow-step" data-step="surprises" aria-labelledby="h-surprises" hidden>
+          <h2 id="h-surprises" class="ow-h">مفاجآت إضافية</h2>
+          <p class="ow-sub">كلها اختيارية. الأسعار من النظام وبتتحسب في الملخص.</p>
+          <div id="addonList" class="ow-addons"></div>
+          <div class="l-field" id="packWrap" hidden><label for="pack">باقة المناسبة</label><select class="l-select" id="pack" data-k="pack"></select><p class="l-help">ثيم وتفاصيل جاهزة لمناسبات معينة.</p></div>
+          <label class="l-choice"><input type="checkbox" data-k="simpleMode"><span><b>المستلم مش متعود على التكنولوجيا</b><small>خط أكبر وألعاب لمس بسيطة فقط</small></span></label>
+        </section>
+
+        <!-- 10 -->
+        <section class="ow-step" data-step="delivery" aria-labelledby="h-delivery" hidden>
+          <h2 id="h-delivery" class="ow-h">الهدية والتوصيل</h2>
+          <p class="ow-sub">قطعة لمسة فيها NFC وQR بيفتحوا نفس الذكرى، وبتوصل في تغليف جاهز للإهداء.</p>
+          <div class="l-grid-2">
+            <div class="l-field"><label for="textColor">لون الكتابة على القطعة</label><select class="l-select" id="textColor" data-k="textColor"><option value="gold">ذهبي</option><option value="silver">فضي</option><option value="black">أسود</option></select></div>
+            <div class="l-field"><label for="engraving">جملة على القطعة <span class="l-opt">(اختياري)</span></label><input class="l-input" id="engraving" data-k="engraving" maxlength="100"></div>
+          </div>
+          <h3 class="ow-h3">عنوان التوصيل</h3>
+          <div class="l-grid-2">
+            <div class="l-field"><label for="zone">منطقة الشحن</label><select class="l-select" id="zone" data-k="zone" aria-describedby="e-zone"><option value="">جاري التحميل…</option></select><p class="l-error" id="e-zone" data-err="zone"></p></div>
+            <div class="l-field"><label for="city">المدينة</label><input class="l-input" id="city" data-k="city" maxlength="80" autocomplete="address-level2"><p class="l-error" data-err="city"></p></div>
+            <div class="l-field"><label for="area">المنطقة / الحي</label><input class="l-input" id="area" data-k="area" maxlength="100" autocomplete="address-level3"><p class="l-error" data-err="area"></p></div>
+            <div class="l-field"><label for="street">العنوان بالتفصيل</label><input class="l-input" id="street" data-k="street" maxlength="180" autocomplete="street-address"><p class="l-error" data-err="street"></p></div>
+            <div class="l-field"><label for="phone">رقم الموبايل</label><input class="l-input" id="phone" data-k="phone" maxlength="24" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="01xxxxxxxxx"><p class="l-error" data-err="phone"></p></div>
+            <div class="l-field"><label for="deliveryDate">تاريخ التوصيل المطلوب <span class="l-opt">(اختياري)</span></label><input class="l-input" type="date" id="deliveryDate" data-k="deliveryDate"></div>
+            
+            <div class="l-field"><label for="notes">ملاحظات <span class="l-opt">(اختياري)</span></label><input class="l-input" id="notes" data-k="notes" maxlength="400"></div>
+          </div>
+          <div class="ow-pay"><span class="ow-pay-logo" aria-hidden="true">⚡</span><div><b>الدفع بإنستاباي</b><small>بعد إرسال الطلب هيظهرلك زرار الدفع والمبلغ بالظبط، وترفع صورة إيصال التحويل. التجهيز بيبدأ بعد تأكيد الدفع.</small></div></div>
+          <label class="l-checkline"><input type="checkbox" data-k="whatsapp"><span>أوافق على استلام تأكيد الطلب وتحديثاته على واتساب.</span></label>
+        </section>
+
+        <!-- 11 -->
+        <section class="ow-step" data-step="review" aria-labelledby="h-review" hidden>
+          <h2 id="h-review" class="ow-h">راجع حكايتك</h2>
+          <p class="ow-sub">ده ملخص كل اللي اخترته. تقدر تعدّل أي جزء قبل الإرسال.</p>
+          <div id="reviewBody"></div>
+          <div class="ow-preview-phone" id="reviewPreview" aria-label="معاينة بداية الذكرى"></div>
+          <div id="turnstileBox"></div>
+          <label class="l-checkline ow-legal"><input type="checkbox" data-k="legal" aria-describedby="e-legal"><span>قرأت وأوافق على <a href="/terms.html" target="_blank" rel="noopener">الشروط</a> و<a href="/privacy.html" target="_blank" rel="noopener">سياسة الخصوصية</a>.</span></label>
+          <p class="l-error" id="e-legal" data-err="legal"></p>
+        </section>
+
+        <!-- 12 -->
+        <section class="ow-step" data-step="send" aria-labelledby="h-send" hidden>
+          <h2 id="h-send" class="ow-h">بنجهّز حكايتكم…</h2>
+          <p class="ow-sub" id="sendStatus" aria-live="polite">جاري إرسال الطلب.</p>
+          <div class="ow-send-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="sendBar"><i></i></div>
+          <ul class="ow-send-files" id="sendFiles"></ul>
+          <div id="sendError" class="l-alert l-alert-err" role="alert" hidden></div>
+          <div class="ow-send-actions" id="sendActions" hidden>
+            <button type="button" class="l-btn l-btn-primary" id="retrySend">إعادة المحاولة</button>
+            <button type="button" class="l-btn l-btn-ghost" id="backToReview">رجوع للمراجعة</button>
+          </div>
+        </section>
+      </form>
+    </div>
+
+    <aside class="ow-summary l-card" aria-labelledby="sumTitle">
+      <h2 id="sumTitle" class="ow-sum-title">ملخص الهدية</h2>
+      <dl class="ow-sum" id="summary"></dl>
+      <div class="ow-sum-total"><span>الإجمالي التقريبي</span><b id="sumTotal">—</b></div>
+      <p class="l-help">السعر النهائي يتأكد من السيرفر. الدفع بإنستاباي بعد إرسال الطلب.</p>
+    </aside>
+  </div>
+</main>
+
+<nav class="ow-nav" aria-label="التنقل بين الخطوات">
+  <div class="l-shell ow-nav-in">
+    <button type="button" class="l-btn l-btn-ghost" id="prevBtn">→ السابق</button>
+    <div class="ow-nav-mid"><b id="navTotal">—</b><small id="navStep">1/12</small></div>
+    <button type="button" class="l-btn l-btn-sun" id="nextBtn">التالي ←</button>
+  </div>
+</nav>
+<script src="/env.js"></script><script src="/assets/js/config-cf-v4.js"></script>
+<script type="module" src="/assets/js/order/wizard.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://*.supabase.co https://i.ytimg.com https://www.facebook.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://challenges.cloudflare.com https://cdn.jsdelivr.net https://www.facebook.com https://connect.facebook.net; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تم استلام طلبك — لمسة</title><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<link rel="stylesheet" href="/assets/css/success.css">
+</head>
+<body class="l-body">
+<main class="ok l-shell">
+  <section class="ok-card l-card" aria-labelledby="ok-title">
+    <div class="ok-seal" aria-hidden="true">✦</div>
+    <span class="l-eyebrow">تم استلام الطلب</span>
+    <h1 id="ok-title" class="l-display">حكايتكم وصلتنا ♡</h1>
+    <p class="l-lead">فاضل خطوة واحدة: الدفع بإنستاباي. بعد تأكيد الدفع هنراجع الصور والإجابات ونجهّز التجربة، وهنكلمك على واتساب لميعاد التوصيل.</p>
+    <div class="ok-order"><small>رقم الطلب</small><b id="orderNo" dir="ltr">—</b></div>
+    <div id="warn" class="l-alert l-alert-info" hidden></div>
+    <section class="ok-pay" id="payBox" hidden aria-labelledby="payTitle">
+      <div class="ok-pay-head"><span aria-hidden="true">⚡</span><div><h2 id="payTitle">ادفع بإنستاباي عشان نبدأ التجهيز</h2><p>حوّل المبلغ، وبعدها ارفع صورة الإيصال هنا.</p></div></div>
+      <div class="ok-pay-amount"><small>المبلغ المطلوب</small><b id="payAmount">—</b><span id="payShipNote" hidden>+ الشحن يتحدد بعد التأكيد ويتدفع منفصل</span></div>
+      <a class="l-btn ok-pay-btn l-btn-block" id="payLink" href="#" target="_blank" rel="noopener" hidden>ادفع بإنستاباي ←</a>
+      <div class="ok-pay-row"><div><small>أو حوّل على العنوان ده — <span id="payName">Lamsa</span></small><b id="payIpa" dir="ltr">—</b></div><button type="button" class="l-btn l-btn-ghost l-btn-sm" id="copyIpa">نسخ</button></div>
+      <div class="ok-pay-row"><div><small>اكتب رقم الطلب في ملاحظة التحويل</small><b id="payRef" dir="ltr">—</b></div><button type="button" class="l-btn l-btn-ghost l-btn-sm" id="copyRef">نسخ</button></div>
+      <div class="ok-pay-proof" id="proofBox">
+        <b>بعد ما تحوّل: ارفع صورة الإيصال</b>
+        <input type="file" id="proofInput" accept="image/jpeg,image/png,image/webp" class="l-sr">
+        <label for="proofInput" class="l-btn l-btn-sun l-btn-block" id="proofBtn">ارفع صورة الإيصال</label>
+        <p class="l-help" id="proofStatus" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <dl class="ok-price" id="pricing">
+      <div><dt>سعر الهدية</dt><dd id="basePrice">—</dd></div>
+      <div><dt>الألعاب والإضافات</dt><dd id="wowPrice">—</dd></div>
+      <div><dt>الشحن</dt><dd id="shippingPrice">—</dd></div>
+      <div class="is-total"><dt>الإجمالي</dt><dd id="totalPrice">—</dd></div>
+    </dl>
+    <p id="waStatus" class="l-alert l-alert-ok" hidden>بعتنالك تفاصيل الطلب على واتساب.</p>
+    <ol class="ok-next"><li><b>الدفع</b> — بإنستاباي، وترفع الإيصال من الصفحة دي أو من «متابعة الطلب».</li><li><b>المراجعة</b> — بنأكد الدفع ونراجع المحتوى.</li><li><b>التجهيز</b> — بنبني الذكرى ونربطها بالقطعة.</li><li><b>التوصيل</b> — الهدية توصل جاهزة، وتفتح بلمسة أو QR.</li></ol>
+    <div class="ok-secret">
+      <b>رمز المتابعة الخاص</b>
+      <code id="trackingCode" dir="ltr">—</code>
+      <button class="l-btn l-btn-ghost l-btn-block" id="copyTracking" type="button">نسخ رقم الطلب ورمز المتابعة</button>
+      <small>احتفظ بالرمز ومتشاركوش غير مع صاحب الطلب.</small>
+    </div>
+    <div class="ok-actions"><a class="l-btn l-btn-primary" id="trackBtn" href="/track.html">متابعة الطلب</a><a class="l-btn l-btn-ghost" href="/">الرئيسية</a></div>
+  </section>
+</main>
+<script src="/env.js"></script>
+<script src="/assets/js/config-cf-v4.js"></script>
+<script type="module" src="/assets/js/order-success.js"></script>
+</body>
+</html>

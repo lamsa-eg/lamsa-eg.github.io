@@ -1,0 +1,21 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://challenges.cloudflare.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://*.supabase.co https://i.ytimg.com https://www.facebook.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://challenges.cloudflare.com https://cdn.jsdelivr.net https://www.facebook.com https://connect.facebook.net; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.tiktok.com https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LAMSA — الباقات والأسعار والألعاب</title><meta name="robots" content="noindex,nofollow,noarchive"><link rel="stylesheet" href="../assets/css/app.css"><link rel="stylesheet" href="../assets/css/admin.css"><link rel="stylesheet" href="../assets/css/lamsa-ds.css"><link rel="stylesheet" href="../assets/css/admin-v40.css"><link rel="stylesheet" href="../assets/css/admin-catalog.css"><link rel="manifest" href="../manifest.webmanifest"><meta name="theme-color" content="#13233b"></head>
+<body class="lm-admin"><div class="admin"><aside class="side"><a class="lm-side-brand" href="index.html" aria-label="لمسة — مركز التشغيل"><span class="l-brand-mark" aria-hidden="true">✦</span><span><b>لمسة</b><small>لوحة الإدارة</small></span></a><div class="side-label">القائمة</div><nav class="menu"><a href="index.html">مركز التشغيل</a><a href="dashboard.html">الطلبات</a><a href="memory-editor.html">الذكريات</a><a href="nfc-writer.html">NFC و QR</a><a href="shipping-settings.html">الشحن</a><a class="active" href="catalog.html">الباقات والتسويق</a><a href="../index.html" target="_blank" rel="noopener">عرض الموقع ↗</a><a href="#" id="logout">تسجيل الخروج</a></nav></aside>
+<main class="content">
+  <div class="adminhead"><div><span class="kicker">الكتالوج</span><h1 class="title">الباقات والأسعار والألعاب</h1><p class="copy">ده المكان الوحيد لتعديل الأسعار. أي تعديل يظهر في الموقع وصفحة الطلب خلال دقيقة تقريبًا (الكاش 60 ثانية)، والسيرفر يحسب السعر النهائي من نفس البيانات.</p></div><button class="heart-outline-btn" id="refresh" type="button">تحديث</button></div>
+  <div id="roleNote" class="cat-note" hidden></div>
+  <div class="cat-tabs" role="tablist" aria-label="أقسام الكتالوج">
+    <button role="tab" aria-selected="true" data-tab="packages" type="button">الباقات</button>
+    <button role="tab" aria-selected="false" data-tab="addons" type="button">الإضافات</button>
+    <button role="tab" aria-selected="false" data-tab="packs" type="button">باقات المناسبات</button>
+    <button role="tab" aria-selected="false" data-tab="seasons" type="button">المواسم والعروض</button>
+    <button role="tab" aria-selected="false" data-tab="games" type="button">الألعاب</button>
+    <button role="tab" aria-selected="false" data-tab="payments" type="button">الدفع والتسويق</button>
+    <button role="tab" aria-selected="false" data-tab="audit" type="button">سجل التعديلات</button>
+  </div>
+  <section class="card cat-panel" id="panel" role="tabpanel" aria-live="polite"><div class="muted">تحميل…</div></section>
+</main></div>
+<script src="/env.js"></script><script src="../assets/js/config-cf-v4.js"></script>
+<script type="module" src="../assets/js/admin-catalog-v38.js"></script>
+<script type="module" src="../assets/js/admin-notifications-v18.js"></script>
+</body></html>
