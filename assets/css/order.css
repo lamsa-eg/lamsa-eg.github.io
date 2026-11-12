@@ -168,3 +168,4 @@
 .ow-pay{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;margin:6px 0 14px;border-radius:var(--l-r);background:linear-gradient(135deg,#f3eefe,#fdf1ec);border:1px solid rgba(91,60,160,.18)}
 .ow-pay-logo{width:42px;height:42px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;background:#4b2a8f;color:#fff;font-size:20px}
 .ow-pay b{display:block;color:var(--l-night)}.ow-pay small{display:block;color:var(--l-ink-2);font-size:13.5px;line-height:1.7}
+.ow-step:not([hidden])~.ow-step:not([hidden]){margin-top:30px;padding-top:26px;border-top:1px dashed var(--l-line-2)}

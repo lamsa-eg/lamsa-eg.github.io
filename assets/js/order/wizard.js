@@ -11,6 +11,16 @@ let icSent = false;
 
 const LEGAL_VERSION = window.LAMSA_CONFIG?.LEGAL_VERSION || "2026-09-11";
 const STEPS = ["occasion", "people", "package", "look", "media", "story", "games", "answers", "surprises", "delivery", "review", "send"];
+// Screens: related sections are shown together so the journey is 7–8 short screens instead of 12.
+// Sections (STEPS) keep their own validation; S.step / S.furthest are screen indexes.
+const PAGES = [["occasion", "people"], ["package"], ["media"], ["story", "look"], ["games", "surprises"], ["answers"], ["delivery"], ["review"], ["send"]];
+const PAGE_LABELS = ["المناسبة والأسماء", "الباقة", "الصور", "الرسالة والشكل", "الألعاب والمفاجآت", "إجابات الألعاب", "التوصيل", "المراجعة", "الإرسال"];
+const NAV_V = 2, REVIEW = PAGES.length - 2, SEND = PAGES.length - 1;
+const pageOf = name => PAGES.findIndex(g => g.includes(name));
+const skipPage = i => PAGES[i]?.[0] === "answers" && !S.games.length;
+const visibleCount = () => PAGES.slice(0, SEND).filter((_, i) => !skipPage(i)).length;
+const visibleNo = i => PAGES.slice(0, i + 1).filter((_, k) => !skipPage(k)).length;
+function showPage(i) { PAGES.forEach((g, k) => g.forEach(n => { $(`[data-step="${n}"]`).hidden = k !== i; })); }
 const STEP_LABELS = ["المناسبة", "الأسماء", "الباقة", "الشكل", "الصور", "القصة", "الألعاب", "الإجابات", "المفاجآت", "التوصيل", "المراجعة", "الإرسال"];
 const OCCASIONS = [["birthday", "عيد ميلاد"], ["anniversary", "ذكرى ارتباط / جواز"], ["engagement", "خطوبة"], ["valentine", "عيد الحب"], ["apology", "اعتذار"], ["mothers_day", "عيد الأم"], ["graduation", "نجاح / تخرج"], ["baby", "مولود جديد"], ["just_because", "من غير مناسبة"], ["other", "مناسبة تانية"]];
 const RELATIONS = [["partner", "حبيبي / حبيبتي"], ["spouse", "زوجي / زوجتي"], ["fiance", "خطيبي / خطيبتي"], ["friend", "صديق / صديقة"], ["mother", "ماما"], ["father", "بابا"], ["sibling", "أخويا / أختي"], ["other", "حد تاني"]];
@@ -80,36 +90,39 @@ function showErrors(name, errors) {
 }
 
 /* ---------------- navigation ---------------- */
-function go(i, { push = true, focus = true } = {}) {
-  i = Math.max(0, Math.min(STEPS.length - 2, i));
-  // Never jump past the furthest validated step.
+function go(i, { push = true, focus = true, dir = 1 } = {}) {
+  i = Math.max(0, Math.min(REVIEW, i));
+  // Never jump past the furthest validated screen.
   if (i > S.furthest) i = S.furthest;
+  while (skipPage(i) && i + dir >= 0 && i + dir <= REVIEW) i += dir;
   S.step = i; persist();
   if (i >= 1 && !icSent) { icSent = true; track("InitiateCheckout", { currency: "EGP", content_category: "gift" }); }
-  STEPS.forEach((n, k) => { const s = $(`[data-step="${n}"]`); s.hidden = k !== i; });
-  renderStep(STEPS[i]);
+  showPage(i);
+  PAGES[i].forEach(renderStep);
   updateChrome();
-  if (push) history.pushState({ step: i }, "", `#${STEPS[i]}`);
-  if (focus) { scrollTo({ top: 0, behavior: "smooth" }); $(`[data-step="${STEPS[i]}"] .ow-h`)?.focus?.({ preventScroll: true }); }
+  if (push) history.pushState({ step: i }, "", `#${PAGES[i][0]}`);
+  if (focus) { scrollTo({ top: 0, behavior: "smooth" }); $(`[data-step="${PAGES[i][0]}"] .ow-h`)?.focus?.({ preventScroll: true }); }
 }
 function next() {
-  const name = STEPS[S.step], errors = validateStep(name);
-  if (!showErrors(name, errors)) { toast("فيه حاجة محتاجة تكمّلها في الخطوة دي"); return; }
-  if (name === "review") return startSubmit();
-  S.furthest = Math.max(S.furthest, S.step + 1);
-  go(S.step + 1);
+  for (const name of PAGES[S.step]) {
+    if (!showErrors(name, validateStep(name))) { toast("فيه حاجة محتاجة تكمّلها هنا"); return; }
+  }
+  if (S.step === REVIEW) return startSubmit();
+  let n = S.step + 1; while (skipPage(n) && n < REVIEW) n++;
+  S.furthest = Math.max(S.furthest, n);
+  go(n);
 }
 function prev() { if (S.step > 0) history.back(); else location.href = "/"; }
 function updateChrome() {
-  const total = STEPS.length, i = S.step, pct = Math.round((i / (total - 1)) * 100);
+  const total = visibleCount(), i = S.step, sending = i === SEND, no = sending ? total : visibleNo(i), pct = sending ? 100 : Math.round(((no - 1) / total) * 100);
   $("#progressBar").style.width = `${Math.max(4, pct)}%`;
-  $("#stepCount").textContent = `الخطوة ${i + 1} من ${total} · ${STEP_LABELS[i]}`;
+  $("#stepCount").textContent = sending ? PAGE_LABELS[i] : `الخطوة ${no} من ${total} · ${PAGE_LABELS[i]}`;
   $("#stepPercent").textContent = `${pct}% مكتمل`;
-  $("#navStep").textContent = `${i + 1}/${total}`;
+  $("#navStep").textContent = sending ? "" : `${no}/${total}`;
   $("#prevBtn").textContent = i === 0 ? "→ الرئيسية" : "→ السابق";
-  const nb = $("#nextBtn"); nb.textContent = STEPS[i] === "review" ? "إرسال الطلب ♡" : "التالي ←";
+  const nb = $("#nextBtn"); nb.textContent = i === REVIEW ? "إرسال الطلب ♡" : "التالي ←";
   nb.disabled = submitting;
-  $(".ow-nav").hidden = STEPS[i] === "send";
+  $(".ow-nav").hidden = sending;
   renderSummary();
 }
 
@@ -381,7 +394,7 @@ function renderSummary() {
 /* review */
 async function renderReview() {
   const { p, total, shippingPending } = pricing(), ctx = gameCtx(), th = THEMES.find(t => t[0] === S.theme);
-  const edit = step => `<button type="button" class="l-link" data-goto="${STEPS.indexOf(step)}">تعديل</button>`;
+  const edit = step => `<button type="button" class="l-link" data-goto="${pageOf(step)}">تعديل</button>`;
   const gameRows = S.games.map(g => { const def = GAME_BY_KEY.get(g.key), ok = !validateGame(def, g.data, ctx).length; return `<li>${esc(def.label)} — ${ok ? "✓ جاهزة" : "⚠ ناقصها بيانات"}</li>`; }).join("");
   $("#reviewBody").innerHTML = `
     <section class="ow-rev"><div class="ow-rev-h"><h3>الحكاية</h3>${edit("occasion")}</div><p>${esc(occasionLabel())} · من <b>${esc(S.senderName)}</b> إلى <b>${esc(S.recipientName)}</b>${S.memoryDate ? ` · ${esc(S.memoryDate)}` : ""}</p></section>
@@ -435,14 +448,14 @@ function storyBuild() {
 async function startSubmit() {
   if (submitting) return;
   // Re-validate everything; jump to the first broken step.
-  for (let i = 0; i < STEPS.indexOf("review"); i++) { const errs = validateStep(STEPS[i]); if (Object.keys(errs).length) { S.furthest = Math.max(S.furthest, i); go(i); setTimeout(() => showErrors(STEPS[i], errs), 50); toast(`راجع خطوة «${STEP_LABELS[i]}»`); return; } }
+  for (const name of STEPS.slice(0, STEPS.indexOf("review"))) { if (name === "answers" && !S.games.length) continue; const errs = validateStep(name); if (Object.keys(errs).length) { const pi = pageOf(name); S.furthest = Math.max(S.furthest, pi); go(pi); setTimeout(() => showErrors(name, errs), 50); toast(`راجع «${PAGE_LABELS[pi]}»`); return; } }
   if (!navigator.onLine) { toast("أنت غير متصل بالإنترنت. طلبك محفوظ — ابعته أول ما الشبكة ترجع."); return; }
   const fp = fingerprint();
   if (S.attempt && S.attempt.fingerprint !== fp) { if (S.attempt.orderNumber) await abortOrder({ orderNumber: S.attempt.orderNumber, trackingToken: S.attempt.trackingToken }); S.attempt = null; }
   S.attempt ??= { requestId: crypto.randomUUID(), fingerprint: fp };
   flushState(S);
-  submitting = true; S.furthest = STEPS.indexOf("send"); S.step = S.furthest;
-  STEPS.forEach((n, k) => { $(`[data-step="${n}"]`).hidden = k !== S.step; }); updateChrome(); history.pushState({ step: S.step }, "", "#send"); scrollTo({ top: 0 });
+  submitting = true; S.furthest = SEND; S.step = SEND;
+  showPage(SEND); updateChrome(); history.pushState({ step: S.step }, "", "#send"); scrollTo({ top: 0 });
   $("#sendError").hidden = true; $("#sendActions").hidden = true;
   const files = []; for (const f of mainFiles()) { const b = await getFile(f.id); if (!b) { return failSend(new Error(`الملف «${f.name}» مش موجود على الجهاز تاني. ارجع لخطوة الصور وضيفه من جديد.`)); } files.push(b); }
   const special = []; for (const kind of ["cover", "background"]) if (S[kind]) { const b = await getFile(S[kind].id); if (b) special.push({ kind: kind === "cover" ? "logo" : "background", blob: b, name: safeName(S[kind].name) }); }
@@ -481,17 +494,23 @@ async function boot() {
   if (qp.get("package") && !S.package) S.package = qp.get("package");
   if (qp.get("pack") && !S.pack) S.pack = qp.get("pack");
   if (qp.get("game") && GAME_BY_KEY.has(qp.get("game")) && !S.games.some(g => g.key === qp.get("game"))) S.games.push({ key: qp.get("game"), data: emptyGameData(GAME_BY_KEY.get(qp.get("game"))) });
-  if (S.step >= STEPS.indexOf("send")) S.step = STEPS.indexOf("review");
+  // Drafts saved before the shorter journey used section indexes; map them to screens once.
+  if (saved && saved.navV !== NAV_V) { S.step = Math.max(0, pageOf(STEPS[saved.step] || "occasion")); S.furthest = Math.max(S.step, pageOf(STEPS[saved.furthest] || "occasion")); }
+  S.navV = NAV_V;
+  if (S.step >= SEND) S.step = REVIEW;
+  if (S.furthest >= SEND) S.furthest = REVIEW;
+  // Put sections in screen order (e.g. the message before the optional look).
+  { const anchor = $('[data-step="send"]').nextSibling, host = $('[data-step="send"]').parentNode; PAGES.flat().forEach(n => host.insertBefore($(`[data-step="${n}"]`), anchor)); }
   fillInputs();
-  const hashStep = STEPS.indexOf(location.hash.slice(1));
-  history.replaceState({ step: S.step }, "", `#${STEPS[S.step]}`);
+  const hashStep = pageOf(location.hash.slice(1));
+  history.replaceState({ step: S.step }, "", `#${PAGES[S.step][0]}`);
   go(hashStep >= 0 && hashStep <= S.furthest ? hashStep : S.step, { push: false, focus: false });
-  addEventListener("popstate", e => { if (submitting) { history.pushState({ step: S.step }, "", "#send"); toast("استنى لحظة — بنكمّل إرسال طلبك"); return; } const i = Number(e.state?.step); if (Number.isInteger(i)) go(i, { push: false }); });
+  addEventListener("popstate", e => { if (submitting) { history.pushState({ step: S.step }, "", "#send"); toast("استنى لحظة — بنكمّل إرسال طلبك"); return; } const i = Number(e.state?.step); if (Number.isInteger(i)) go(i, { push: false, dir: i < S.step ? -1 : 1 }); });
   addEventListener("beforeunload", e => { flushState(S); if (submitting) { e.preventDefault(); e.returnValue = ""; } });
   addEventListener("pagehide", () => flushState(S));
   $("#nextBtn").onclick = next; $("#prevBtn").onclick = prev;
   $("#retrySend").onclick = () => startSubmit();
-  $("#backToReview").onclick = () => { S.furthest = STEPS.indexOf("review"); go(S.furthest); };
+  $("#backToReview").onclick = () => { S.furthest = REVIEW; go(REVIEW); };
   $("#resetDraft").onclick = async () => { if (!confirm("هتمسح المسودة الحالية وتبدأ من الأول؟")) return; if (S.attempt?.orderNumber) await abortOrder({ orderNumber: S.attempt.orderNumber, trackingToken: S.attempt.trackingToken }); await clearDraft(); location.replace("/order.html"); };
   document.addEventListener("click", e => { const g = e.target.closest("[data-goto]"); if (g) go(Number(g.dataset.goto)); if (e.target.closest("[data-reload]")) location.reload(); });
   try {
@@ -502,6 +521,6 @@ async function boot() {
     catalogReady = true; C = buildCatalog({});
     $("#packageList").innerHTML = `<div class="l-alert l-alert-err">تعذر تحميل الباقات والأسعار: ${esc(e.message)} <button type="button" class="l-link" data-reload>إعادة المحاولة</button></div>`;
   }
-  renderStep(STEPS[S.step]); renderSummary();
+  PAGES[S.step].forEach(renderStep); renderSummary();
 }
 boot();

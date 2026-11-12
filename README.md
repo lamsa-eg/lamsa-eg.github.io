@@ -10,7 +10,7 @@
 
 ```
 index.html            الصفحة الرئيسية (باقات من القاعدة + تجارب WOW قابلة للعب)
-order.html            رحلة الطلب (12 خطوة) ← assets/js/order/*
+order.html            رحلة الطلب (7–8 شاشات) ← assets/js/order/*
 order-success.html    تأكيد الطلب ورقم المتابعة
 memory.html  (/m/*)   صفحة الذكرى ← assets/js/memory.js + assets/js/wow/** (ألعاب)
 track.html            متابعة الطلب

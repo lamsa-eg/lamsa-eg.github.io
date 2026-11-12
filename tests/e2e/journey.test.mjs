@@ -30,7 +30,7 @@ test("full order journey with real game answers reaches the memory page", async 
   assert.match(await page.textContent('[data-err="occasion"]'), /اختار المناسبة/);
   await page.click('#occasionChips label:has-text("عيد ميلاد")');
   await page.click('#relationshipChips label:has-text("حبيبي")');
-  await next(page); await stepIs(page, "people");
+  await stepIs(page, "people"); // same screen as the occasion
 
   await page.fill("#senderName", "سارة"); await page.fill("#recipientName", "يوسف");
   await page.check('input[name="recipientGender"][value="m"]');
@@ -39,7 +39,6 @@ test("full order journey with real game answers reaches the memory page", async 
   assert.equal(await page.locator(".ow-pkg").count(), 3);
   assert.match(await page.textContent(".ow-pkg.is-rec"), /ننصح بها/);
   await page.click('.ow-pkg:has(input[value="premium"])');
-  await next(page); await stepIs(page, "look");
   await next(page); await stepIs(page, "media");
 
   // Media — upload, reorder, delete
@@ -52,12 +51,12 @@ test("full order journey with real game answers reaches the memory page", async 
   assert.equal(await page.getAttribute(".ow-thumb:nth-child(2)", "data-id"), firstId, "image moved one position later");
   await page.click(".ow-thumb:nth-child(5) [data-del]");
   await page.waitForFunction(() => document.querySelectorAll(".ow-thumb").length === 4);
-  await next(page); await stepIs(page, "story");
+  await next(page); await stepIs(page, "story"); await stepIs(page, "look");
 
   await page.fill("#message", "كل سنة وإنت أجمل حكاية في عمري، ولسه البداية.");
   await page.fill("#sq-firstMeet", "معرض الكتاب");
   await page.fill("#sq-habit", "بيتأخر دايمًا ربع ساعة");
-  await next(page); await stepIs(page, "games");
+  await next(page); await stepIs(page, "games"); await stepIs(page, "surprises");
 
   // Games — three real-answer games
   for (const key of ["who_of_us", "order_story", "open_when"]) await page.click(`[data-toggle="${key}"]`);
@@ -76,8 +75,8 @@ test("full order journey with real game answers reaches the memory page", async 
   await page.check(`${ed("order_story")} [data-gpath="items.0.image"] >> nth=2`);
   await page.fill(`${ed("open_when")} [data-gpath="items.0.title"]`, "لما أوحشك");
   await page.fill(`${ed("open_when")} [data-gpath="items.0.text"]`, "افتكر إني جنبك حتى لو بعيد.");
-  await next(page); await stepIs(page, "surprises");
   await next(page); await stepIs(page, "delivery");
+  assert.match(await page.textContent("#stepCount"), /الخطوة 7 من 8/);
 
   await page.selectOption("#zone", "cairo");
   await page.fill("#city", "القاهرة"); await page.fill("#area", "مدينة نصر"); await page.fill("#street", "شارع تجريبي 10"); await page.fill("#phone", "01000000000");
@@ -163,13 +162,14 @@ test("server error during submit keeps the draft and allows retry", async () => 
   const ctx = await browser.newContext({ viewport: { width: 360, height: 800 } });
   const page = await ctx.newPage(); await blockExternal(page);
   await page.goto(base + "/order?package=mini");
-  await page.click('#occasionChips label:has-text("اعتذار")'); await page.click('#relationshipChips label:has-text("صديق")'); await next(page);
+  await page.click('#occasionChips label:has-text("اعتذار")'); await page.click('#relationshipChips label:has-text("صديق")');
   await page.fill("#senderName", "منى"); await page.fill("#recipientName", "هالة"); await page.check('input[name="recipientGender"][value="f"]'); await next(page);
-  await page.waitForSelector('.ow-pkg input[value="mini"]:checked'); await next(page); await next(page);
+  await page.waitForSelector('.ow-pkg input[value="mini"]:checked'); await next(page);
   await page.setInputFiles("#imageInput", photos.slice(0, 2)); await page.waitForFunction(() => document.querySelectorAll(".ow-thumb").length === 2); await next(page);
   await page.fill("#message", "آسفة من قلبي، وحشتيني جدًا."); await next(page);
   assert.match(await page.textContent("#gamesAllowance"), /لا تشمل ألعاب/);
-  await next(page); await next(page); await next(page);
+  await next(page); // no games -> the answers screen is skipped
+  await stepIs(page, "delivery"); assert.match(await page.textContent("#stepCount"), /الخطوة 6 من 7/);
   await page.selectOption("#zone", "other"); await page.fill("#city", "طنطا"); await page.fill("#area", "وسط البلد"); await page.fill("#street", "شارع تجريبي 5"); await page.fill("#phone", "01111111111"); await next(page);
   await page.check('[data-k="legal"]');
   await fetch(base + "/__mock/fail", { method: "POST", body: JSON.stringify({ "complete-order": 503 }) });
