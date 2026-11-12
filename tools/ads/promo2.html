@@ -1,0 +1,51 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>LAMSA promo v2 (question hook)</title>
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<style>
+/* 18s question-hook promo timed to the male voiceover (VO starts at 0.4s). tools/ads/reel.mjs --page=promo2 --secs=18. */
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;font-family:var(--l-font);background:#0c1626}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;padding:300px 80px 380px;text-align:center;opacity:0;animation:sc var(--d) linear both;animation-delay:var(--t)}
+.night{background:var(--l-sky);color:#fff}.sand{background:radial-gradient(120% 80% at 50% 0%,#fff8ea 0%,#f6e9d0 60%,#f1dcbb 100%);color:#13233b}
+.end{animation-name:scEnd}
+@keyframes sc{0%{opacity:0}7%{opacity:1}93%{opacity:1}100%{opacity:0}}
+@keyframes scEnd{0%{opacity:0}8%{opacity:1}100%{opacity:1}}
+h1{color:inherit;font-family:var(--l-display);font-size:118px;line-height:1.3;margin:0}
+h1 em{font-style:normal;display:block;color:#f6c177}.sand h1 em{color:#c7432a}
+h1 span{display:block}
+p{font-size:44px;line-height:1.6;margin:0;opacity:.92}
+.up{opacity:0;animation:up .6s var(--l-ease) both;animation-delay:var(--t)}
+@keyframes up{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+.pop{opacity:0;animation:pop .6s var(--l-ease) both;animation-delay:var(--t)}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+.arch{width:640px;aspect-ratio:4/5;border-radius:999px 999px 40px 40px;overflow:hidden;border:10px solid rgba(246,193,119,.5);box-shadow:0 40px 100px rgba(12,22,38,.5);position:relative;background:#13233b}
+.arch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.arch img.kb{animation:zoom 4.5s linear both}
+.fade{opacity:0;animation:fadeIn .7s ease both;animation-delay:var(--t)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.round{width:760px;aspect-ratio:1;border-radius:60px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(19,35,59,.25)}
+.round img{width:100%;height:100%;object-fit:cover;display:block;animation:zoom 4.4s linear both;animation-delay:3.9s}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.12)}}
+.words{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-family:var(--l-display);font-size:96px;line-height:1.3}
+.words b{font-weight:700}.words b:nth-child(2){color:#f6c177}
+.phone{width:600px;background:var(--l-sky);border-radius:70px;border:14px solid #13233b;box-shadow:0 40px 100px rgba(19,35,59,.3);padding:90px 44px;display:flex;flex-direction:column;gap:34px;color:#fff}
+.phone small{color:#f6c177;font-size:32px}.phone .q{font-family:var(--l-display);font-size:66px;line-height:1.35}
+.phone .o{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.phone .o span{background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.25);border-radius:30px;padding:30px 0;font-size:44px;font-weight:600}
+.phone .o .y{animation:pick .45s ease both;animation-delay:11.7s}
+@keyframes pick{from{background:rgba(255,255,255,.12);color:#fff}to{background:#f6c177;color:#13233b;border-color:transparent;transform:scale(1.06)}}
+.brand{font-family:var(--l-display);font-size:210px;line-height:1;display:flex;align-items:center;gap:30px}.brand i{font-style:normal;color:#f6c177;font-size:130px}
+.cta{background:linear-gradient(135deg,#f6c177,#f08a5d);color:#13233b;font-weight:700;font-size:58px;padding:36px 74px;border-radius:999px;box-shadow:0 20px 50px rgba(12,22,38,.35)}
+.price{font-size:40px}.price b{font-size:64px}
+.url{font-size:38px;direction:ltr;opacity:.85}
+.hook h1{font-size:150px;line-height:1.25}.hook .q2{font-size:112px;color:#c7432a;font-family:var(--l-display);line-height:1.3}
+.hook .mark{font-family:var(--l-display);font-size:420px;line-height:.8;color:rgba(199,67,42,.14);position:absolute;top:260px;inset-inline-start:70px}
+.tag{display:inline-block;padding:14px 34px;border-radius:999px;background:rgba(255,255,255,.12);border:2px solid rgba(246,193,119,.4);color:#f6d9b0;font-size:40px;font-weight:600}
+.round.sm{width:680px}
+.tilt{transform:rotate(-4deg)}.arch.sm{width:520px}
+.q{opacity:0;animation:up .5s var(--l-ease) both;animation-delay:10.6s}
+</style></head><body>
+<section class="sc sand hook" style="--t:0s;--d:4s"><span class="mark" aria-hidden="true">؟</span><h1 class="up" style="--t:.4s">فاكر آخر هدية جبتها؟</h1><div class="q2 up" style="--t:2.3s">طب لسه حد فاكرها؟</div></section>
+<section class="sc night" style="--t:3.9s;--d:4.5s"><span class="tag pop" style="--t:4s">✦ لمسة · هدية مختلفة</span><div class="round sm pop" style="--t:4.1s"><img src="/assets/img/scene-tap.svg" alt=""></div><h1><span class="up" style="--t:5.7s">تقرّب منها الموبايل…</span><em class="up" style="--t:7s">تفتح حكايتكم.</em></h1></section>
+<section class="sc night" style="--t:8.3s;--d:1.5s"><div class="arch sm tilt pop" style="--t:8.35s"><img src="/assets/demo-v2/corniche.svg" alt=""></div><div class="words"><b class="up" style="--t:8.4s">صوركم</b><b class="up" style="--t:8.9s">رسالتك</b></div></section>
+<section class="sc sand" style="--t:9.7s;--d:2.8s"><h1 class="up" style="--t:9.75s">ولعبة <em style="display:inline">بتسأل:</em></h1><div class="phone pop" style="--t:9.9s"><small>✦ لعبة «مين فينا؟»</small><div class="q">مين اللي بيتأخر أكتر؟</div><div class="o"><span>آدم</span><span class="y">ليلى ✓</span></div></div></section>
+<section class="sc night end" style="--t:12.4s;--d:5.6s"><p class="up" style="--t:12.5s;font-size:56px;font-weight:600">اعملها من موبايلك</p><div class="brand pop" style="--t:12.9s"><i>✦</i>لمسة</div><span class="cta pop" style="--t:13.9s">ابدأ حكايتكم ←</span><div class="price up" id="price" style="--t:14.6s"></div><div class="url up" style="--t:14.9s">lamsa-eg.github.io</div></section>
+<script src="/tools/ads/reel.js"></script></body></html>
