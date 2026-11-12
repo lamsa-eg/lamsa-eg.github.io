@@ -8,7 +8,7 @@ const out = arg("out") || `docs/marketing/creatives/lamsa-${pageName}-1080x1920.
 rmSync(tmp, { recursive: true, force: true }); mkdirSync(tmp, { recursive: true });
 const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
 await p.goto(`${base}/tools/ads/${pageName}.html?price=${arg("price")}`); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(300);
-for (let f = 0; f < FPS * SECS; f++) { await p.evaluate(ms => window.seek(ms), (f * 1000) / FPS); await p.screenshot({ path: `${tmp}/f${String(f).padStart(4, "0")}.jpg`, type: "jpeg", quality: 90 }); }
+for (let f = 0; f < Math.round(FPS * SECS); f++) { await p.evaluate(ms => window.seek(ms), (f * 1000) / FPS); await p.screenshot({ path: `${tmp}/f${String(f).padStart(4, "0")}.jpg`, type: "jpeg", quality: 90 }); }
 await b.close();
 execFileSync("ffmpeg", ["-loglevel", "error", "-y", "-framerate", String(FPS), "-i", `${tmp}/f%04d.jpg`, "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-shortest", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", "-c:a", "aac", "-movflags", "+faststart", out]);
 rmSync(tmp, { recursive: true, force: true }); console.log("reel done");

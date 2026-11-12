@@ -1,0 +1,54 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>LAMSA promo v3 (imagine, no price)</title>
+<link rel="stylesheet" href="/assets/css/lamsa-ds.css">
+<style>
+/* 15.5s "imagine" promo, no price, timed to the lively female voiceover (VO starts at 0.4s). tools/ads/reel.mjs --page=promo3 --secs=15.5 */
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;font-family:var(--l-font);background:#0c1626}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;padding:300px 80px 380px;text-align:center;opacity:0;animation:sc var(--d) linear both;animation-delay:var(--t)}
+.night{background:var(--l-sky);color:#fff}.sand{background:radial-gradient(120% 80% at 50% 0%,#fff8ea 0%,#f6e9d0 60%,#f1dcbb 100%);color:#13233b}
+.end{animation-name:scEnd}
+@keyframes sc{0%{opacity:0}7%{opacity:1}93%{opacity:1}100%{opacity:0}}
+@keyframes scEnd{0%{opacity:0}8%{opacity:1}100%{opacity:1}}
+h1{color:inherit;font-family:var(--l-display);font-size:118px;line-height:1.3;margin:0}
+h1 em{font-style:normal;display:block;color:#f6c177}.sand h1 em{color:#c7432a}
+h1 span{display:block}
+p{font-size:44px;line-height:1.6;margin:0;opacity:.92}
+.up{opacity:0;animation:up .6s var(--l-ease) both;animation-delay:var(--t)}
+@keyframes up{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+.pop{opacity:0;animation:pop .6s var(--l-ease) both;animation-delay:var(--t)}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+.arch{width:640px;aspect-ratio:4/5;border-radius:999px 999px 40px 40px;overflow:hidden;border:10px solid rgba(246,193,119,.5);box-shadow:0 40px 100px rgba(12,22,38,.5);position:relative;background:#13233b}
+.arch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.arch img.kb{animation:zoom 4.5s linear both}
+.fade{opacity:0;animation:fadeIn .7s ease both;animation-delay:var(--t)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.round{width:760px;aspect-ratio:1;border-radius:60px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(19,35,59,.25)}
+.round img{width:100%;height:100%;object-fit:cover;display:block;animation:zoom 2s linear both;animation-delay:2.8s}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.12)}}
+.words{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-family:var(--l-display);font-size:96px;line-height:1.3}
+.words b{font-weight:700}.words b:nth-child(2){color:#f6c177}
+.phone{width:600px;background:var(--l-sky);border-radius:70px;border:14px solid #13233b;box-shadow:0 40px 100px rgba(19,35,59,.3);padding:90px 44px;display:flex;flex-direction:column;gap:34px;color:#fff}
+.phone small{color:#f6c177;font-size:32px}.phone .q{font-family:var(--l-display);font-size:66px;line-height:1.35}
+.phone .o{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.phone .o span{background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.25);border-radius:30px;padding:30px 0;font-size:44px;font-weight:600}
+.phone .o .y{animation:pick .45s ease both;animation-delay:9.9s}
+@keyframes pick{from{background:rgba(255,255,255,.12);color:#fff}to{background:#f6c177;color:#13233b;border-color:transparent;transform:scale(1.06)}}
+.brand{font-family:var(--l-display);font-size:210px;line-height:1;display:flex;align-items:center;gap:30px}.brand i{font-style:normal;color:#f6c177;font-size:130px}
+.cta{background:linear-gradient(135deg,#f6c177,#f08a5d);color:#13233b;font-weight:700;font-size:58px;padding:36px 74px;border-radius:999px;box-shadow:0 20px 50px rgba(12,22,38,.35)}
+.price{font-size:40px}.price b{font-size:64px}
+.url{font-size:38px;direction:ltr;opacity:.85}
+.big{font-family:var(--l-display);font-size:190px;line-height:1.2;color:#f6c177}
+.mem{width:620px;background:linear-gradient(180deg,#0c1626,#16294a 60%,#3a3359);border-radius:70px;border:14px solid #f6e7c3;box-shadow:0 0 0 0 rgba(246,193,119,.5),0 40px 100px rgba(12,22,38,.5);padding:70px 40px;display:flex;flex-direction:column;gap:24px;color:#fff;animation:glow 2.2s ease-out both;animation-delay:4.6s}
+@keyframes glow{0%{box-shadow:0 0 0 0 rgba(246,193,119,.7),0 40px 100px rgba(12,22,38,.5)}100%{box-shadow:0 0 0 90px rgba(246,193,119,0),0 40px 100px rgba(12,22,38,.5)}}
+.mem small{color:#f6c177;font-size:32px}.mem b{font-family:var(--l-display);font-size:62px;line-height:1.3}
+.mem .row{display:flex;align-items:center;gap:20px;text-align:start;background:rgba(255,255,255,.1);border-radius:26px;padding:22px 26px;font-size:36px;font-weight:600}
+.mem .row i{font-style:normal;flex:0 0 auto;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#f6c177;color:#13233b;font-size:30px}
+.words.sm{font-size:84px}
+.tagline{font-family:var(--l-display);font-size:96px;color:#f6c177;line-height:1.3}
+</style></head><body>
+<section class="sc night" style="--t:0s;--d:2.9s"><div class="big up" style="--t:.4s">تخيّل…</div><div class="arch pop" style="--t:1.6s"><img class="kb" src="/assets/img/scene-gift.svg" alt=""></div></section>
+<section class="sc sand" style="--t:2.8s;--d:1.8s"><div class="round pop" style="--t:2.85s"><img src="/assets/img/scene-tap.svg" alt=""></div><h1 class="up" style="--t:2.9s">تقرّب منها <em style="display:inline">موبايلك…</em></h1></section>
+<section class="sc night" style="--t:4.5s;--d:2.5s"><div class="pop" style="--t:4.55s"><div class="mem"><small>ليلى، دي معمولة لك ✦</small><b>حكايتكم كلها قدامك</b><div class="row up" style="--t:5.1s"><i>١</i>افتكر أول يوم</div><div class="row up" style="--t:5.4s"><i>٢</i>مين فينا؟</div><div class="row up" style="--t:5.7s"><i>٣</i>المفاجأة الأخيرة</div></div></div></section>
+<section class="sc night" style="--t:6.9s;--d:2.1s"><div class="arch pop" style="--t:6.95s"><img src="/assets/demo-v2/corniche.svg" alt=""><img class="fade" style="--t:7.9s" src="/assets/demo-v2/coffee.svg" alt=""></div><div class="words sm"><b class="up" style="--t:7s">الصور</b><b class="up" style="--t:7.6s">الكلام اللي اتقال</b></div></section>
+<section class="sc sand" style="--t:8.9s;--d:1.7s"><h1 class="up" style="--t:8.95s">واللعبة اللي <em style="display:inline">بتضحّككم</em></h1><div class="phone pop" style="--t:8.95s"><small>✦ لعبة «مين فينا؟»</small><div class="q">مين اللي بيتأخر أكتر؟</div><div class="o"><span>آدم</span><span class="y">ليلى ✓</span></div></div></section>
+<section class="sc night end" style="--t:10.5s;--d:5s"><div class="brand pop" style="--t:10.6s"><i>✦</i>لمسة</div><div class="tagline up" style="--t:11.5s">هدية بتحكي.</div><span class="cta pop" style="--t:12.6s">ابدأوا حكايتكم ←</span><div class="url up" style="--t:13.1s">lamsa-eg.github.io</div></section>
+<script src="/tools/ads/reel.js"></script></body></html>
