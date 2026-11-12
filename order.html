@@ -84,12 +84,14 @@
           <p class="ow-sub">ده شكل صفحة الذكرى اللي هتفتح على موبايل المستلم.</p>
           <fieldset class="ow-fieldset"><legend class="l-label">الستايل</legend><div class="ow-themes" id="themeList"></div></fieldset>
           <div class="l-field"><label for="pageTitle">عنوان الذكرى <span class="l-opt">(اختياري)</span></label><input class="l-input" id="pageTitle" data-k="pageTitle" maxlength="120" placeholder="مثال: حكايتنا الجميلة"></div>
+          <details class="ow-story-q" id="lookDetails"><summary>تخصيص أكتر للشكل <span class="l-opt">(اختياري)</span></summary>
           <div class="l-grid-2">
             <div class="l-field"><label for="layoutStyle">عرض الصور</label><select class="l-select" id="layoutStyle" data-k="layoutStyle"><option value="carousel">عرض متحرك كالفيديو</option><option value="gallery">معرض رأسي</option><option value="grid2">صورتين في الصف</option><option value="grid">شبكة</option></select></div>
             <div class="l-field"><label for="pageEffect">الحركة في الصفحة</label><select class="l-select" id="pageEffect" data-k="pageEffect"><option value="none">هادئة</option><option value="fade">تلاشي ناعم</option><option value="glow">توهج</option><option value="particles">جزيئات خفيفة</option></select></div>
             <div class="l-field"><label for="fontSize">حجم الخط</label><select class="l-select" id="fontSize" data-k="fontSize"><option value="normal">عادي</option><option value="large">كبير</option><option value="xlarge">أكبر</option></select></div>
             <div class="l-field"><label for="pageTextColor">لون النص</label><select class="l-select" id="pageTextColor" data-k="pageTextColor"><option value="default">حسب الستايل</option><option value="gold">ذهبي</option><option value="silver">فضي</option><option value="rose">وردي</option><option value="warm">دافئ</option></select></div>
           </div>
+          </details>
         </section>
 
         <!-- 5 -->
@@ -124,7 +126,7 @@
           <h2 id="h-story" class="ow-h">احكيلنا قصتكم</h2>
           <p class="ow-sub">جاوب على اللي تعرفه بس. الإجابات دي بنستخدمها في الخط الزمني واقتراح الألعاب، ومش بتظهر لحد غير صاحب الهدية.</p>
           <div class="l-field"><label for="message">الرسالة الأساسية</label><textarea class="l-textarea" id="message" data-k="message" maxlength="2000" rows="5" placeholder="اكتب الكلام اللي نفسك يوصل…" aria-describedby="e-message"></textarea><p class="l-help"><span data-count="message">0</span>/2000</p><p class="l-error" id="e-message" data-err="message"></p></div>
-          <details class="ow-story-q" open><summary>أسئلة الحكاية</summary>
+          <details class="ow-story-q" id="storyDetails"><summary>أسئلة عن حكايتكم <span class="l-opt">(اختياري — بتخلّي الذكرى أحلى وبتقترح ألعاب)</span></summary>
             <div class="l-grid-2" id="storyQuestions"></div>
           </details>
           <div class="l-field"><label for="closingText">جملة الختام <span class="l-opt">(اختياري)</span></label><input class="l-input" id="closingText" data-k="closingText" maxlength="240" placeholder="وكل يوم وإنت أجمل ذكرى"></div>

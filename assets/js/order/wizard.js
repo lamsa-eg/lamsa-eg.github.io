@@ -31,7 +31,7 @@ const OCCASION_PACK = { engagement: "engagement", mothers_day: "mothers_day", ap
 
 const fresh = () => ({ v: 1, step: 0, furthest: 0, requestId: crypto.randomUUID(), occasion: "", occasionCustom: "", relationship: "", senderName: "", recipientName: "", recipientGender: "", memoryDate: "", package: "", theme: "black_rose", pageTitle: "", layoutStyle: "carousel", pageEffect: "none", fontSize: "normal", pageTextColor: "default", images: [], cover: null, background: null, video: null, audio: null, songTitle: "", songUrl: "", message: "", closingText: "", story: {}, games: [], pack: "", addons: [], simpleMode: false, textColor: "gold", engraving: "", zone: "", city: "", area: "", street: "", phone: "", deliveryDate: "", paymentMethod: "instapay", notes: "", whatsapp: true, legal: false, attempt: null, honeypot: "" });
 
-let S = fresh(), C = buildCatalog({}), catalogReady = false, submitting = false, gameFilter = "الكل", turnstileToken = "";
+let S = fresh(), C = buildCatalog({}), catalogReady = false, submitting = false, gameFilter = "الكل", gamesAll = false, turnstileToken = "";
 const urls = new Map(); // file id -> object URL
 
 /* ---------------- state helpers ---------------- */
@@ -257,6 +257,7 @@ function scrubImageRefs(data, id) { if (!data) return; for (const [k, v] of Obje
 /* story */
 function renderStory() {
   const host = $("#storyQuestions"); if (host.childElementCount) return;
+  $("#storyDetails").open = Object.values(S.story || {}).some(v => String(v || "").trim());
   host.innerHTML = STORY_Q.map(([k, l, ph]) => `<div class="l-field ${k === "milestones" ? "ow-span" : ""}"><label for="sq-${k}">${l}</label>${k === "milestones" ? `<textarea class="l-textarea" id="sq-${k}" data-k="story.${k}" maxlength="600" rows="3" placeholder="${esc(ph)}"></textarea>` : `<input class="l-input" id="sq-${k}" data-k="story.${k}" maxlength="200" placeholder="${esc(ph)}">`}</div>`).join("");
   fillInputs();
 }
@@ -278,7 +279,10 @@ function renderGames() {
   $("#gameFilter").innerHTML = cats.map(c => `<button type="button" class="ow-filter ${c === gameFilter ? "is-on" : ""}" aria-pressed="${c === gameFilter}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
   const ctx = gameCtx();
   const shown = list.filter(g => gameFilter === "الكل" || g.category === gameFilter).sort((a, b) => Number(sugg.has(b.key)) - Number(sugg.has(a.key)));
-  $("#gameList").innerHTML = shown.map(g => {
+  // Keep the first screen short: suggested + first few games, the rest behind one tap.
+  const FIRST = 6, trimmed = gameFilter === "الكل" && !gamesAll && shown.length > FIRST + 1;
+  const visible = trimmed ? shown.filter((g, i) => i < FIRST || S.games.some(x => x.key === g.key)) : shown;
+  $("#gameList").innerHTML = visible.map(g => {
     const sel = S.games.find(x => x.key === g.key), ready = sel && !validateGame(g, sel.data, ctx).length;
     const imgShort = g.needsImages && S.images.length < g.needsImages, addonPrice = g.addon ? C.addon(g.addon) : null;
     const canExtend = S.games.length < 3 && C.addon("extra_game") && !S.addons.includes("extra_game"), full = !sel && S.games.length >= max && !canExtend, extend = !sel && S.games.length >= max && canExtend, unavailable = (g.addon && !addonPrice);
@@ -289,11 +293,12 @@ function renderGames() {
       ${sel ? `<p class="ow-game-state ${ready ? "is-ready" : ""}">${ready ? "✓ تم تجهيز بيانات اللعبة" : "✎ محتاجة إجاباتك في الخطوة الجاية"}</p>` : ""}</div>
       <button type="button" class="l-btn ${sel ? "l-btn-ghost" : "l-btn-soft"} l-btn-sm" data-toggle="${g.key}" ${(!sel && (full || unavailable)) ? "disabled" : ""} aria-pressed="${!!sel}">${sel ? "إزالة" : unavailable ? "غير متاحة" : full ? "وصلت للحد" : extend ? `إضافة (+${money(C.addon("extra_game").price)})` : "إضافة"}</button>
     </article>`;
-  }).join("") || `<p class="l-help">مفيش ألعاب في التصنيف ده.</p>`;
+  }).join("") + (trimmed ? `<button type="button" class="l-btn l-btn-ghost l-btn-block ow-more" data-more-games>شوف كل الألعاب (${shown.length})</button>` : "") || `<p class="l-help">مفيش ألعاب في التصنيف ده.</p>`;
 }
 function bindGames() {
   $("#gameFilter").addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (b) { gameFilter = b.dataset.cat; renderGames(); } });
   $("#gameList").addEventListener("click", e => {
+    if (e.target.closest("[data-more-games]")) { gamesAll = true; renderGames(); return; }
     const b = e.target.closest("[data-toggle]"); if (!b) return; const key = b.dataset.toggle, i = S.games.findIndex(x => x.key === key);
     if (i >= 0) { S.gameDrafts = { ...(S.gameDrafts || {}), [key]: S.games[i].data }; S.games.splice(i, 1); toast("اتشالت اللعبة — إجاباتها محفوظة لو رجعتلها", 2500); }
     else {

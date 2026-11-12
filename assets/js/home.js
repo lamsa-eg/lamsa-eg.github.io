@@ -24,6 +24,9 @@ async function packages() {
       <a class="l-btn ${p.recommended ? "l-btn-primary" : "l-btn-ghost"} l-btn-block" href="/order?package=${encodeURIComponent(p.id)}" data-cta="pkg-${esc(p.id)}">ابدأ بباقة ${esc(p.label)}</a>
     </article>`).join("");
     host.removeAttribute("aria-busy");
+    // On phones the packages are a swipe row: start on the recommended one.
+    const rec = $(".h-pkg.is-rec", host);
+    if (rec && host.scrollWidth > host.clientWidth) { const a = rec.getBoundingClientRect(), h = host.getBoundingClientRect(); host.scrollLeft += a.left + a.width / 2 - (h.left + h.width / 2); }
     const min = C.minPrice();
     if (sticky) { sticky.classList.remove("l-skel"); sticky.textContent = min === null ? "اختار باقتك" : money(min); }
     if (C.season) {

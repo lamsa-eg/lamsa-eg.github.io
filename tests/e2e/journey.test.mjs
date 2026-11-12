@@ -54,6 +54,7 @@ test("full order journey with real game answers reaches the memory page", async 
   await next(page); await stepIs(page, "story"); await stepIs(page, "look");
 
   await page.fill("#message", "كل سنة وإنت أجمل حكاية في عمري، ولسه البداية.");
+  await page.click("#storyDetails summary"); // optional story questions are collapsed by default
   await page.fill("#sq-firstMeet", "معرض الكتاب");
   await page.fill("#sq-habit", "بيتأخر دايمًا ربع ساعة");
   await next(page); await stepIs(page, "games"); await stepIs(page, "surprises");

@@ -169,3 +169,15 @@
 .ow-pay-logo{width:42px;height:42px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;background:#4b2a8f;color:#fff;font-size:20px}
 .ow-pay b{display:block;color:var(--l-night)}.ow-pay small{display:block;color:var(--l-ink-2);font-size:13.5px;line-height:1.7}
 .ow-step:not([hidden])~.ow-step:not([hidden]){margin-top:30px;padding-top:26px;border-top:1px dashed var(--l-line-2)}
+
+/* v46: compact game cards on phones (one row: icon, text, add button) */
+.ow-story-q summary .l-opt{font-weight:400;font-size:13px}
+.ow-more{grid-column:1/-1}
+@media (max-width:479px){
+  .ow-game{grid-template-columns:44px 1fr auto;gap:10px;padding:12px;align-items:center}
+  .ow-game-prev{width:44px;height:44px;border-radius:14px;font-size:20px}
+  .ow-game h3{font-size:16px}.ow-game p{font-size:13.5px;margin:0}
+  .ow-game-meta{display:none}
+  .ow-game .l-btn{grid-column:auto;justify-self:end;align-self:center;min-height:40px;padding-inline:14px}
+  .ow-game.is-sel .ow-game-meta{display:flex;margin-top:6px}
+}
